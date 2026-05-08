@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem -Path \"C:\\\\dev\\\\trentondarts\" -Force | Select-Object Name, @{Name=\"Type\";Expression={if\\($_.PSIsContainer\\){\"Directory\"}else{\"File\"}}} | Format-Table -AutoSize)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\dev\\\\trentondarts-dotnet\" -Recurse -Directory | Where-Object { $_.Name -eq \"Migrations\" -or $_.Name -eq \"Data\" } | Select-Object -ExpandProperty FullName)",
+      "Bash(Get-ChildItem \"C:\\\\dev\\\\trentondarts-dotnet\\\\TrentonDarts.Web\\\\appsettings*.json\")",
+      "Bash(Select-Object FullName)",
+      "Bash(Test-Path *)",
+      "Bash(dotnet ef database *)",
+      "Bash(dotnet ef migrations *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ]
+  }
+}

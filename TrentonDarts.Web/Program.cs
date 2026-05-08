@@ -8,6 +8,10 @@ using TrentonDarts.Web.Data.Entities;
 using TrentonDarts.Web.Domain;
 using TrentonDarts.Web.Services;
 
+// Npgsql 6+ defaults DateTime to timestamptz; our entities use unspecified-kind DateTime
+// (matching the original Laravel/MySQL schema), so opt into the legacy mapping.
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 var builder = WebApplication.CreateBuilder(args);
 
 // EF Core + PostgreSQL

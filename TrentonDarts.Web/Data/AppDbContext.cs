@@ -124,6 +124,7 @@ public class AppDbContext : IdentityDbContext<User>
         builder.Entity<MatchTypeGameRule>(e =>
         {
             e.ToTable("match_type_game_rules");
+            e.HasQueryFilter(r => r.MatchType.DeletedAt == null);
             e.Property(p => p.MatchTypeId).HasColumnName("matchTypeId");
             e.Property(p => p.GameType).HasColumnName("gameType");
             e.Property(p => p.DoubleIn).HasColumnName("doubleIn");
@@ -182,6 +183,7 @@ public class AppDbContext : IdentityDbContext<User>
         builder.Entity<WinterSeasonTeam>(e =>
         {
             e.ToTable("winter_season_teams");
+            e.HasQueryFilter(st => st.Season.DeletedAt == null);
             e.Property(p => p.LeagueId).HasColumnName("leagueId");
             e.Property(p => p.SeasonId).HasColumnName("seasonId");
             e.Property(p => p.TeamId).HasColumnName("teamId");
@@ -197,6 +199,7 @@ public class AppDbContext : IdentityDbContext<User>
         builder.Entity<WinterSeasonTeamPlayer>(e =>
         {
             e.ToTable("winter_season_team_players");
+            e.HasQueryFilter(tp => tp.Player.DeletedAt == null);
             e.Property(p => p.LeagueId).HasColumnName("leagueId");
             e.Property(p => p.SeasonId).HasColumnName("seasonId");
             e.Property(p => p.SeasonTeamId).HasColumnName("seasonTeamId");
@@ -211,6 +214,7 @@ public class AppDbContext : IdentityDbContext<User>
         builder.Entity<WinterSeasonWeek>(e =>
         {
             e.ToTable("winter_season_weeks");
+            e.HasQueryFilter(w => w.Season.DeletedAt == null);
             e.Property(p => p.LeagueId).HasColumnName("leagueId");
             e.Property(p => p.SeasonId).HasColumnName("seasonId");
             e.Property(p => p.WeekType).HasColumnName("weekType");
@@ -223,6 +227,7 @@ public class AppDbContext : IdentityDbContext<User>
         builder.Entity<WinterSeasonMatch>(e =>
         {
             e.ToTable("winter_season_matches");
+            e.HasQueryFilter(m => m.HomeTeam.DeletedAt == null && m.AwayTeam.DeletedAt == null);
             e.Property(p => p.SeasonId).HasColumnName("seasonId");
             e.Property(p => p.WeekId).HasColumnName("weekId");
             e.Property(p => p.MatchTypeId).HasColumnName("matchTypeId");
@@ -242,6 +247,7 @@ public class AppDbContext : IdentityDbContext<User>
         builder.Entity<WinterMatchResult>(e =>
         {
             e.ToTable("winter_match_results");
+            e.HasQueryFilter(mr => mr.Match.HomeTeam.DeletedAt == null && mr.Match.AwayTeam.DeletedAt == null);
             e.Property(p => p.HasScorecard).HasColumnName("hasScorecard");
             e.Property(p => p.AwayScoreOverride).HasColumnName("awayScoreOverride");
             e.Property(p => p.HomeScoreOverride).HasColumnName("homeScoreOverride");
@@ -256,6 +262,7 @@ public class AppDbContext : IdentityDbContext<User>
         builder.Entity<WinterGameResult>(e =>
         {
             e.ToTable("winter_game_results");
+            e.HasQueryFilter(gr => gr.GameRule.MatchType.DeletedAt == null);
             e.Property(p => p.MatchId).HasColumnName("matchId");
             e.Property(p => p.HomePlayers).HasColumnName("homePlayers");
             e.Property(p => p.AwayPlayers).HasColumnName("awayPlayers");
@@ -271,6 +278,7 @@ public class AppDbContext : IdentityDbContext<User>
         builder.Entity<WinterGameAward>(e =>
         {
             e.ToTable("winter_game_awards");
+            e.HasQueryFilter(a => a.Player.DeletedAt == null);
             e.Property(p => p.GameId).HasColumnName("gameId");
             e.Property(p => p.PlayerId).HasColumnName("playerId");
             e.Property(p => p.AwardType).HasColumnName("awardType");
@@ -416,6 +424,7 @@ public class AppDbContext : IdentityDbContext<User>
         builder.Entity<DartEventResult>(e =>
         {
             e.ToTable("dart_event_results");
+            e.HasQueryFilter(r => r.Event.DeletedAt == null);
             e.Property(p => p.EventId).HasColumnName("eventId");
             e.Property(p => p.SpecificEventName).HasColumnName("specificEventName");
             e.Property(p => p.PlayerId).HasColumnName("playerId");
