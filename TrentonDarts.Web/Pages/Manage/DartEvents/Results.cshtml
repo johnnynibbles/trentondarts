@@ -1,0 +1,61 @@
+@page "/Manage/{leagueId:int}/dartevents/{eventId:int}/results"
+@model TrentonDarts.Web.Pages.Manage.DartEvents.ResultsModel
+@{
+    ViewData["Title"] = "Event Results";
+    Layout = "_ManageLayout";
+}
+
+<h2>@Model.EventName – Results</h2>
+<a href="/Manage/@Model.LeagueId/dartevents/@Model.EventId/edit" class="btn btn-default">Back to Event</a>
+<br/><br/>
+
+<form method="post" asp-page-handler="Add" class="form-inline" style="margin-bottom:16px;">
+    <input type="hidden" name="eventId" value="@Model.EventId" />
+    <div class="form-group">
+        <label>Specific Event</label>
+        <input name="specificEventName" class="form-control" style="width:200px;" />
+    </div>
+    <div class="form-group">
+        <label>Player</label>
+        <select name="playerId" class="form-control">
+            <option value="">-- select --</option>
+            @foreach (var p in Model.Players)
+            {
+                <option value="@p.Id">@p.FirstName @p.LastName</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Finish</label>
+        <input name="finished" class="form-control" style="width:80px;" />
+    </div>
+    <button type="submit" class="btn btn-primary">Add</button>
+</form>
+
+<table class="table table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th>Specific Event</th>
+            <th>Player</th>
+            <th>Finish</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var r in Model.Results)
+    {
+        <tr>
+            <td>@r.SpecificEventName</td>
+            <td>@r.Player?.Name</td>
+            <td>@r.Finished</td>
+            <td>
+                <form method="post" asp-page-handler="Delete" style="display:inline;"
+                      onsubmit="return confirm('Remove this result?')">
+                    <input type="hidden" name="id" value="@r.Id" />
+                    <button type="submit" class="btn btn-xs btn-danger">Remove</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

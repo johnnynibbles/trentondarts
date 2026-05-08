@@ -1,0 +1,40 @@
+@{
+    var leagueId = ViewContext.RouteData.Values["leagueId"]?.ToString() ?? "1";
+}
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-manage">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/Manage/@leagueId">Manage</a>
+        </div>
+        <div id="navbar-manage" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Site <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/Manage/@leagueId/dartevents">Dart Events</a></li>
+                        <li><a href="/Manage/@leagueId/pageparts">Page Content</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">League <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/Manage/@leagueId/players">Players</a></li>
+                        <li><a href="/Manage/@leagueId/teams">Teams</a></li>
+                        <li><a href="/Manage/@leagueId/sponsors">Sponsors</a></li>
+                        <li><a href="/Manage/@leagueId/boardmembers">Board Members</a></li>
+                    </ul>
+                </li>
+                <li><a href="/Manage/@leagueId/seasons">Seasons</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/">Public Site</a></li>
+                <li><a href="/Auth/Logout">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>

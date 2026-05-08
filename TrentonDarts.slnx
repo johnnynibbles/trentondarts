@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="TrentonDarts.Tests/TrentonDarts.Tests.csproj" />
+  <Project Path="TrentonDarts.Web/TrentonDarts.Web.csproj" />
+</Solution>

@@ -1,0 +1,11 @@
+{
+  "name": "trentondarts",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "migrate": "dotnet ef database update --project TrentonDarts.Web",
+    "migrate:add": "dotnet ef migrations add --project TrentonDarts.Web",
+    "start": "dotnet run --project TrentonDarts.Web",
+    "dev": "npm run migrate && dotnet run --project TrentonDarts.Web"
+  }
+}

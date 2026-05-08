@@ -1,0 +1,39 @@
+@page "/Manage/{leagueId:int}/dartevents"
+@model TrentonDarts.Web.Pages.Manage.DartEvents.IndexModel
+@{
+    ViewData["Title"] = "Dart Events";
+    Layout = "_ManageLayout";
+}
+
+<h2>Dart Events</h2>
+<a href="/Manage/@Model.LeagueId/dartevents/create" class="btn btn-primary">Add Event</a>
+<br/><br/>
+
+<table class="table table-bordered table-condensed table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var e in Model.Events)
+    {
+        <tr>
+            <td>@e.Name</td>
+            <td>@e.EventDate?.ToString("MM/dd/yyyy")</td>
+            <td>@(TrentonDarts.Web.Data.Entities.DartEvent.EventTypes.GetValueOrDefault(e.EventTypeId ?? 0, ""))</td>
+            <td>
+                <a href="/Manage/@Model.LeagueId/dartevents/@e.Id/edit" class="btn btn-xs btn-default">Edit</a>
+                <form method="post" asp-page-handler="Delete" style="display:inline;"
+                      onsubmit="return confirm('Delete @e.Name?')">
+                    <input type="hidden" name="id" value="@e.Id" />
+                    <button type="submit" class="btn btn-xs btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

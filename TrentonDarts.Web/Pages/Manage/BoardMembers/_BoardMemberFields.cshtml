@@ -1,0 +1,33 @@
+@model TrentonDarts.Web.Pages.Manage.BoardMembers.BoardMemberInput
+
+<div class="form-group">
+    <label class="col-sm-2 control-label">User ID</label>
+    <div class="col-sm-4"><input asp-for="UserId" class="form-control" /></div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">Name *</label>
+    <div class="col-sm-4">
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">Position</label>
+    <div class="col-sm-4"><input asp-for="Position" class="form-control" /></div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">Starting Season</label>
+    <div class="col-sm-4"><input asp-for="StartingSeason" class="form-control" /></div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">Ending Season</label>
+    <div class="col-sm-4"><input asp-for="EndingSeason" class="form-control" /></div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">Start Season ID</label>
+    <div class="col-sm-2"><input asp-for="StartSeasonId" class="form-control" type="number" /></div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">End Season ID</label>
+    <div class="col-sm-2"><input asp-for="EndSeasonId" class="form-control" type="number" /></div>
+</div>

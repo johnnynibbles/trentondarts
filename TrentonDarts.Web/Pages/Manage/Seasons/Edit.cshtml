@@ -1,0 +1,19 @@
+@page "/Manage/{leagueId:int}/seasons/{id:int}/edit"
+@model TrentonDarts.Web.Pages.Manage.Seasons.EditModel
+@{
+    ViewData["Title"] = "Edit Season";
+    Layout = "_ManageLayout";
+}
+
+<h2>Edit Season</h2>
+<a href="/Manage/@Model.LeagueId/seasons" class="btn btn-default">Back</a>
+<br/><br/>
+
+<form method="post" class="form-horizontal">
+    @await Html.PartialAsync("_SeasonFields", Model.Input)
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,232 @@
+@page "/team/{id:int}"
+@model TrentonDarts.Web.Pages.Teams.ShowModel
+@{
+    ViewData["Title"] = $"{Model.SeasonTeam.Team.Name} Team";
+}
+
+<div class="team-page">
+    <h2>@Model.SeasonTeam.Team.Name Team</h2>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 col-md-4">
+                <select id="selectedSeason" class="form-control">
+                    @foreach (var s in Model.AllSeasons)
+                    {
+                        if (s.Id == Model.Season.Id) { <option value="@s.Id" selected>@s.Name</option> }
+                        else { <option value="@s.Id">@s.Name</option> }
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-8 col-md-8">
+                <div class="stats">
+                    <div class="table-responsive">
+                        <table class="table table-condensed table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th colspan="4" rowspan="2">
+                                        <select id="statPart" class="form-control">
+                                            @foreach (var opt in new[] { ("whole","Whole Season"), ("pre","Pre Season"), ("regular","Regular Season") })
+                                            {
+                                                if (opt.Item1 == Model.StatPart) { <option value="@opt.Item1" selected>@opt.Item2</option> }
+                                                else { <option value="@opt.Item1">@opt.Item2</option> }
+                                            }
+                                        </select>
+                                    </th>
+                                    <th></th>
+                                    <th colspan="4" style="text-align:center;">Singles</th>
+                                    <th colspan="4" style="text-align:center;">Doubles</th>
+                                    <th colspan="2" style="text-align:center;">Triples</th>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:center;">Overall</th>
+                                    <th colspan="2" style="text-align:center;">Cricket</th>
+                                    <th colspan="2" style="text-align:center;">'01</th>
+                                    <th colspan="2" style="text-align:center;">Cricket</th>
+                                    <th colspan="2" style="text-align:center;">501</th>
+                                    <th colspan="2" style="text-align:center;">'01</th>
+                                </tr>
+                                <tr>
+                                    <th>Team Name</th><th title="Weeks Played">WP</th><th title="Games Played">GP</th>
+                                    <th style="text-align:center;">Record</th>
+                                    <th style="text-align:center;">Win %</th>
+                                    <th style="text-align:center;">W</th><th style="text-align:center;">L</th>
+                                    <th style="text-align:center;">W</th><th style="text-align:center;">L</th>
+                                    <th style="text-align:center;">W</th><th style="text-align:center;">L</th>
+                                    <th style="text-align:center;">W</th><th style="text-align:center;">L</th>
+                                    <th style="text-align:center;">W</th><th style="text-align:center;">L</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @if (!Model.TeamStats.Any())
+                            {
+                                <tr class="warning"><td colspan="15">Currently No Stats</td></tr>
+                            }
+                            else
+                            {
+                                @foreach (var t in Model.TeamStats)
+                                {
+                                    <tr class="team-stat-row info">
+                                        <td colspan="3">@t.TeamName</td>
+                                        <td style="text-align:center;">@t.PointsWon - @t.PointsLost</td>
+                                        <td style="text-align:center;">@(Math.Round(t.OverallWin * 100, 1)) %</td>
+                                        <td style="text-align:center;">@t.GameCricket.Won</td><td style="text-align:center;" class="loss-column">@t.GameCricket.Lost</td>
+                                        <td style="text-align:center;">@t.Game301.Won</td><td style="text-align:center;" class="loss-column">@t.Game301.Lost</td>
+                                        <td style="text-align:center;">@t.GameDoubleCricket.Won</td><td style="text-align:center;" class="loss-column">@t.GameDoubleCricket.Lost</td>
+                                        <td style="text-align:center;">@t.Game501.Won</td><td style="text-align:center;" class="loss-column">@t.Game501.Lost</td>
+                                        <td style="text-align:center;">@t.Game801.Won</td><td style="text-align:center;" class="loss-column">@t.Game801.Lost</td>
+                                    </tr>
+                                    @foreach (var p in Model.PlayerStats.OrderByDescending(ps => ps.OverallWin).ThenByDescending(ps => ps.GamesPlayed))
+                                    {
+                                        <tr>
+                                            <td><a href="/player/@p.PlayerId?season=@Model.Season.Id">@p.PlayerName</a></td>
+                                            <td style="text-align:center;">@p.WeeksPlayed</td>
+                                            <td style="text-align:center;">@p.GamesPlayed</td>
+                                            <td style="text-align:center;">@p.GamesWon - @p.GamesLost</td>
+                                            <td style="text-align:center;">@(p.OverallWin > 0 ? $"{Math.Round(p.OverallWin * 100, 1)} %" : "-")</td>
+                                            <td style="text-align:center;">@p.GameCricket.Won</td><td style="text-align:center;" class="loss-column">@p.GameCricket.Lost</td>
+                                            <td style="text-align:center;">@p.Game301.Won</td><td style="text-align:center;" class="loss-column">@p.Game301.Lost</td>
+                                            <td style="text-align:center;">@p.GameDoubleCricket.Won</td><td style="text-align:center;" class="loss-column">@p.GameDoubleCricket.Lost</td>
+                                            <td style="text-align:center;">@p.Game501.Won</td><td style="text-align:center;" class="loss-column">@p.Game501.Lost</td>
+                                            <td style="text-align:center;">@p.Game801.Won</td><td style="text-align:center;" class="loss-column">@p.Game801.Lost</td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="schedule">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><h3 class="panel-title">Schedule</h3></div>
+                        @foreach (var s in Model.TeamSchedule)
+                        {
+                            <div class="week-schedule clearfix">
+                                <div class="date pull-left">@s.Date.ToString("MMM dd")</div>
+                                @if (s.IsBye)
+                                {
+                                    <div class="bye pull-left">BYE</div>
+                                }
+                                else if (s.AwayScore == 0 && s.HomeScore == 0)
+                                {
+                                    <div class="team-name pull-left">
+                                        @if (s.IsAwayGame)
+                                        {
+                                            <div class="team home pull-left"><strong>@@</strong> <a href="/team/@s.HomeTeamId?season=@Model.Season.Id">@s.HomeTeamName</a></div>
+                                        }
+                                        else
+                                        {
+                                            <div class="team away pull-left"><a href="/team/@s.AwayTeamId?season=@Model.Season.Id">vs @s.AwayTeamName</a></div>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="team-name pull-left">
+                                        @(s.IsAwayGame ? $"@ {s.HomeTeamName}" : $"vs {s.AwayTeamName}")
+                                        @if (!s.HasScorecard && (s.AwayScore != 0 || s.HomeScore != 0))
+                                        {
+                                            <i title="Scorecard isn't entered" class="fa fa-bolt"></i>
+                                        }
+                                    </div>
+                                    <div class="result pull-left">
+                                        @(s.IsAwayGame ? $"{s.AwayScore} - {s.HomeScore}" : $"{s.HomeScore} - {s.AwayScore}")
+                                    </div>
+                                    <div class="win-loss pull-left">
+                                        @{
+                                            var matchUrl2 = Model.IsBoardMember
+                                                ? $"/season/{Model.Season.Id}/match/{s.MatchId}/edit"
+                                                : $"/season/{Model.Season.Id}/match/{s.MatchId}";
+                                            var teamWon = (s.IsAwayGame && s.AwayScore > s.HomeScore)
+                                                || (!s.IsAwayGame && s.HomeScore > s.AwayScore);
+                                        }
+                                        <a href="@matchUrl2">
+                                            <span class="label @(teamWon ? "label-success" : "label-danger")">
+                                                @(teamWon ? "W" : "L")
+                                            </span>
+                                        </a>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4 col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h3 class="panel-title">Standings</h3></div>
+                    <table class="table table-striped table-hover">
+                        <tbody>
+                        @foreach (var div in Model.DivStandings)
+                        {
+                            <tr style="background-color:#7FC3FF;font-weight:bold;">
+                                <td>Division @div.Name</td>
+                                @if (Model.Season.IsUsingMatchPoints) { <td style="text-align:center;">P</td> }
+                                <td style="text-align:center;">W</td>
+                                <td style="text-align:center;">L</td>
+                                <td style="text-align:center;">%</td>
+                            </tr>
+                            @foreach (var s in div.Standings)
+                            {
+                                <tr>
+                                    <td><a href="/team/@s.TeamId?season=@Model.Season.Id">@s.Name</a></td>
+                                    @if (Model.Season.IsUsingMatchPoints) { <td style="text-align:center;vertical-align:middle;">@s.MatchPoints</td> }
+                                    <td style="text-align:center;vertical-align:middle;">@s.WonPoints</td>
+                                    <td style="text-align:center;vertical-align:middle;">@s.LossPoints</td>
+                                    <td style="text-align:center;vertical-align:middle;">@(Math.Round(s.Percentage * 100, 1))%</td>
+                                </tr>
+                            }
+                        }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="awards">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><h3 class="panel-title">Awards</h3></div>
+                        @if (!Model.Awards.Any())
+                        {
+                            <div class="panel-body">No Awards Yet.</div>
+                        }
+                        @foreach (var a in Model.Awards)
+                        {
+                            <div class="award-tag clearfix">
+                                <div class="award-header clearfix">
+                                    <div class="award-year pull-left">@a.Date.Year</div>
+                                    <div class="award-date">@a.Date.ToString("MM-dd")</div>
+                                </div>
+                                <div class="award-body clearfix">
+                                    <div class="name-tag pull-left">
+                                        <div class="player-name">@a.PlayerName</div>
+                                        <div class="player-team">@a.TeamName</div>
+                                    </div>
+                                    @if (a.Value > 0)
+                                    {
+                                        <div class="award-value pull-right"><span class="badge">@a.Value</span></div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function($){
+            $(document).ready(function() {
+                $('#statPart, #selectedSeason').change(function() {
+                    window.location = '?statpart=' + encodeURIComponent($('#statPart').val())
+                        + '&season=' + encodeURIComponent($('#selectedSeason').val());
+                });
+            });
+        })(jQuery);
+    </script>
+}

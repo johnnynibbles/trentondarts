@@ -1,0 +1,19 @@
+@page "/Manage/{leagueId:int}/sponsors/create"
+@model TrentonDarts.Web.Pages.Manage.Sponsors.CreateModel
+@{
+    ViewData["Title"] = "Add Sponsor";
+    Layout = "_ManageLayout";
+}
+
+<h2>Add Sponsor</h2>
+<a href="/Manage/@Model.LeagueId/sponsors" class="btn btn-default">Back</a>
+<br/><br/>
+
+<form method="post" class="form-horizontal">
+    @await Html.PartialAsync("_SponsorFields", Model.Input)
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+</form>

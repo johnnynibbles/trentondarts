@@ -1,0 +1,70 @@
+@page "/Manage/{leagueId:int}/seasons/{id:int}/weeks/{weekId:int}/matches"
+@model TrentonDarts.Web.Pages.Manage.Seasons.WeekMatchesModel
+@{
+    ViewData["Title"] = "Week Matches";
+    Layout = "_ManageLayout";
+}
+
+<h2>@Model.WeekDate.ToString("MM/dd/yyyy") – Matches</h2>
+<a href="/Manage/@Model.LeagueId/seasons/@Model.Id" class="btn btn-default">Back</a>
+<br/><br/>
+
+<form method="post" asp-page-handler="Add" class="form-inline" style="margin-bottom:16px;">
+    <div class="form-group">
+        <label>Away Team</label>
+        <select name="awayTeamId" class="form-control">
+            @foreach (var t in Model.Teams)
+            {
+                <option value="@t.TeamId">@t.Team.Name</option>
+            }
+        </select>
+    </div>
+    <span>@@</span>
+    <div class="form-group">
+        <label>Home Team</label>
+        <select name="homeTeamId" class="form-control">
+            @foreach (var t in Model.Teams)
+            {
+                <option value="@t.TeamId">@t.Team.Name</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Division</label>
+        <input name="division" class="form-control" style="width:80px;" />
+    </div>
+    <div class="form-group">
+        <label>Match Type</label>
+        <select name="matchTypeId" class="form-control">
+            @foreach (var mt in Model.MatchTypes)
+            {
+                <option value="@mt.Id">@mt.Name</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Add</button>
+</form>
+
+<table class="table table-bordered table-condensed">
+    <thead>
+        <tr><th>Away</th><th>Home</th><th>Division</th><th>Type</th><th></th></tr>
+    </thead>
+    <tbody>
+    @foreach (var m in Model.Matches)
+    {
+        <tr>
+            <td>@m.AwayTeam.Name</td>
+            <td>@m.HomeTeam.Name</td>
+            <td>@m.Division</td>
+            <td>@m.MatchType.Name</td>
+            <td>
+                <form method="post" asp-page-handler="Delete" style="display:inline;"
+                      onsubmit="return confirm('Delete this match?')">
+                    <input type="hidden" name="matchId" value="@m.Id" />
+                    <button type="submit" class="btn btn-xs btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

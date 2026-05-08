@@ -1,0 +1,19 @@
+@page "/Manage/{leagueId:int}/players/{id:int}/edit"
+@model TrentonDarts.Web.Pages.Manage.Players.EditModel
+@{
+    ViewData["Title"] = "Edit Player";
+    Layout = "_ManageLayout";
+}
+
+<h2>Edit Player</h2>
+<a href="/Manage/@Model.LeagueId/players" class="btn btn-default">Back</a>
+<br/><br/>
+
+<form method="post" class="form-horizontal">
+    @await Html.PartialAsync("_PlayerFields", Model.Input)
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+</form>

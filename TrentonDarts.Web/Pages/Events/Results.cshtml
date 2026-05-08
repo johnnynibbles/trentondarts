@@ -1,0 +1,38 @@
+@page "/events/results"
+@model TrentonDarts.Web.Pages.Events.ResultsModel
+@{
+    ViewData["Title"] = "Event Results";
+}
+
+<h1 style="text-align:center;">Greater Trenton Dart League <br/> Player Activity in Events</h1>
+
+<table class="table table-bordered table-condensed" style="width:80%;margin-right:auto;margin-left:auto;">
+    <thead>
+        <tr valign="center">
+            <th>Event Name</th>
+            <th>Event Date</th>
+            <th>Specific Event</th>
+            <th>Name</th>
+            <th>Finish</th>
+        </tr>
+    </thead>
+    <tbody>
+    @if (!Model.EventResults.Any())
+    {
+        <tr class="warning"><td colspan="5">Currently No Results</td></tr>
+    }
+    else
+    {
+        @foreach (var r in Model.EventResults)
+        {
+            <tr>
+                <td>@r.EventName</td>
+                <td>@r.EventDate?.ToString("MM-dd-yyyy")</td>
+                <td>@r.SpecificEvent</td>
+                <td>@r.PlayerName</td>
+                <td>@r.Place</td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>

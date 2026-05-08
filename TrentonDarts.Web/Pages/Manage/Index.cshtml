@@ -1,0 +1,22 @@
+@page "/Manage/{leagueId:int}"
+@model TrentonDarts.Web.Pages.Manage.IndexModel
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "_ManageLayout";
+}
+
+<h2>League Management</h2>
+
+<div class="row">
+    <div class="col-sm-3">
+        <div class="list-group">
+            <a href="/Manage/@Model.LeagueId/players" class="list-group-item">Players</a>
+            <a href="/Manage/@Model.LeagueId/teams" class="list-group-item">Teams</a>
+            <a href="/Manage/@Model.LeagueId/sponsors" class="list-group-item">Sponsors</a>
+            <a href="/Manage/@Model.LeagueId/boardmembers" class="list-group-item">Board Members</a>
+            <a href="/Manage/@Model.LeagueId/dartevents" class="list-group-item">Dart Events</a>
+            <a href="/Manage/@Model.LeagueId/pageparts" class="list-group-item">Page Parts</a>
+            <a href="/Manage/@Model.LeagueId/seasons" class="list-group-item">Seasons</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,88 @@
+@page "/sponsors"
+@model TrentonDarts.Web.Pages.Sponsors.IndexModel
+@{
+    ViewData["Title"] = "GTDL Sponsors";
+}
+
+<div class="page-header"><h2>GTDL Sponsors</h2></div>
+
+<ul class="nav nav-pills nav-justified">
+    @foreach (var kv in Model.SponsorTypes)
+    {
+        <li role="presentation" class="@(Model.SelectedType == kv.Key ? "active" : "")">
+            <a href="/sponsors?type=@kv.Key">@kv.Value</a>
+        </li>
+    }
+</ul>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Contact</th>
+            <th></th>
+            <th style="width:30%;">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+    @if (!Model.Sponsors.Any())
+    {
+        <tr class="warning"><td colspan="5">Currently No Sponsors</td></tr>
+    }
+    else
+    {
+        @foreach (var s in Model.Sponsors)
+        {
+            <tr>
+                <td>
+                    @if (!string.IsNullOrEmpty(s.Url))
+                    {
+                        <a href="@s.Url" target="_blank"><strong>@s.Name</strong></a>
+                    }
+                    else
+                    {
+                        <strong>@s.Name</strong>
+                    }
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(s.Address1))
+                    {
+                        if (!string.IsNullOrEmpty(s.MapUrl))
+                        {
+                            <a href="@s.MapUrl" target="_blank">
+                                @s.Address1<br/>
+                                @if (!string.IsNullOrEmpty(s.Address2)) { @s.Address2 <br/> }
+                                @s.City, @s.State @s.Zip
+                            </a>
+                        }
+                        else
+                        {
+                            @s.Address1<br/>
+                            @if (!string.IsNullOrEmpty(s.Address2)) { @s.Address2 <br/> }
+                            @:@s.City, @s.State @s.Zip
+                        }
+                    }
+                </td>
+                <td>
+                    <div>@s.Phone</div>
+                    <div>@s.Email</div>
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(s.FacebookUrl))
+                    {
+                        <a href="@s.FacebookUrl" target="_blank"><i class="fa fa-facebook-official fa-2x"></i></a>
+                    }
+                </td>
+                <td>
+                    @foreach (var t in s.Teams)
+                    {
+                        <div>@t.Name</div>
+                    }
+                    <div>@s.Description</div>
+                </td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>

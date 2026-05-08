@@ -1,0 +1,77 @@
+@using Microsoft.AspNetCore.Http
+@inject TrentonDarts.Web.Services.NavService NavService
+@{
+    var nav = await NavService.GetDefaultNavAsync();
+    var isAuthenticated = User.Identity?.IsAuthenticated ?? false;
+    var isBoardMember = isAuthenticated && await NavService.IsBoardMemberAsync(User);
+}
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Dart League</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/"> Trenton Dart League</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                @foreach (var item in nav)
+                {
+                    <li>
+                        @if (item.SubItems.Count > 0)
+                        {
+                            <a href="@item.Url" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@item.Title <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                @foreach (var sub in item.SubItems)
+                                {
+                                    if (sub.IsHeader)
+                                    {
+                                        <li class="dropdown-header">@sub.Title</li>
+                                    }
+                                    else if (sub.IsSeparator)
+                                    {
+                                        <li role="separator" class="divider"></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="@sub.Url">@sub.Title</a></li>
+                                    }
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <a href="@item.Url">@item.Title</a>
+                        }
+                    </li>
+                }
+            </ul>
+            @if (isAuthenticated)
+            {
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@User.Identity!.Name <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            @if (isBoardMember)
+                            {
+                                <li class="dropdown-header">Manage</li>
+                                <li><a href="/manage/1">League</a></li>
+                                <li role="separator" class="divider"></li>
+                            }
+                            <li><a href="/Auth/Logout">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            }
+            else
+            {
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/Auth/Login">Log in</a></li>
+                </ul>
+            }
+        </div>
+    </div>
+</nav>

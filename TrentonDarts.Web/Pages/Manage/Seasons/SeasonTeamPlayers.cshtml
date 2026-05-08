@@ -1,0 +1,54 @@
+@page "/Manage/{leagueId:int}/seasons/{id:int}/teams/{seasonTeamId:int}/players"
+@model TrentonDarts.Web.Pages.Manage.Seasons.SeasonTeamPlayersModel
+@{
+    ViewData["Title"] = "Team Players";
+    Layout = "_ManageLayout";
+}
+
+<h2>@Model.TeamName – Players</h2>
+<a href="/Manage/@Model.LeagueId/seasons/@Model.Id" class="btn btn-default">Back</a>
+<br/><br/>
+
+<form method="post" asp-page-handler="Add" class="form-inline" style="margin-bottom:16px;">
+    <div class="form-group">
+        <label>Player</label>
+        <select name="playerId" class="form-control">
+            @foreach (var p in Model.AvailablePlayers)
+            {
+                <option value="@p.Id">@p.FirstName @p.LastName</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Role</label>
+        <select name="role" class="form-control">
+            @foreach (var r in new[] { "Player", "Captain", "Co-Captain" })
+            {
+                <option value="@r">@r</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Add</button>
+</form>
+
+<table class="table table-bordered table-condensed">
+    <thead>
+        <tr><th>Player</th><th>Role</th><th></th></tr>
+    </thead>
+    <tbody>
+    @foreach (var tp in Model.TeamPlayers)
+    {
+        <tr>
+            <td>@tp.Player.Name</td>
+            <td>@tp.Role</td>
+            <td>
+                <form method="post" asp-page-handler="Delete" style="display:inline;"
+                      onsubmit="return confirm('Remove player?')">
+                    <input type="hidden" name="seasonTeamPlayerId" value="@tp.Id" />
+                    <button type="submit" class="btn btn-xs btn-danger">Remove</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

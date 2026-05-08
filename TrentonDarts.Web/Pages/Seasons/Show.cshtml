@@ -1,0 +1,153 @@
+@page "/season/{id:int}"
+@model TrentonDarts.Web.Pages.Seasons.ShowModel
+@{
+    ViewData["Title"] = Model.Season.Name;
+}
+
+<h2>@Model.Season.Name</h2>
+
+@* Week navigation *@
+<div class="row">
+    <div class="col-md-12">
+        <div class="btn-group" role="group">
+            @if (Model.PreviousWeekDate.HasValue)
+            {
+                <a href="/season/@Model.Season.Id?week=@Model.PreviousWeekDate.Value.ToString("yyyy-MM-dd")"
+                   class="btn btn-default btn-sm">&laquo; Previous</a>
+            }
+            else
+            {
+                <button class="btn btn-default btn-sm" disabled>&laquo; Previous</button>
+            }
+
+            @if (Model.NextWeekDate.HasValue)
+            {
+                <a href="/season/@Model.Season.Id?week=@Model.NextWeekDate.Value.ToString("yyyy-MM-dd")"
+                   class="btn btn-default btn-sm">Next &raquo;</a>
+            }
+            else
+            {
+                <button class="btn btn-default btn-sm" disabled>Next &raquo;</button>
+            }
+        </div>
+        @if (Model.ResultWeekDate.HasValue)
+        {
+            <span class="text-muted"> Week of @Model.ResultWeekDate.Value.ToString("MMMM d, yyyy")</span>
+        }
+    </div>
+</div>
+
+@* Weekly results *@
+@if (Model.DivSchedules.Any())
+{
+    foreach (var div in Model.DivSchedules)
+    {
+        foreach (var week in div.Weeks)
+        {
+            if (week.Matches.Any())
+            {
+                <h4>Results — @week.Date.ToString("MMMM d, yyyy")</h4>
+                <table class="table table-condensed table-hover">
+                    <thead><tr><th>Division</th><th>Away</th><th></th><th>Home</th><th></th></tr></thead>
+                    <tbody>
+                    @foreach (var m in week.Matches)
+                    {
+                        <tr onclick="window.location='/season/@Model.Season.Id/match/@m.MatchId'" style="cursor:pointer">
+                            <td>@m.Division</td>
+                            <td>@m.AwayTeamName</td>
+                            <td>@(m.HasScorecard ? $"{m.AwayScore} - {m.HomeScore}" : "vs")</td>
+                            <td>@m.HomeTeamName</td>
+                            <td>@if (Model.IsBoardMember) {<a href="/season/@Model.Season.Id/match/@m.MatchId/edit" class="btn btn-xs btn-default">Edit</a>}</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }
+            @if (week.ByeTeamNames.Any())
+            {
+                <p><strong>Byes:</strong> @string.Join(", ", week.ByeTeamNames)</p>
+            }
+        }
+    }
+}
+
+@* Division standings *@
+<h3>Standings — @(Model.SeasonPart == "regular" ? "Regular Season" : "Pre-Season")</h3>
+@foreach (var div in Model.DivStandings)
+{
+    <h4>Division @div.Name</h4>
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Team</th>
+                @if (Model.Season.IsUsingMatchPoints) { <th>MP</th> }
+                <th>W</th><th>L</th><th>%</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var s in div.Standings)
+        {
+            <tr>
+                <td><a href="/team/@s.TeamId">@s.Name</a></td>
+                @if (Model.Season.IsUsingMatchPoints) { <td>@s.MatchPoints</td> }
+                <td>@s.WonPoints</td>
+                <td>@s.LossPoints</td>
+                <td>@s.Percentage.ToString("P1")</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@* Next week schedule *@
+@if (Model.NextWeekSchedules.Any())
+{
+    <h3>Upcoming</h3>
+    @foreach (var div in Model.NextWeekSchedules)
+    {
+        foreach (var week in div.Weeks)
+        {
+            if (week.Matches.Any())
+            {
+                <h4>Week of @week.Date.ToString("MMMM d, yyyy")</h4>
+                <table class="table table-condensed">
+                    <thead><tr><th>Division</th><th>Away</th><th></th><th>Home</th></tr></thead>
+                    <tbody>
+                    @foreach (var m in week.Matches)
+                    {
+                        <tr>
+                            <td>@m.Division</td>
+                            <td>@m.AwayTeamName</td>
+                            <td>@@</td>
+                            <td>@m.HomeTeamName</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }
+            @if (week.ByeTeamNames.Any())
+            {
+                <p><strong>Byes:</strong> @string.Join(", ", week.ByeTeamNames)</p>
+            }
+        }
+    }
+}
+
+@* Awards for the week *@
+@if (Model.Awards.Any())
+{
+    <h3>Awards @(Model.ViewAllAwards ? "(All)" : "")</h3>
+    <table class="table table-condensed">
+        <thead><tr><th>Player</th><th>Team</th><th>Type</th><th>Value</th></tr></thead>
+        <tbody>
+        @foreach (var a in Model.Awards)
+        {
+            <tr><td>@a.PlayerName</td><td>@a.TeamName</td><td>@a.AwardType</td><td>@(a.Value > 0 ? a.Value.ToString() : "")</td></tr>
+        }
+        </tbody>
+    </table>
+    @if (!Model.ViewAllAwards)
+    {
+        <a href="/season/@Model.Season.Id?allAwards=true">View all awards</a>
+    }
+}

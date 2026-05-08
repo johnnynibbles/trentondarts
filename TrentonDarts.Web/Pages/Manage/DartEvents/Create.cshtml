@@ -1,0 +1,19 @@
+@page "/Manage/{leagueId:int}/dartevents/create"
+@model TrentonDarts.Web.Pages.Manage.DartEvents.CreateModel
+@{
+    ViewData["Title"] = "Add Dart Event";
+    Layout = "_ManageLayout";
+}
+
+<h2>Add Dart Event</h2>
+<a href="/Manage/@Model.LeagueId/dartevents" class="btn btn-default">Back</a>
+<br/><br/>
+
+<form method="post" class="form-horizontal">
+    @await Html.PartialAsync("_DartEventFields", Model.Input)
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+</form>

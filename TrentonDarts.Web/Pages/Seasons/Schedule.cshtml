@@ -1,0 +1,119 @@
+@page "/season/{seasonId:int}/schedule"
+@model TrentonDarts.Web.Pages.Seasons.ScheduleModel
+@{
+    ViewData["Title"] = $"Schedule — {Model.Season.Name}";
+}
+
+<div class="single-form season-schedule">
+    <h2>Season @Model.Season.Name</h2>
+
+    @if (Model.PreSchedules.Any())
+    {
+        <h3>Pre Season</h3>
+        @foreach (var schedule in Model.PreSchedules)
+        {
+            <div class="division clearfix">
+                <div class="division-title">Division @schedule.Name</div>
+                @foreach (var week in schedule.Weeks)
+                {
+                    <div class="panel panel-primary week-matches pull-left">
+                        <div class="panel-heading">
+                            <div class="panel-title title">@week.Date.ToString("MM-dd-yyyy")</div>
+                        </div>
+                        <div class="panel-body">
+                            @if (!week.Matches.Any())
+                            {
+                                <div class="no-matches"><strong>No Matches</strong></div>
+                            }
+                            @foreach (var m in week.Matches)
+                            {
+                                var noScore = m.AwayScore == 0 && m.HomeScore == 0;
+                                var matchUrl = Model.IsBoardMember
+                                    ? $"/season/{Model.Season.Id}/match/{m.MatchId}/edit"
+                                    : $"/season/{Model.Season.Id}/match/{m.MatchId}";
+                                <a href="@matchUrl">
+                                    <div class="match-card @(noScore ? "no-results" : "")">
+                                        <div class="team away @(!noScore && m.AwayScore > m.HomeScore ? "winner" : "") @(!noScore && m.AwayScore < m.HomeScore ? "loser" : "") clearfix">
+                                            <div class="team-name pull-left">@m.AwayTeamName</div>
+                                            <div class="team-score pull-left">@(noScore ? "-" : m.AwayScore.ToString())</div>
+                                        </div>
+                                        <div class="team home @(!noScore && m.AwayScore < m.HomeScore ? "winner" : "") @(!noScore && m.AwayScore > m.HomeScore ? "loser" : "") clearfix">
+                                            <div class="team-name pull-left">
+                                                @m.HomeTeamName
+                                                @if (!m.HasScorecard && !noScore) { <i title="Scorecard isn't entered" class="fa fa-bolt"></i> }
+                                            </div>
+                                            <div class="team-score pull-left">@(noScore ? "-" : m.HomeScore.ToString())</div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>
+                            }
+                        </div>
+                        <div class="panel-footer">
+                            <strong>Bye:</strong>
+                            @(week.ByeTeamNames.Any() ? string.Join(", ", week.ByeTeamNames) : "None")
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    }
+
+    <div class="clearfix"></div>
+    <h3>Regular Season</h3>
+
+    @if (Model.RegularSchedules.Any())
+    {
+        @foreach (var schedule in Model.RegularSchedules)
+        {
+            <div class="division clearfix">
+                <div class="division-title">Division @schedule.Name</div>
+                @foreach (var week in schedule.Weeks)
+                {
+                    <div class="panel panel-primary week-matches pull-left">
+                        <div class="panel-heading">
+                            <div class="panel-title title">@week.Date.ToString("MM-dd-yyyy")</div>
+                        </div>
+                        <div class="panel-body">
+                            @if (!week.Matches.Any())
+                            {
+                                <div class="no-matches"><strong>No Matches</strong></div>
+                            }
+                            @foreach (var m in week.Matches)
+                            {
+                                var noScore = m.AwayScore == 0 && m.HomeScore == 0;
+                                var matchUrl = Model.IsBoardMember
+                                    ? $"/season/{Model.Season.Id}/match/{m.MatchId}/edit"
+                                    : $"/season/{Model.Season.Id}/match/{m.MatchId}";
+                                <a href="@matchUrl">
+                                    <div class="match-card @(noScore ? "no-results" : "")">
+                                        <div class="team away @(!noScore && m.AwayScore > m.HomeScore ? "winner" : "") @(!noScore && m.AwayScore < m.HomeScore ? "loser" : "") clearfix">
+                                            <div class="team-name pull-left">@m.AwayTeamName</div>
+                                            <div class="team-score pull-left">@(noScore ? "-" : m.AwayScore.ToString())</div>
+                                        </div>
+                                        <div class="team home @(!noScore && m.AwayScore < m.HomeScore ? "winner" : "") @(!noScore && m.AwayScore > m.HomeScore ? "loser" : "") clearfix">
+                                            <div class="team-name pull-left">
+                                                @m.HomeTeamName
+                                                @if (!m.HasScorecard && !noScore) { <i title="Scorecard isn't entered" class="fa fa-bolt"></i> }
+                                            </div>
+                                            <div class="team-score pull-left">@(noScore ? "-" : m.HomeScore.ToString())</div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>
+                            }
+                        </div>
+                        <div class="panel-footer">
+                            <strong>Bye:</strong>
+                            @(week.ByeTeamNames.Any() ? string.Join(", ", week.ByeTeamNames) : "None")
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    }
+    else
+    {
+        <div>No Schedule</div>
+    }
+</div>

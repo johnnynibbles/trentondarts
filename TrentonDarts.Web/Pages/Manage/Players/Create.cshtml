@@ -1,0 +1,19 @@
+@page "/Manage/{leagueId:int}/players/create"
+@model TrentonDarts.Web.Pages.Manage.Players.CreateModel
+@{
+    ViewData["Title"] = "Add Player";
+    Layout = "_ManageLayout";
+}
+
+<h2>Add Player</h2>
+<a href="/Manage/@Model.LeagueId/players" class="btn btn-default">Back</a>
+<br/><br/>
+
+<form method="post" class="form-horizontal">
+    @await Html.PartialAsync("_PlayerFields", Model.Input)
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+</form>

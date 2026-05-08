@@ -1,0 +1,130 @@
+@page "/player/{id:int}"
+@model TrentonDarts.Web.Pages.Players.ShowModel
+@{
+    ViewData["Title"] = $"{Model.Player.Name} — {Model.Season.Name}";
+}
+
+<div id="player-sheet">
+    <h2>
+        @Model.Player.Name on
+        @if (Model.PlayerTeam != null)
+        {
+            <a href="/team/@Model.PlayerTeam.Id?season=@Model.Season.Id">@Model.PlayerTeam.Name</a>
+        }
+        else
+        {
+            <span>No Team</span>
+        }
+    </h2>
+    <h4>
+        @Model.Season.Name Season
+        <small>
+            <a href="/player/@Model.Player.Id?season=@Model.Season.Id&groupby=gameType">group by game type</a>
+        </small>
+    </h4>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-9 col-md-8">
+                <div class="game-history">
+                    <table class="table table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th style="text-align:center;">Game Type</th>
+                                <th style="text-align:center;">#</th>
+                                <th>Partner</th>
+                                <th style="text-align:center;">Result</th>
+                                <th>Opponents</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @if (!Model.GameHistories.Any())
+                        {
+                            <tr class="warning"><td colspan="5">Currently No Matches</td></tr>
+                        }
+                        else
+                        {
+                            int lastMatchId = 0;
+                            @foreach (var gh in Model.GameHistories)
+                            {
+                                if (lastMatchId != gh.MatchId)
+                                {
+                                    lastMatchId = gh.MatchId;
+                                    var matchUrl = Model.IsBoardMember
+                                        ? $"/season/{Model.Season.Id}/match/{gh.MatchId}/edit"
+                                        : $"/season/{Model.Season.Id}/match/{gh.MatchId}";
+                                    <tr class="info">
+                                        <td colspan="5">
+                                            <strong>
+                                                <a href="@matchUrl" style="margin-right:10px;">
+                                                    <i class="fa fa-sticky-note-o"></i>
+                                                    @gh.Date.ToString("MM-dd-yyyy")
+                                                    @(gh.SeasonPart == "pre" ? "Pre" : "Reg")
+                                                </a>
+                                                <a href="/team/@gh.OpponentTeamId?season=@Model.Season.Id">
+                                                    @(gh.IsHomeGame ? "vs" : "@") @gh.OpponentTeamName
+                                                </a>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td style="vertical-align:middle;text-align:center;">@gh.GameType</td>
+                                    <td style="vertical-align:middle;text-align:center;">@gh.GameOrder</td>
+                                    <td style="vertical-align:middle">
+                                        @foreach (var mate in gh.TeamPlayers)
+                                        {
+                                            <div><a href="/player/@mate.Id?season=@Model.Season.Id">@mate.Name</a></div>
+                                        }
+                                    </td>
+                                    <td style="vertical-align:middle;text-align:center;">
+                                        @if (gh.IsWon)
+                                        {
+                                            <span class="label label-success">Won</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="label label-danger">Lost</span>
+                                        }
+                                    </td>
+                                    <td style="vertical-align:middle">
+                                        @foreach (var opp in gh.Opponents)
+                                        {
+                                            <div><a href="/player/@opp.Id?season=@Model.Season.Id">@opp.Name</a></div>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-sm-3 col-md-4">
+                @if (Model.PlayerTeam != null)
+                {
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4>@Model.PlayerTeam.Name</h4>
+                        </div>
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr><th>Player</th><th style="text-align:center;">W-L</th></tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var ps in Model.TeamPlayerStats.OrderByDescending(p => p.OverallWin).ThenByDescending(p => p.GamesPlayed))
+                            {
+                                <tr class="@(ps.PlayerId == Model.Player.Id ? "warning" : "")">
+                                    <td><a href="/player/@ps.PlayerId?season=@Model.Season.Id">@ps.PlayerName</a></td>
+                                    <td style="text-align:center;">@ps.GamesWon - @ps.GamesLost</td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+@page "/Manage/{leagueId:int}/boardmembers"
+@model TrentonDarts.Web.Pages.Manage.BoardMembers.IndexModel
+@{
+    ViewData["Title"] = "Board Members";
+    Layout = "_ManageLayout";
+}
+
+<h2>Board Members</h2>
+<a href="/Manage/@Model.LeagueId/boardmembers/create" class="btn btn-primary">Add Board Member</a>
+<br/><br/>
+
+<table class="table table-bordered table-condensed table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Seasons</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var m in Model.Members)
+    {
+        <tr>
+            <td>@m.Name</td>
+            <td>@m.Position</td>
+            <td>@m.StartingSeason – @m.EndingSeason</td>
+            <td>
+                <a href="/Manage/@Model.LeagueId/boardmembers/@m.Id/edit" class="btn btn-xs btn-default">Edit</a>
+                <form method="post" asp-page-handler="Delete" style="display:inline;"
+                      onsubmit="return confirm('Delete @m.Name?')">
+                    <input type="hidden" name="id" value="@m.Id" />
+                    <button type="submit" class="btn btn-xs btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

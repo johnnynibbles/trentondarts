@@ -1,0 +1,19 @@
+@page "/Manage/{leagueId:int}/sponsors/{id:int}/edit"
+@model TrentonDarts.Web.Pages.Manage.Sponsors.EditModel
+@{
+    ViewData["Title"] = "Edit Sponsor";
+    Layout = "_ManageLayout";
+}
+
+<h2>Edit Sponsor</h2>
+<a href="/Manage/@Model.LeagueId/sponsors" class="btn btn-default">Back</a>
+<br/><br/>
+
+<form method="post" class="form-horizontal">
+    @await Html.PartialAsync("_SponsorFields", Model.Input)
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+</form>

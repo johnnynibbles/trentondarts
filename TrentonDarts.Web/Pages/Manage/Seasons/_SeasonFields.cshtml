@@ -1,0 +1,49 @@
+@model TrentonDarts.Web.Pages.Manage.Seasons.SeasonInput
+
+<div class="form-group">
+    <label class="col-sm-2 control-label">Name *</label>
+    <div class="col-sm-4">
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">Start Year *</label>
+    <div class="col-sm-2"><input asp-for="StartYear" class="form-control" type="number" /></div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">End Year *</label>
+    <div class="col-sm-2"><input asp-for="EndYear" class="form-control" type="number" /></div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">Season Type</label>
+    <div class="col-sm-3">
+        <select asp-for="SeasonType" class="form-control">
+            <option value="">-- select --</option>
+            @foreach (var opt in new[] { ("winter","Winter"), ("summer","Summer") })
+            {
+                if (opt.Item1 == Model?.SeasonType) { <option value="@opt.Item1" selected>@opt.Item2</option> }
+                else { <option value="@opt.Item1">@opt.Item2</option> }
+            }
+        </select>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <div class="checkbox"><label><input asp-for="IsCurrent" /> Is Current Season</label></div>
+        <div class="checkbox"><label><input asp-for="IsUsingMatchPoints" /> Use Match Points</label></div>
+        <div class="checkbox"><label><input asp-for="AccumulatePointsForAllParts" /> Accumulate Points for All Parts</label></div>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">Win Points</label>
+    <div class="col-sm-2"><input asp-for="WinPoints" class="form-control" type="number" /></div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">Half Points</label>
+    <div class="col-sm-2"><input asp-for="HalfPoints" class="form-control" type="number" /></div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">Min for Half Points</label>
+    <div class="col-sm-2"><input asp-for="MinPointForHalfPoints" class="form-control" type="number" /></div>
+</div>

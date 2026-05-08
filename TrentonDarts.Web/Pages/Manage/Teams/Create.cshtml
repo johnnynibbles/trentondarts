@@ -1,0 +1,44 @@
+@page "/Manage/{leagueId:int}/teams/create"
+@model TrentonDarts.Web.Pages.Manage.Teams.CreateModel
+@{
+    ViewData["Title"] = "Add Team";
+    Layout = "_ManageLayout";
+}
+
+<h2>Add Team</h2>
+<a href="/Manage/@Model.LeagueId/teams" class="btn btn-default">Back</a>
+<br/><br/>
+
+<form method="post" class="form-horizontal">
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Name *</label>
+        <div class="col-sm-4">
+            <input asp-for="Input.Name" class="form-control" />
+            <span asp-validation-for="Input.Name" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Sponsor</label>
+        <div class="col-sm-4">
+            <select asp-for="Input.SponsorId" class="form-control">
+                <option value="">-- None --</option>
+                @foreach (var s in Model.Sponsors)
+                {
+                    if (s.Id == Model.Input.SponsorId) { <option value="@s.Id" selected>@s.Name</option> }
+                    else { <option value="@s.Id">@s.Name</option> }
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Notes</label>
+        <div class="col-sm-6">
+            <textarea asp-for="Input.Notes" class="form-control" rows="3"></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+</form>

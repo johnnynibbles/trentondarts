@@ -1,0 +1,127 @@
+@model TrentonDarts.Web.Pages.Manage.DartEvents.DartEventInput
+
+<div class="form-group">
+    <label class="col-sm-2 control-label">Name *</label>
+    <div class="col-sm-6">
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">Event Type</label>
+    <div class="col-sm-4">
+        <select asp-for="EventTypeId" class="form-control">
+            <option value="">-- select --</option>
+            @foreach (var kv in TrentonDarts.Web.Data.Entities.DartEvent.EventTypes)
+            {
+                if (kv.Key == Model?.EventTypeId) { <option value="@kv.Key" selected>@kv.Value</option> }
+                else { <option value="@kv.Key">@kv.Value</option> }
+            }
+        </select>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">Event Date</label>
+    <div class="col-sm-3">
+        <input asp-for="EventDate" class="form-control" type="date"
+               value="@Model?.EventDate?.ToString("yyyy-MM-dd")" />
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">End Date</label>
+    <div class="col-sm-3">
+        <input asp-for="EventEndDate" class="form-control" type="date"
+               value="@Model?.EventEndDate?.ToString("yyyy-MM-dd")" />
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">Dart Type</label>
+    <div class="col-sm-3">
+        <select asp-for="DartType" class="form-control">
+            <option value="">-- select --</option>
+            @foreach (var opt in new[] { ("Steel", "Steel Tip"), ("Soft", "Soft Tip"), ("Both", "Both") })
+            {
+                if (opt.Item1 == Model?.DartType) { <option value="@opt.Item1" selected>@opt.Item2</option> }
+                else { <option value="@opt.Item1">@opt.Item2</option> }
+            }
+        </select>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">Contact</label>
+    <div class="col-sm-4"><input asp-for="EventContact" class="form-control" /></div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">Contact 2</label>
+    <div class="col-sm-4"><input asp-for="EventContact2" class="form-control" /></div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">Host Name</label>
+    <div class="col-sm-4"><input asp-for="HostName" class="form-control" /></div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">Host URL</label>
+    <div class="col-sm-6"><input asp-for="HostUrl" class="form-control" /></div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">Host Phone</label>
+    <div class="col-sm-3"><input asp-for="HostPhone" class="form-control" /></div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">Location</label>
+    <div class="col-sm-4"><input asp-for="LocationName" class="form-control" /></div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">Address</label>
+    <div class="col-sm-6"><input asp-for="Address1" class="form-control" placeholder="Address Line 1" /></div>
+</div>
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-6"><input asp-for="Address2" class="form-control" placeholder="Address Line 2" /></div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">City</label>
+    <div class="col-sm-4"><input asp-for="City" class="form-control" /></div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">State</label>
+    <div class="col-sm-2"><input asp-for="State" class="form-control" maxlength="2" /></div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">Zip</label>
+    <div class="col-sm-2"><input asp-for="Zip" class="form-control" /></div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">Event URL</label>
+    <div class="col-sm-6"><input asp-for="Url" class="form-control" /></div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">Facebook URL</label>
+    <div class="col-sm-6"><input asp-for="FacebookUrl" class="form-control" /></div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">Map URL</label>
+    <div class="col-sm-6"><input asp-for="MapUrl" class="form-control" /></div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">Registration Start</label>
+    <div class="col-sm-3"><input asp-for="RegistrationStartTime" class="form-control" /></div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">Registration End</label>
+    <div class="col-sm-3"><input asp-for="RegistrationEndTime" class="form-control" /></div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">Darts Start</label>
+    <div class="col-sm-3"><input asp-for="DartStart" class="form-control" /></div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">Description</label>
+    <div class="col-sm-6"><textarea asp-for="Description" class="form-control" rows="4"></textarea></div>
+</div>
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <div class="checkbox">
+            <label><input asp-for="IsTitleEvent" /> Title Event (show on home page)</label>
+        </div>
+    </div>
+</div>

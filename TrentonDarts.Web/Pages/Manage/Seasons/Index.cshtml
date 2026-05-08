@@ -1,0 +1,40 @@
+@page "/Manage/{leagueId:int}/seasons"
+@model TrentonDarts.Web.Pages.Manage.Seasons.IndexModel
+@{
+    ViewData["Title"] = "Seasons";
+    Layout = "_ManageLayout";
+}
+
+<h2>Seasons</h2>
+<a href="/Manage/@Model.LeagueId/seasons/create" class="btn btn-primary">Add Season</a>
+<br/><br/>
+
+<table class="table table-bordered table-condensed table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Years</th>
+            <th>Current</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var s in Model.Seasons)
+    {
+        <tr>
+            <td>@s.Name</td>
+            <td>@s.StartYear – @s.EndYear</td>
+            <td>@(s.IsCurrent ? "Yes" : "")</td>
+            <td>
+                <a href="/Manage/@Model.LeagueId/seasons/@s.Id" class="btn btn-xs btn-default">Manage</a>
+                <a href="/Manage/@Model.LeagueId/seasons/@s.Id/edit" class="btn btn-xs btn-default">Edit</a>
+                <form method="post" asp-page-handler="Delete" style="display:inline;"
+                      onsubmit="return confirm('Delete @s.Name?')">
+                    <input type="hidden" name="id" value="@s.Id" />
+                    <button type="submit" class="btn btn-xs btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

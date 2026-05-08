@@ -1,0 +1,33 @@
+@page "/Manage/{leagueId:int}/pageparts/create"
+@model TrentonDarts.Web.Pages.Manage.PageParts.CreateModel
+@{
+    ViewData["Title"] = "Add Page Part";
+    Layout = "_ManageLayout";
+}
+
+<h2>Add Page Part</h2>
+<a href="/Manage/@Model.LeagueId/pageparts" class="btn btn-default">Back</a>
+<br/><br/>
+
+<form method="post" class="form-horizontal">
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Name *</label>
+        <div class="col-sm-4">
+            <input asp-for="Input.Name" class="form-control" />
+            <span asp-validation-for="Input.Name" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Description</label>
+        <div class="col-sm-6"><input asp-for="Input.Description" class="form-control" /></div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">HTML</label>
+        <div class="col-sm-8"><textarea asp-for="Input.Html" class="form-control" rows="10"></textarea></div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+</form>

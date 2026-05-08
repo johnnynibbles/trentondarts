@@ -1,0 +1,26 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.log
+appsettings.*.json
+!appsettings.json
+!appsettings.Development.json
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Vite output
+TrentonDarts.Web/wwwroot/dist/
+
+# EF
+*.db
+*.db-shm
+*.db-wal
+
+# OS
+.DS_Store
+Thumbs.db

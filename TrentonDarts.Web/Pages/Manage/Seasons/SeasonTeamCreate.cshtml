@@ -1,0 +1,38 @@
+@page "/Manage/{leagueId:int}/seasons/{id:int}/teams/create"
+@model TrentonDarts.Web.Pages.Manage.Seasons.SeasonTeamCreateModel
+@{
+    ViewData["Title"] = "Add Team to Season";
+    Layout = "_ManageLayout";
+}
+
+<h2>Add Team to Season</h2>
+<a href="/Manage/@Model.LeagueId/seasons/@Model.Id" class="btn btn-default">Back</a>
+<br/><br/>
+
+<form method="post" class="form-horizontal">
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Team *</label>
+        <div class="col-sm-4">
+            <select asp-for="Input.TeamId" class="form-control">
+                <option value="">-- select --</option>
+                @foreach (var t in Model.Teams)
+                {
+                    <option value="@t.Id">@t.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Pre-Season Division</label>
+        <div class="col-sm-2"><input asp-for="Input.PreSeasonDiv" class="form-control" /></div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Regular Season Division</label>
+        <div class="col-sm-2"><input asp-for="Input.RegularSeasonDiv" class="form-control" /></div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+</form>

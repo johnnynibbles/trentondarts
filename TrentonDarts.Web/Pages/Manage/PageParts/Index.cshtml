@@ -1,0 +1,32 @@
+@page "/Manage/{leagueId:int}/pageparts"
+@model TrentonDarts.Web.Pages.Manage.PageParts.IndexModel
+@{
+    ViewData["Title"] = "Page Parts";
+    Layout = "_ManageLayout";
+}
+
+<h2>Page Parts</h2>
+<a href="/Manage/@Model.LeagueId/pageparts/create" class="btn btn-primary">Add Page Part</a>
+<br/><br/>
+
+<table class="table table-bordered table-condensed table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var p in Model.Parts)
+    {
+        <tr>
+            <td>@p.Name</td>
+            <td>@p.Description</td>
+            <td>
+                <a href="/Manage/@Model.LeagueId/pageparts/@p.Id/edit" class="btn btn-xs btn-default">Edit</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
