@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@source "../Pages/**/*.cshtml";
 
 /* ── Option C: League App — Steel & Bull palette ─────────────────────────── */
 :root {
