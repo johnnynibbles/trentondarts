@@ -5,57 +5,67 @@
     Layout = "_ManageLayout";
 }
 
-<h2>@Model.EventName – Results</h2>
-<a href="/Manage/@Model.LeagueId/dartevents/@Model.EventId/edit" class="btn btn-default">Back to Event</a>
-<br/><br/>
+<h2 class="text-2xl font-bold mb-4" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">@Model.EventName – Results</h2>
 
-<form method="post" asp-page-handler="Add" class="form-inline" style="margin-bottom:16px;">
+<div class="flex flex-wrap gap-2 mb-5">
+    <a href="/Manage/@Model.LeagueId/dartevents/@Model.EventId/edit" class="inline-block px-3 py-1.5 rounded text-sm font-medium" style="background:rgba(255,255,255,0.08);color:#F5ECD7;text-decoration:none">Back to Event</a>
+</div>
+
+<h3 class="text-lg font-bold mb-3" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">Add Result</h3>
+
+<form method="post" asp-page-handler="Add" class="glass-card mb-5">
     <input type="hidden" name="eventId" value="@Model.EventId" />
-    <div class="form-group">
-        <label>Specific Event</label>
-        <input name="specificEventName" class="form-control" style="width:200px;" />
+    <div class="flex flex-wrap gap-4 items-end">
+        <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Specific Event</label>
+            <input name="specificEventName" class="rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12);width:200px" />
+        </div>
+        <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Player</label>
+            <select name="playerId" class="rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12);width:200px">
+                <option value="">-- select --</option>
+                @foreach (var p in Model.Players)
+                {
+                    <option value="@p.Id">@p.FirstName @p.LastName</option>
+                }
+            </select>
+        </div>
+        <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Finish</label>
+            <input name="finished" class="rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12);width:80px" />
+        </div>
+        <div>
+            <button type="submit" class="px-4 py-2 rounded-lg text-sm font-medium cursor-pointer" style="background:#C8962E;color:#0A0A0B;border:none">Add</button>
+        </div>
     </div>
-    <div class="form-group">
-        <label>Player</label>
-        <select name="playerId" class="form-control">
-            <option value="">-- select --</option>
-            @foreach (var p in Model.Players)
-            {
-                <option value="@p.Id">@p.FirstName @p.LastName</option>
-            }
-        </select>
-    </div>
-    <div class="form-group">
-        <label>Finish</label>
-        <input name="finished" class="form-control" style="width:80px;" />
-    </div>
-    <button type="submit" class="btn btn-primary">Add</button>
 </form>
 
-<table class="table table-bordered table-condensed">
+<div class="glass-card overflow-x-auto">
+<table class="w-full text-sm">
     <thead>
-        <tr>
-            <th>Specific Event</th>
-            <th>Player</th>
-            <th>Finish</th>
-            <th></th>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04)">
+            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Specific Event</th>
+            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Player</th>
+            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Finish</th>
+            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF"></th>
         </tr>
     </thead>
     <tbody>
     @foreach (var r in Model.Results)
     {
-        <tr>
-            <td>@r.SpecificEventName</td>
-            <td>@r.Player?.Name</td>
-            <td>@r.Finished</td>
-            <td>
-                <form method="post" asp-page-handler="Delete" style="display:inline;"
-                      onsubmit="return confirm('Remove this result?')">
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06)"
+            onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background=''">
+            <td class="px-3 py-2">@r.SpecificEventName</td>
+            <td class="px-3 py-2">@r.Player?.Name</td>
+            <td class="px-3 py-2">@r.Finished</td>
+            <td class="px-3 py-2">
+                <form method="post" asp-page-handler="Delete" style="display:inline" onsubmit="return confirm('Remove this result?')">
                     <input type="hidden" name="id" value="@r.Id" />
-                    <button type="submit" class="btn btn-xs btn-danger">Remove</button>
+                    <button type="submit" class="px-2 py-0.5 rounded text-xs font-medium cursor-pointer" style="background:#C8101A;color:#fff;border:none">Remove</button>
                 </form>
             </td>
         </tr>
     }
     </tbody>
 </table>
+</div>

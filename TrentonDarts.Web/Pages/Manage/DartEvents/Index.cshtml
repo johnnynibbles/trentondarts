@@ -5,35 +5,39 @@
     Layout = "_ManageLayout";
 }
 
-<h2>Dart Events</h2>
-<a href="/Manage/@Model.LeagueId/dartevents/create" class="btn btn-primary">Add Event</a>
-<br/><br/>
+<h2 class="text-2xl font-bold mb-4" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">Dart Events</h2>
 
-<table class="table table-bordered table-condensed table-hover">
+<div class="flex flex-wrap gap-2 mb-5">
+    <a href="/Manage/@Model.LeagueId/dartevents/create" class="inline-block px-3 py-1.5 rounded text-sm font-medium" style="background:#C8962E;color:#0A0A0B;text-decoration:none">Add Event</a>
+</div>
+
+<div class="glass-card overflow-x-auto">
+<table class="w-full text-sm">
     <thead>
-        <tr>
-            <th>Name</th>
-            <th>Date</th>
-            <th>Type</th>
-            <th>Actions</th>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04)">
+            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Name</th>
+            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Date</th>
+            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Type</th>
+            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Actions</th>
         </tr>
     </thead>
     <tbody>
     @foreach (var e in Model.Events)
     {
-        <tr>
-            <td>@e.Name</td>
-            <td>@e.EventDate?.ToString("MM/dd/yyyy")</td>
-            <td>@(TrentonDarts.Web.Data.Entities.DartEvent.EventTypes.GetValueOrDefault(e.EventTypeId ?? 0, ""))</td>
-            <td>
-                <a href="/Manage/@Model.LeagueId/dartevents/@e.Id/edit" class="btn btn-xs btn-default">Edit</a>
-                <form method="post" asp-page-handler="Delete" style="display:inline;"
-                      onsubmit="return confirm('Delete @e.Name?')">
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06)"
+            onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background=''">
+            <td class="px-3 py-2">@e.Name</td>
+            <td class="px-3 py-2">@e.EventDate?.ToString("MM/dd/yyyy")</td>
+            <td class="px-3 py-2">@(TrentonDarts.Web.Data.Entities.DartEvent.EventTypes.GetValueOrDefault(e.EventTypeId ?? 0, ""))</td>
+            <td class="px-3 py-2" style="white-space:nowrap">
+                <a href="/Manage/@Model.LeagueId/dartevents/@e.Id/edit" class="inline-block px-2 py-0.5 rounded text-xs font-medium" style="background:rgba(255,255,255,0.08);color:#F5ECD7;text-decoration:none">Edit</a>
+                <form method="post" asp-page-handler="Delete" style="display:inline" onsubmit="return confirm('Delete @e.Name?')">
                     <input type="hidden" name="id" value="@e.Id" />
-                    <button type="submit" class="btn btn-xs btn-danger">Delete</button>
+                    <button type="submit" class="px-2 py-0.5 rounded text-xs font-medium cursor-pointer" style="background:#C8101A;color:#fff;border:none">Delete</button>
                 </form>
             </td>
         </tr>
     }
     </tbody>
 </table>
+</div>

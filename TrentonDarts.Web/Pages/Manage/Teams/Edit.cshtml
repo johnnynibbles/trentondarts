@@ -5,40 +5,36 @@
     Layout = "_ManageLayout";
 }
 
-<h2>Edit Team</h2>
-<a href="/Manage/@Model.LeagueId/teams" class="btn btn-default">Back</a>
-<br/><br/>
+<h2 class="text-2xl font-bold mb-4" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">Edit Team</h2>
 
-<form method="post" class="form-horizontal">
-    <div class="form-group">
-        <label class="col-sm-2 control-label">Name *</label>
-        <div class="col-sm-4">
-            <input asp-for="Input.Name" class="form-control" />
-            <span asp-validation-for="Input.Name" class="text-danger"></span>
-        </div>
+<div class="flex flex-wrap gap-2 mb-5">
+    <a href="/Manage/@Model.LeagueId/teams" class="inline-block px-3 py-1.5 rounded text-sm font-medium" style="background:rgba(255,255,255,0.08);color:#F5ECD7;text-decoration:none">Back</a>
+</div>
+
+<form method="post" class="max-w-xl">
+    <div asp-validation-summary="ModelOnly" class="mb-4 p-3 rounded-lg text-sm" style="background:rgba(200,16,26,0.15);color:#fca5a5;border:1px solid rgba(200,16,26,0.3)"></div>
+    <div class="mb-4">
+        <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Name *</label>
+        <input asp-for="Input.Name" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+        <span asp-validation-for="Input.Name" class="text-xs mt-1 block" style="color:#C8101A"></span>
     </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label">Sponsor</label>
-        <div class="col-sm-4">
-            <select asp-for="Input.SponsorId" class="form-control">
-                <option value="">-- None --</option>
-                @foreach (var s in Model.Sponsors)
-                {
-                    if (s.Id == Model.Input.SponsorId) { <option value="@s.Id" selected>@s.Name</option> }
-                    else { <option value="@s.Id">@s.Name</option> }
-                }
-            </select>
-        </div>
+    <div class="mb-4">
+        <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Sponsor</label>
+        <select asp-for="Input.SponsorId" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)">
+            <option value="">-- None --</option>
+            @foreach (var s in Model.Sponsors)
+            {
+                if (s.Id == Model.Input.SponsorId) { <option value="@s.Id" selected>@s.Name</option> }
+                else { <option value="@s.Id">@s.Name</option> }
+            }
+        </select>
     </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label">Notes</label>
-        <div class="col-sm-6">
-            <textarea asp-for="Input.Notes" class="form-control" rows="3"></textarea>
-        </div>
+    <div class="mb-4">
+        <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Notes</label>
+        <textarea asp-for="Input.Notes" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" rows="3"></textarea>
     </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-primary">Save</button>
-        </div>
+    <div class="flex gap-3 mt-6">
+        <button type="submit" class="px-4 py-2 rounded-lg text-sm font-medium cursor-pointer" style="background:#C8962E;color:#0A0A0B;border:none">Save</button>
+        <a href="/Manage/@Model.LeagueId/teams" class="inline-block px-4 py-2 rounded-lg text-sm font-medium" style="background:rgba(255,255,255,0.08);color:#F5ECD7;text-decoration:none">Cancel</a>
     </div>
 </form>

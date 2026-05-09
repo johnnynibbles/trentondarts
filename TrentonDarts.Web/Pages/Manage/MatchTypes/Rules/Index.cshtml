@@ -5,55 +5,59 @@
     Layout = "_ManageLayout";
 }
 
-<h2>Rules — @Model.MatchTypeName</h2>
-<a href="/Manage/@Model.LeagueId/matchtypes" class="btn btn-default">Back</a>
-<a href="/Manage/@Model.LeagueId/matchtypes/@Model.MatchTypeId/rules/create" class="btn btn-primary" style="margin-left:8px">Add Rule</a>
-<br/><br/>
+<h2 class="text-2xl font-bold mb-4" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">Rules — @Model.MatchTypeName</h2>
 
-<table class="table table-bordered table-condensed table-hover">
+<div class="flex flex-wrap gap-2 mb-5">
+    <a href="/Manage/@Model.LeagueId/matchtypes" class="inline-block px-3 py-1.5 rounded text-sm font-medium" style="background:rgba(255,255,255,0.08);color:#F5ECD7;text-decoration:none">Back</a>
+    <a href="/Manage/@Model.LeagueId/matchtypes/@Model.MatchTypeId/rules/create" class="inline-block px-3 py-1.5 rounded text-sm font-medium" style="background:#C8962E;color:#0A0A0B;text-decoration:none">Add Rule</a>
+</div>
+
+<div class="glass-card overflow-x-auto">
+<table class="w-full text-sm">
     <thead>
-        <tr>
-            <th>#</th>
-            <th>Game Type</th>
-            <th>Group</th>
-            <th>Who Starts</th>
-            <th>Players</th>
-            <th>Pts</th>
-            <th>Legs</th>
-            <th>Dbl In</th>
-            <th>Dbl Out</th>
-            <th>Forfeit</th>
-            <th>Actions</th>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04)">
+            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">#</th>
+            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Game Type</th>
+            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Group</th>
+            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Who Starts</th>
+            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Players</th>
+            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Pts</th>
+            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Legs</th>
+            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Dbl In</th>
+            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Dbl Out</th>
+            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Forfeit</th>
+            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Actions</th>
         </tr>
     </thead>
     <tbody>
     @foreach (var r in Model.Rules)
     {
-        <tr>
-            <td>@r.OrderId</td>
-            <td>@r.GameType</td>
-            <td>@r.GroupName</td>
-            <td>@(r.WhoStarts == "H" ? "Home" : r.WhoStarts == "A" ? "Away" : "—")</td>
-            <td>@r.NumberOfPlayers</td>
-            <td>@r.GamePointValue</td>
-            <td>@r.NumberOfLegs</td>
-            <td>@(r.DoubleIn ? "✓" : "")</td>
-            <td>@(r.DoubleOut ? "✓" : "")</td>
-            <td>@(r.ForfeitIfNoPlayers ? "✓" : "")</td>
-            <td style="white-space:nowrap">
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06)"
+            onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background=''">
+            <td class="px-3 py-2">@r.OrderId</td>
+            <td class="px-3 py-2">@r.GameType</td>
+            <td class="px-3 py-2">@r.GroupName</td>
+            <td class="px-3 py-2">@(r.WhoStarts == "H" ? "Home" : r.WhoStarts == "A" ? "Away" : "—")</td>
+            <td class="px-3 py-2">@r.NumberOfPlayers</td>
+            <td class="px-3 py-2">@r.GamePointValue</td>
+            <td class="px-3 py-2">@r.NumberOfLegs</td>
+            <td class="px-3 py-2">@(r.DoubleIn ? "✓" : "")</td>
+            <td class="px-3 py-2">@(r.DoubleOut ? "✓" : "")</td>
+            <td class="px-3 py-2">@(r.ForfeitIfNoPlayers ? "✓" : "")</td>
+            <td class="px-3 py-2" style="white-space:nowrap">
                 <form method="post" style="display:inline">
                     <input type="hidden" name="id" value="@r.Id" />
-                    <button type="submit" asp-page-handler="MoveUp" class="btn btn-xs btn-default">↑</button>
-                    <button type="submit" asp-page-handler="MoveDown" class="btn btn-xs btn-default">↓</button>
+                    <button type="submit" asp-page-handler="MoveUp" class="px-2 py-0.5 rounded text-xs font-medium cursor-pointer" style="background:rgba(255,255,255,0.08);color:#F5ECD7;border:none">↑</button>
+                    <button type="submit" asp-page-handler="MoveDown" class="px-2 py-0.5 rounded text-xs font-medium cursor-pointer" style="background:rgba(255,255,255,0.08);color:#F5ECD7;border:none">↓</button>
                 </form>
-                <a href="/Manage/@Model.LeagueId/matchtypes/@Model.MatchTypeId/rules/@r.Id/edit" class="btn btn-xs btn-default">Edit</a>
-                <form method="post" asp-page-handler="Delete" style="display:inline"
-                      onsubmit="return confirm('Delete this rule?')">
+                <a href="/Manage/@Model.LeagueId/matchtypes/@Model.MatchTypeId/rules/@r.Id/edit" class="inline-block px-2 py-0.5 rounded text-xs font-medium" style="background:rgba(255,255,255,0.08);color:#F5ECD7;text-decoration:none">Edit</a>
+                <form method="post" asp-page-handler="Delete" style="display:inline" onsubmit="return confirm('Delete this rule?')">
                     <input type="hidden" name="id" value="@r.Id" />
-                    <button type="submit" class="btn btn-xs btn-danger">Delete</button>
+                    <button type="submit" class="px-2 py-0.5 rounded text-xs font-medium cursor-pointer" style="background:#C8101A;color:#fff;border:none">Delete</button>
                 </form>
             </td>
         </tr>
     }
     </tbody>
 </table>
+</div>

@@ -1,33 +1,31 @@
 @model TrentonDarts.Web.Pages.Manage.BoardMembers.BoardMemberInput
 
-<div class="form-group">
-    <label class="col-sm-2 control-label">User ID</label>
-    <div class="col-sm-4"><input asp-for="UserId" class="form-control" /></div>
+<div class="mb-4">
+    <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">User ID</label>
+    <input asp-for="UserId" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
 </div>
-<div class="form-group">
-    <label class="col-sm-2 control-label">Name *</label>
-    <div class="col-sm-4">
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
-    </div>
+<div class="mb-4">
+    <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Name *</label>
+    <input asp-for="Name" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <span asp-validation-for="Name" class="text-xs mt-1 block" style="color:#C8101A"></span>
 </div>
-<div class="form-group">
-    <label class="col-sm-2 control-label">Position</label>
-    <div class="col-sm-4"><input asp-for="Position" class="form-control" /></div>
+<div class="mb-4">
+    <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Position</label>
+    <input asp-for="Position" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
 </div>
-<div class="form-group">
-    <label class="col-sm-2 control-label">Starting Season</label>
-    <div class="col-sm-4"><input asp-for="StartingSeason" class="form-control" /></div>
+<div class="mb-4">
+    <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Starting Season</label>
+    <input asp-for="StartingSeason" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
 </div>
-<div class="form-group">
-    <label class="col-sm-2 control-label">Ending Season</label>
-    <div class="col-sm-4"><input asp-for="EndingSeason" class="form-control" /></div>
+<div class="mb-4">
+    <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Ending Season</label>
+    <input asp-for="EndingSeason" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
 </div>
-<div class="form-group">
-    <label class="col-sm-2 control-label">Start Season ID</label>
-    <div class="col-sm-2"><input asp-for="StartSeasonId" class="form-control" type="number" /></div>
+<div class="mb-4">
+    <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Start Season ID</label>
+    <input asp-for="StartSeasonId" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" type="number" />
 </div>
-<div class="form-group">
-    <label class="col-sm-2 control-label">End Season ID</label>
-    <div class="col-sm-2"><input asp-for="EndSeasonId" class="form-control" type="number" /></div>
+<div class="mb-4">
+    <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">End Season ID</label>
+    <input asp-for="EndSeasonId" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" type="number" />
 </div>
