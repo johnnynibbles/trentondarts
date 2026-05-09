@@ -34,7 +34,14 @@
     }
     @if (Model.ResultWeekDate.HasValue)
     {
-        <span class="text-sm" style="color:#9CA3AF">Week of @Model.ResultWeekDate.Value.ToString("MMMM d, yyyy")</span>
+        <span class="text-sm text-center" style="color:#9CA3AF">
+            @if (Model.CurrentWeekNumber > 0 && Model.TotalWeeks > 0)
+            {
+                <span class="font-semibold" style="color:#F5ECD7">Week @Model.CurrentWeekNumber of @Model.TotalWeeks</span>
+                <span class="mx-1" style="color:#6B7280">—</span>
+            }
+            @Model.ResultWeekDate.Value.ToString("MMMM d, yyyy")
+        </span>
     }
 </div>
 

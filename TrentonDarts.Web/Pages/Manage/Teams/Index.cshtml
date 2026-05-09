@@ -7,12 +7,14 @@
 
 <h2 class="text-2xl font-bold mb-4" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">Teams</h2>
 
-<div class="flex flex-wrap gap-2 mb-5">
+<div class="flex flex-wrap items-center gap-2 mb-5">
     <a href="/Manage/@Model.LeagueId/teams/create" class="inline-block px-3 py-1.5 rounded text-sm font-medium" style="background:#C8962E;color:#0A0A0B;text-decoration:none">Add Team</a>
+    <input id="team-search" type="search" placeholder="Search teams…" autocomplete="off"
+           class="rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12);min-width:200px" />
 </div>
 
 <div class="glass-card overflow-x-auto">
-<table class="w-full text-sm">
+<table class="w-full text-sm" id="teams-table">
     <thead>
         <tr style="border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04)">
             <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Name</th>
@@ -39,3 +41,18 @@
     </tbody>
 </table>
 </div>
+
+@section Scripts {
+<script>
+(function () {
+    var input = document.getElementById('team-search');
+    var rows = document.querySelectorAll('#teams-table tbody tr');
+    input.addEventListener('input', function () {
+        var q = input.value.trim().toLowerCase();
+        rows.forEach(function (row) {
+            row.style.display = row.cells[0].textContent.toLowerCase().includes(q) ? '' : 'none';
+        });
+    });
+})();
+</script>
+}

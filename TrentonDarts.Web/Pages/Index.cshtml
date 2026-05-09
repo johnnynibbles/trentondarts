@@ -16,6 +16,33 @@
     @Html.Raw(Model.PlayerOfTheWeek)
 </div>
 
+@if (Model.CurrentSeasonId.HasValue)
+{
+    var sid = Model.CurrentSeasonId.Value;
+    <div class="flex flex-wrap justify-center gap-2 mb-6">
+        <a href="/season/@sid" class="px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+           style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#F5ECD7;text-decoration:none"
+           onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.06)'">
+            <i class="fa-solid fa-ranking-star mr-1.5" style="color:#C8962E"></i>Standings
+        </a>
+        <a href="/season/@sid/schedule" class="px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+           style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#F5ECD7;text-decoration:none"
+           onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.06)'">
+            <i class="fa-solid fa-calendar-days mr-1.5" style="color:#C8962E"></i>Schedule
+        </a>
+        <a href="/season/@sid/stats" class="px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+           style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#F5ECD7;text-decoration:none"
+           onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.06)'">
+            <i class="fa-solid fa-chart-bar mr-1.5" style="color:#C8962E"></i>Stats
+        </a>
+        <a href="/season/@sid/awards" class="px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+           style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#F5ECD7;text-decoration:none"
+           onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.06)'">
+            <i class="fa-solid fa-trophy mr-1.5" style="color:#C8962E"></i>Awards
+        </a>
+    </div>
+}
+
 @if (Model.TitleEvent != null)
 {
     <div class="glass-card p-5 mb-6 max-w-xl">

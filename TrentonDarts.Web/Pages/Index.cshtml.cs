@@ -17,6 +17,7 @@ public class IndexModel : PageModel
     public DartEvent? TitleEvent { get; private set; }
     public string WelcomeMessage { get; private set; } = "";
     public string PlayerOfTheWeek { get; private set; } = "";
+    public int? CurrentSeasonId { get; private set; }
 
     public async Task OnGetAsync()
     {
@@ -31,5 +32,8 @@ public class IndexModel : PageModel
 
         var playerOfWeek = await _db.PageParts.FirstOrDefaultAsync(p => p.Name == "GTDL_PLAYER_OF_THE_WEEK");
         PlayerOfTheWeek = playerOfWeek?.Html ?? "";
+
+        var currentSeason = await _db.WinterSeasons.FirstOrDefaultAsync(s => s.IsCurrent);
+        CurrentSeasonId = currentSeason?.Id;
     }
 }
