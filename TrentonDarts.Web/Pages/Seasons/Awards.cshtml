@@ -4,91 +4,84 @@
     ViewData["Title"] = $"Awards — {Model.Season.Name}";
 }
 
-<style media="print" type="text/css">
-    @@page { size: landscape; }
-</style>
+<style media="print" type="text/css">@@page { size: landscape; }</style>
 
-<div class="season-stats">
-    <h3>Season @Model.Season.Name</h3>
-    <div style="margin-right:15px;margin-left:15px;">
-        <div class="row">
-            <div class="col-xs-12 col-sm-3">
-                <div class="form-group">
-                    <label for="seasonPart">Season Part</label>
-                    <select id="seasonPart" class="form-control">
-                        @foreach (var opt in new[] { ("whole","Whole Season"), ("pre","Pre Season"), ("regular","Regular Season") })
-                        {
-                            if (opt.Item1 == Model.SeasonPart) { <option value="@opt.Item1" selected>@opt.Item2</option> }
-                            else { <option value="@opt.Item1">@opt.Item2</option> }
-                        }
-                    </select>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-3">
-                <div class="form-group">
-                    <label for="division">Division</label>
-                    <select id="division" class="form-control">
-                        <option value="">All Divisions</option>
-                        @foreach (var kv in Model.Divisions)
-                        {
-                            @if (kv.Key == Model.Division) { <option value="@kv.Key" selected>@kv.Value</option> }
-                            else { <option value="@kv.Key">@kv.Value</option> }
-                        }
-                    </select>
-                </div>
-            </div>
-        </div>
+<h2 class="text-3xl font-bold mb-4" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">@Model.Season.Name — Awards</h2>
+
+<div class="flex flex-wrap gap-3 mb-5">
+    <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Season Part</label>
+        <select id="seasonPart" class="rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)">
+            @foreach (var opt in new[] { ("whole","Whole Season"), ("pre","Pre Season"), ("regular","Regular Season") })
+            {
+                if (opt.Item1 == Model.SeasonPart) { <option value="@opt.Item1" selected>@opt.Item2</option> }
+                else { <option value="@opt.Item1">@opt.Item2</option> }
+            }
+        </select>
     </div>
-
-    <div class="table-responsive">
-        <table class="table table-condensed table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>Player Name</th>
-                    <th>Team Name</th>
-                    <th style="text-align:center;">Season Part</th>
-                    <th style="text-align:center;">Division</th>
-                    <th style="text-align:center;">Date</th>
-                    <th style="text-align:center;">Award</th>
-                    <th style="text-align:center;">Value</th>
-                </tr>
-            </thead>
-            <tbody>
-            @if (!Model.Awards.Any())
+    <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Division</label>
+        <select id="division" class="rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)">
+            <option value="">All Divisions</option>
+            @foreach (var kv in Model.Divisions)
             {
-                <tr class="warning"><td colspan="7">Currently No Awards</td></tr>
+                if (kv.Key == Model.Division) { <option value="@kv.Key" selected>@kv.Value</option> }
+                else { <option value="@kv.Key">@kv.Value</option> }
             }
-            else
-            {
-                @foreach (var a in Model.Awards)
-                {
-                    <tr>
-                        <td><a href="/player/@a.PlayerId?season=@Model.Season.Id">@a.PlayerName</a></td>
-                        <td><a href="/team/@a.TeamId?season=@Model.Season.Id">@a.TeamName</a></td>
-                        <td style="text-align:center;">@(a.SeasonPart == "pre" ? "Pre" : "Regular")</td>
-                        <td style="text-align:center;">@a.Division</td>
-                        <td style="text-align:center;">@a.Date.ToString("MM-dd-yyyy")</td>
-                        <td style="text-align:center;">@a.AwardType</td>
-                        <td style="text-align:center;">@(a.Value > 0 ? a.Value.ToString() : "")</td>
-                    </tr>
-                }
-            }
-            </tbody>
-        </table>
+        </select>
     </div>
 </div>
 
+<div class="glass-card overflow-x-auto">
+    <table class="w-full text-sm whitespace-nowrap">
+        <thead>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04)">
+                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#F5ECD7">Player</th>
+                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#F5ECD7">Team</th>
+                <th class="px-3 py-2 text-center text-xs" style="color:#6B7280">Part</th>
+                <th class="px-3 py-2 text-center text-xs" style="color:#6B7280">Division</th>
+                <th class="px-3 py-2 text-center text-xs" style="color:#6B7280">Date</th>
+                <th class="px-3 py-2 text-center text-xs" style="color:#6B7280">Award</th>
+                <th class="px-3 py-2 text-center text-xs" style="color:#6B7280">Value</th>
+            </tr>
+        </thead>
+        <tbody>
+        @if (!Model.Awards.Any())
+        {
+            <tr><td colspan="7" class="px-3 py-6 text-center text-sm" style="color:#6B7280">Currently No Awards</td></tr>
+        }
+        else
+        {
+            @foreach (var a in Model.Awards)
+            {
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"
+                    onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background=''">
+                    <td class="px-3 py-2"><a href="/player/@a.PlayerId?season=@Model.Season.Id" style="color:#F5ECD7;text-decoration:none">@a.PlayerName</a></td>
+                    <td class="px-3 py-2"><a href="/team/@a.TeamId?season=@Model.Season.Id" style="color:#C8962E;text-decoration:none">@a.TeamName</a></td>
+                    <td class="px-3 py-2 text-center text-xs" style="color:#9CA3AF">@(a.SeasonPart == "pre" ? "Pre" : "Regular")</td>
+                    <td class="px-3 py-2 text-center text-xs" style="color:#9CA3AF">@a.Division</td>
+                    <td class="px-3 py-2 text-center text-xs" style="color:#9CA3AF">@a.Date.ToString("MM-dd-yyyy")</td>
+                    <td class="px-3 py-2 text-center text-xs font-semibold" style="color:#C8962E">@a.AwardType</td>
+                    <td class="px-3 py-2 text-center text-xs" style="color:#F5ECD7">@(a.Value > 0 ? a.Value.ToString() : "")</td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+</div>
+
 @section Scripts {
-    <script>
-        (function($){
-            $(document).ready(function() {
-                $("#seasonPart, #division").change(function() {
-                    var q = '?seasonPart=' + encodeURIComponent($("#seasonPart").val());
-                    var div = $("#division").val();
-                    if (div) q += '&division=' + encodeURIComponent(div);
-                    window.location = q;
-                });
-            });
-        })(jQuery);
-    </script>
+<script>
+(function () {
+    function navigate() {
+        var q = '?seasonPart=' + encodeURIComponent(document.getElementById('seasonPart').value);
+        var div = document.getElementById('division').value;
+        if (div) q += '&division=' + encodeURIComponent(div);
+        window.location = q;
+    }
+    ['seasonPart', 'division'].forEach(function(id) {
+        document.getElementById(id).addEventListener('change', navigate);
+    });
+})();
+</script>
 }

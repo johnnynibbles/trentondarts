@@ -5,138 +5,135 @@
     int position = 1;
 }
 
-<style media="print" type="text/css">
-    @@page { size: landscape; }
-</style>
+<style media="print" type="text/css">@@page { size: landscape; }</style>
 
-<div class="season-leaderboard">
-    <h3>Season @Model.Season.Name</h3>
-    <div style="margin-right:15px;margin-left:15px;">
-        <div class="row">
-            <div class="col-xs-12 col-sm-3">
-                <div class="form-group">
-                    <label for="seasonPart">Season Part</label>
-                    <select id="seasonPart" class="form-control">
-                        @foreach (var opt in new[] { ("whole","Whole Season"), ("pre","Pre Season"), ("regular","Regular Season") })
-                        {
-                            if (opt.Item1 == Model.SeasonPart) { <option value="@opt.Item1" selected>@opt.Item2</option> }
-                            else { <option value="@opt.Item1">@opt.Item2</option> }
-                        }
-                    </select>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-3">
-                <div class="form-group">
-                    <label for="division">Division</label>
-                    <select id="division" class="form-control">
-                        <option value="">All Divisions</option>
-                        @foreach (var kv in Model.Divisions)
-                        {
-                            @if (kv.Key == Model.Division) { <option value="@kv.Key" selected>@kv.Value</option> }
-                            else { <option value="@kv.Key">@kv.Value</option> }
-                        }
-                    </select>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-3">
-                <div class="form-group">
-                    <label for="leaderboard">Leaderboard</label>
-                    <select id="leaderboard" class="form-control">
-                        <option value="">Select</option>
-                        @foreach (var kv in TrentonDarts.Web.Pages.Seasons.LeaderboardModel.Leaderboards)
-                        {
-                            @if (kv.Key == Model.Leaderboard) { <option value="@kv.Key" selected>@kv.Value</option> }
-                            else { <option value="@kv.Key">@kv.Value</option> }
-                        }
-                    </select>
-                </div>
-            </div>
-        </div>
+<h2 class="text-3xl font-bold mb-4" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">@Model.Season.Name — Leaderboard</h2>
+
+<div class="flex flex-wrap gap-3 mb-5">
+    <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Season Part</label>
+        <select id="seasonPart" class="rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)">
+            @foreach (var opt in new[] { ("whole","Whole Season"), ("pre","Pre Season"), ("regular","Regular Season") })
+            {
+                if (opt.Item1 == Model.SeasonPart) { <option value="@opt.Item1" selected>@opt.Item2</option> }
+                else { <option value="@opt.Item1">@opt.Item2</option> }
+            }
+        </select>
     </div>
-
-    <div class="table-responsive">
-        <table class="table table-condensed table-striped table-hover">
-            <thead>
-                <tr>
-                    <th colspan="11"></th>
-                    <th colspan="4" style="text-align:center;">Singles</th>
-                    <th colspan="4" style="text-align:center;">Doubles</th>
-                    <th colspan="2" style="text-align:center;">Triples</th>
-                </tr>
-                <tr>
-                    <th colspan="5"></th>
-                    <th style="text-align:center;">Overall</th>
-                    <th style="text-align:center;">Singles</th>
-                    <th style="text-align:center;">Doubles</th>
-                    <th style="text-align:center;">T '01</th>
-                    <th style="text-align:center;">Cricket</th>
-                    <th style="text-align:center;">01</th>
-                    <th colspan="2" style="text-align:center;">Cricket</th>
-                    <th colspan="2" style="text-align:center;">'01</th>
-                    <th colspan="2" style="text-align:center;">Cricket</th>
-                    <th colspan="2" style="text-align:center;">501</th>
-                    <th colspan="2" style="text-align:center;">'01</th>
-                </tr>
-                <tr>
-                    <th></th><th>Player</th><th title="Weeks Played">WP</th><th title="Games Played">GP</th>
-                    <th style="text-align:center;">Record</th>
-                    <th style="text-align:center;">Win %</th><th style="text-align:center;">Win %</th>
-                    <th style="text-align:center;">Win %</th><th style="text-align:center;">Win %</th>
-                    <th style="text-align:center;">Win %</th><th style="text-align:center;">Win %</th>
-                    <th style="text-align:center;">W</th><th style="text-align:center;">L</th>
-                    <th style="text-align:center;">W</th><th style="text-align:center;">L</th>
-                    <th style="text-align:center;">W</th><th style="text-align:center;">L</th>
-                    <th style="text-align:center;">W</th><th style="text-align:center;">L</th>
-                    <th style="text-align:center;">W</th><th style="text-align:center;">L</th>
-                </tr>
-            </thead>
-            <tbody>
-            @if (!Model.PlayerStats.Any())
+    <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Division</label>
+        <select id="division" class="rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)">
+            <option value="">All Divisions</option>
+            @foreach (var kv in Model.Divisions)
             {
-                <tr class="warning"><td colspan="21">Currently No Stats</td></tr>
+                if (kv.Key == Model.Division) { <option value="@kv.Key" selected>@kv.Value</option> }
+                else { <option value="@kv.Key">@kv.Value</option> }
             }
-            else
+        </select>
+    </div>
+    <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Leaderboard</label>
+        <select id="leaderboard" class="rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)">
+            <option value="">Select</option>
+            @foreach (var kv in TrentonDarts.Web.Pages.Seasons.LeaderboardModel.Leaderboards)
             {
-                @foreach (var p in Model.PlayerStats)
-                {
-                    <tr>
-                        <td>@(position++)</td>
-                        <td><a href="/player/@p.PlayerId">@p.PlayerName</a></td>
-                        <td style="text-align:center;">@p.WeeksPlayed</td>
-                        <td style="text-align:center;">@p.GamesPlayed</td>
-                        <td style="text-align:center;">@p.GamesWon - @p.GamesLost</td>
-                        <td style="text-align:center;">@(p.OverallWin > 0 ? $"{Math.Round(p.OverallWin * 100, 1)} %" : "-")</td>
-                        <td style="text-align:center;">@(p.SinglesWin > 0 ? $"{Math.Round(p.SinglesWin * 100, 1)} %" : "-")</td>
-                        <td style="text-align:center;">@(p.DoublesWin > 0 ? $"{Math.Round(p.DoublesWin * 100, 1)} %" : "-")</td>
-                        <td style="text-align:center;">@(p.Eight01Win > 0 ? $"{Math.Round(p.Eight01Win * 100, 1)} %" : "-")</td>
-                        <td style="text-align:center;">@(p.CricketWin > 0 ? $"{Math.Round(p.CricketWin * 100, 1)} %" : "-")</td>
-                        <td style="text-align:center;">@(p.Oh1Win > 0 ? $"{Math.Round(p.Oh1Win * 100, 1)} %" : "-")</td>
-                        <td style="text-align:center;">@p.GameCricket.Won</td><td style="text-align:center;" class="loss-column">@p.GameCricket.Lost</td>
-                        <td style="text-align:center;">@p.Game301.Won</td><td style="text-align:center;" class="loss-column">@p.Game301.Lost</td>
-                        <td style="text-align:center;">@p.GameDoubleCricket.Won</td><td style="text-align:center;" class="loss-column">@p.GameDoubleCricket.Lost</td>
-                        <td style="text-align:center;">@p.Game501.Won</td><td style="text-align:center;" class="loss-column">@p.Game501.Lost</td>
-                        <td style="text-align:center;">@p.Game801.Won</td><td style="text-align:center;" class="loss-column">@p.Game801.Lost</td>
-                    </tr>
-                }
+                if (kv.Key == Model.Leaderboard) { <option value="@kv.Key" selected>@kv.Value</option> }
+                else { <option value="@kv.Key">@kv.Value</option> }
             }
-            </tbody>
-        </table>
+        </select>
     </div>
 </div>
 
+<div class="glass-card overflow-x-auto season-leaderboard">
+    <table class="w-full text-xs whitespace-nowrap">
+        <thead>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.08)">
+                <th colspan="11" class="px-2 py-1"></th>
+                <th colspan="4" class="px-2 py-1 text-center text-xs font-semibold uppercase tracking-wider" style="color:#C8962E;border-left:1px solid rgba(255,255,255,0.08)">Singles</th>
+                <th colspan="4" class="px-2 py-1 text-center text-xs font-semibold uppercase tracking-wider" style="color:#C8962E;border-left:1px solid rgba(255,255,255,0.08)">Doubles</th>
+                <th colspan="2" class="px-2 py-1 text-center text-xs font-semibold uppercase tracking-wider" style="color:#C8962E;border-left:1px solid rgba(255,255,255,0.08)">Triples</th>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.08)">
+                <th colspan="5" class="px-2 py-1"></th>
+                <th class="px-2 py-1 text-center" style="color:#9CA3AF">Overall</th>
+                <th class="px-2 py-1 text-center" style="color:#9CA3AF">Singles</th>
+                <th class="px-2 py-1 text-center" style="color:#9CA3AF">Doubles</th>
+                <th class="px-2 py-1 text-center" style="color:#9CA3AF">T '01</th>
+                <th class="px-2 py-1 text-center" style="color:#9CA3AF">Cricket</th>
+                <th class="px-2 py-1 text-center" style="color:#9CA3AF">01</th>
+                <th colspan="2" class="px-2 py-1 text-center" style="color:#9CA3AF;border-left:1px solid rgba(255,255,255,0.06)">Cricket</th>
+                <th colspan="2" class="px-2 py-1 text-center" style="color:#9CA3AF">'01</th>
+                <th colspan="2" class="px-2 py-1 text-center" style="color:#9CA3AF;border-left:1px solid rgba(255,255,255,0.06)">Cricket</th>
+                <th colspan="2" class="px-2 py-1 text-center" style="color:#9CA3AF">501</th>
+                <th colspan="2" class="px-2 py-1 text-center" style="color:#9CA3AF;border-left:1px solid rgba(255,255,255,0.06)">'01</th>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04)">
+                <th class="px-2 py-2 text-center text-xs" style="color:#6B7280">#</th>
+                <th class="px-2 py-2 text-left text-xs font-semibold" style="color:#F5ECD7">Player</th>
+                <th class="px-2 py-2 text-center text-xs" style="color:#6B7280" title="Weeks Played">WP</th>
+                <th class="px-2 py-2 text-center text-xs" style="color:#6B7280" title="Games Played">GP</th>
+                <th class="px-2 py-2 text-center text-xs" style="color:#6B7280">Record</th>
+                <th class="px-2 py-2 text-center text-xs" style="color:#6B7280">Win%</th>
+                <th class="px-2 py-2 text-center text-xs" style="color:#6B7280">Win%</th>
+                <th class="px-2 py-2 text-center text-xs" style="color:#6B7280">Win%</th>
+                <th class="px-2 py-2 text-center text-xs" style="color:#6B7280">Win%</th>
+                <th class="px-2 py-2 text-center text-xs" style="color:#6B7280">Win%</th>
+                <th class="px-2 py-2 text-center text-xs" style="color:#6B7280">Win%</th>
+                <th class="px-2 py-2 text-center text-xs" style="color:#1A7A3C">W</th><th class="px-2 py-2 text-center text-xs" style="color:#C8101A">L</th>
+                <th class="px-2 py-2 text-center text-xs" style="color:#1A7A3C">W</th><th class="px-2 py-2 text-center text-xs" style="color:#C8101A">L</th>
+                <th class="px-2 py-2 text-center text-xs" style="color:#1A7A3C">W</th><th class="px-2 py-2 text-center text-xs" style="color:#C8101A">L</th>
+                <th class="px-2 py-2 text-center text-xs" style="color:#1A7A3C">W</th><th class="px-2 py-2 text-center text-xs" style="color:#C8101A">L</th>
+                <th class="px-2 py-2 text-center text-xs" style="color:#1A7A3C">W</th><th class="px-2 py-2 text-center text-xs" style="color:#C8101A">L</th>
+            </tr>
+        </thead>
+        <tbody>
+        @if (!Model.PlayerStats.Any())
+        {
+            <tr><td colspan="21" class="px-3 py-4 text-center text-sm" style="color:#6B7280">Currently No Stats</td></tr>
+        }
+        else
+        {
+            @foreach (var p in Model.PlayerStats)
+            {
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"
+                    onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background=''">
+                    <td class="px-2 py-2 text-center font-bold" style="font-family:'Rajdhani',sans-serif;font-size:1rem;color:#C8962E">@(position++)</td>
+                    <td class="px-2 py-2"><a href="/player/@p.PlayerId" style="color:#F5ECD7;text-decoration:none">@p.PlayerName</a></td>
+                    <td class="px-2 py-2 text-center" style="color:#9CA3AF">@p.WeeksPlayed</td>
+                    <td class="px-2 py-2 text-center" style="color:#9CA3AF">@p.GamesPlayed</td>
+                    <td class="px-2 py-2 text-center">@p.GamesWon - @p.GamesLost</td>
+                    <td class="px-2 py-2 text-center">@(p.OverallWin > 0 ? $"{Math.Round(p.OverallWin * 100, 1)}%" : "–")</td>
+                    <td class="px-2 py-2 text-center">@(p.SinglesWin > 0 ? $"{Math.Round(p.SinglesWin * 100, 1)}%" : "–")</td>
+                    <td class="px-2 py-2 text-center">@(p.DoublesWin > 0 ? $"{Math.Round(p.DoublesWin * 100, 1)}%" : "–")</td>
+                    <td class="px-2 py-2 text-center">@(p.Eight01Win > 0 ? $"{Math.Round(p.Eight01Win * 100, 1)}%" : "–")</td>
+                    <td class="px-2 py-2 text-center">@(p.CricketWin > 0 ? $"{Math.Round(p.CricketWin * 100, 1)}%" : "–")</td>
+                    <td class="px-2 py-2 text-center">@(p.Oh1Win > 0 ? $"{Math.Round(p.Oh1Win * 100, 1)}%" : "–")</td>
+                    <td class="px-2 py-2 text-center" style="color:#1A7A3C">@p.GameCricket.Won</td><td class="px-2 py-2 text-center loss-column">@p.GameCricket.Lost</td>
+                    <td class="px-2 py-2 text-center" style="color:#1A7A3C">@p.Game301.Won</td><td class="px-2 py-2 text-center loss-column">@p.Game301.Lost</td>
+                    <td class="px-2 py-2 text-center" style="color:#1A7A3C">@p.GameDoubleCricket.Won</td><td class="px-2 py-2 text-center loss-column">@p.GameDoubleCricket.Lost</td>
+                    <td class="px-2 py-2 text-center" style="color:#1A7A3C">@p.Game501.Won</td><td class="px-2 py-2 text-center loss-column">@p.Game501.Lost</td>
+                    <td class="px-2 py-2 text-center" style="color:#1A7A3C">@p.Game801.Won</td><td class="px-2 py-2 text-center loss-column">@p.Game801.Lost</td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+</div>
+
 @section Scripts {
-    <script>
-        (function($){
-            $(document).ready(function() {
-                $("#seasonPart, #division, #leaderboard").change(function() {
-                    var q = '?seasonPart=' + encodeURIComponent($("#seasonPart").val());
-                    var div = $("#division").val();
-                    var lb = $("#leaderboard").val();
-                    if (div) q += '&division=' + encodeURIComponent(div);
-                    if (lb) q += '&leaderboard=' + encodeURIComponent(lb);
-                    window.location = q;
-                });
-            });
-        })(jQuery);
-    </script>
+<script>
+(function () {
+    function navigate() {
+        var q = '?seasonPart=' + encodeURIComponent(document.getElementById('seasonPart').value);
+        var div = document.getElementById('division').value;
+        var lb  = document.getElementById('leaderboard').value;
+        if (div) q += '&division=' + encodeURIComponent(div);
+        if (lb)  q += '&leaderboard=' + encodeURIComponent(lb);
+        window.location = q;
+    }
+    ['seasonPart','division','leaderboard'].forEach(function(id) {
+        document.getElementById(id).addEventListener('change', navigate);
+    });
+})();
+</script>
 }

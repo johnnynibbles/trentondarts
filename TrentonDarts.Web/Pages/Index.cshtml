@@ -4,31 +4,32 @@
     ViewData["Title"] = "Greater Trenton Dart League";
 }
 
-<div class="page-header">
-    <h1 style="text-align: center;">Welcome to The Greater Trenton Dart League</h1>
-    <div class="important-message">
-        @Html.Raw(Model.WelcomeMessage)
-        @Html.Raw(Model.PlayerOfTheWeek)
-    </div>
+<div class="text-center mb-8">
+    <h1 class="text-3xl sm:text-4xl font-bold tracking-wide mb-2" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">
+        Welcome to the Greater Trenton Dart League
+    </h1>
+    <div class="w-16 h-0.5 mx-auto" style="background:#C8101A"></div>
 </div>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-7 col-md-8">
-            @if (Model.TitleEvent != null)
-            {
-                <div class="well well-sm">
-                    <h3>@Model.TitleEvent.Name</h3>
-                    <p>@Model.TitleEvent.EventDate?.ToString("MMMM d, yyyy")</p>
-                </div>
-            }
-        </div>
+<div class="important-message mb-6">
+    @Html.Raw(Model.WelcomeMessage)
+    @Html.Raw(Model.PlayerOfTheWeek)
+</div>
+
+@if (Model.TitleEvent != null)
+{
+    <div class="glass-card p-5 mb-6 max-w-xl">
+        <p class="text-xs font-semibold uppercase tracking-widest mb-1" style="color:#C8962E">Upcoming Event</p>
+        <h3 class="text-xl font-bold mb-1" style="font-family:'Rajdhani',sans-serif">@Model.TitleEvent.Name</h3>
+        <p class="text-sm" style="color:#9CA3AF">@Model.TitleEvent.EventDate?.ToString("MMMM d, yyyy")</p>
     </div>
-    <div class="row">
-        <div class="col-sm-12 col-md-12">
-            <div class="alert alert-success" style="text-align: center;">
-                <h4>Interesting <a href="http://www.si.com/vault/1975/02/17/557875/eight-feet-away-from-glory" target="_blank">Sports Illustrated article</a> on darts from 1975. Our own Conrad Daniels is a key part!</h4>
-            </div>
-        </div>
-    </div>
+}
+
+<div class="glass-card p-4 text-center max-w-2xl">
+    <p class="text-sm" style="color:#9CA3AF">
+        Check out this interesting
+        <a href="http://www.si.com/vault/1975/02/17/557875/eight-feet-away-from-glory" target="_blank" rel="noopener noreferrer"
+           class="font-semibold" style="color:#C8962E">Sports Illustrated article on darts from 1975</a>.
+        Our own Conrad Daniels is a key part!
+    </p>
 </div>

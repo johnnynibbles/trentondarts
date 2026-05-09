@@ -137,16 +137,26 @@ a:hover { color: #fff; }
 }
 .game-group { background: rgba(255,255,255,0.02); }
 .game {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   border-top: 1px solid rgba(255,255,255,0.08);
   padding: 5px 0;
 }
 .game:nth-child(2) { background: rgba(255,255,255,0.03); }
 .game:last-child { border-bottom: 1px solid rgba(255,255,255,0.08); }
-.players, .result, .score { text-align: center; }
+.game-home-players { flex: 4; min-width: 0; overflow: hidden; text-overflow: ellipsis; padding: 0 6px; }
+.game-away-players { flex: 4; min-width: 0; overflow: hidden; text-overflow: ellipsis; padding: 0 6px; text-align: right; }
+.game-result       { flex: 1; text-align: center; }
+.game-score        { flex: 2; text-align: center; font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; font-weight: 700; color: #F5ECD7; }
+.game-awards       { flex-basis: 100%; font-size: 0.75rem; padding: 2px 6px; text-align: center; color: var(--color-gold); }
+@media (max-width: 575px) { .game-result { display: none; } }
 .forfeit {
   font-weight: 700;
   background-color: rgba(200,16,26,0.35);
   color: #F5ECD7;
+  padding: 2px 6px;
+  border-radius: 4px;
 }
 
 @media (max-width: 767px) {

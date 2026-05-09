@@ -5,118 +5,91 @@
 }
 
 <div id="scoresheet">
-    <h2>Season @Model.Season.Name</h2>
-    <div class="container-fluid">
-        <select id="matchesThisWeek" class="form-control">
+    <div class="flex items-center justify-between flex-wrap gap-3 mb-4">
+        <h2 class="text-2xl font-bold" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">
+            @Model.Season.Name
+        </h2>
+        <select id="matchesThisWeek" class="rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)">
             @foreach (var kv in Model.MatchesThisWeek)
             {
                 @if (kv.Key == Model.SelectedMatchRoute) { <option value="@kv.Key" selected>@kv.Value</option> }
                 else { <option value="@kv.Key">@kv.Value</option> }
             }
         </select>
-        <h3>@Model.Match.AwayTeam.Name <strong>@@ @Model.Match.HomeTeam.Name</strong></h3>
     </div>
 
-    <div class="container-fluid" data-bind="visible: !hasScorecard()">
-        <div class="row header">
-            <div class="col-xs-4 col-sm-4 col-md-4 truncate" style="text-align: center;">
-                [H] @Model.Match.HomeTeam.Name
-            </div>
-            <div class="col-xs-3 col-sm-4 col-md-4" style="text-align: center;">
-                <span data-bind="html: homeScoreOverride"></span>-<span data-bind="html: awayScoreOverride"></span><br/>
-                No Scorecard Available
-            </div>
-            <div class="col-xs-4 col-sm-4 col-md-4 truncate" style="text-align: center;">
-                [A] @Model.Match.AwayTeam.Name
-            </div>
+    <h3 class="text-xl font-bold mb-4" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">
+        @Model.Match.AwayTeam.Name <span style="color:#6B7280">@@</span> @Model.Match.HomeTeam.Name
+    </h3>
+
+    <div data-bind="visible: !hasScorecard()">
+        <div class="scoresheet-row header">
+            <div class="scoresheet-col-team">@Model.Match.HomeTeam.Name</div>
+            <div class="scoresheet-col-score"><span data-bind="html: homeScoreOverride"></span>–<span data-bind="html: awayScoreOverride"></span></div>
+            <div class="scoresheet-col-team" style="text-align:right">@Model.Match.AwayTeam.Name</div>
+        </div>
+        <p class="text-center py-4 text-sm" style="color:#6B7280">No Scorecard Available</p>
+    </div>
+
+    <div data-bind="visible: hasScorecard()">
+        <div class="scoresheet-row header">
+            <div class="scoresheet-col-team">@Model.Match.HomeTeam.Name</div>
+            <div class="scoresheet-col-score"><span data-bind="html: homeScore"></span>–<span data-bind="html: awayScore"></span></div>
+            <div class="scoresheet-col-team" style="text-align:right">@Model.Match.AwayTeam.Name</div>
         </div>
     </div>
 
-    <div class="container-fluid" data-bind="visible: hasScorecard()">
-        <div class="row header">
-            <div class="col-xs-4 col-sm-4 col-md-4 truncate" style="text-align: center;">
-                [H] @Model.Match.HomeTeam.Name
-            </div>
-            <div class="col-xs-3 col-sm-4 col-md-4" style="text-align: center;">
-                <span data-bind="html: homeScore"></span>-<span data-bind="html: awayScore"></span>
-            </div>
-            <div class="col-xs-4 col-sm-4 col-md-4 truncate" style="text-align: center;">
-                [A] @Model.Match.AwayTeam.Name
-            </div>
+    <div class="score-sheet" data-bind="foreach: gameGroups, visible: hasScorecard()">
+        <div class="game-group-header" data-bind="html: name"></div>
+        <div data-bind="template: {name: 'gameTemplate', foreach: games}"></div>
+    </div>
+
+    <div data-bind="visible: hasScorecard()">
+        <div class="scoresheet-row footer">
+            <div class="scoresheet-col-team">@Model.Match.HomeTeam.Name</div>
+            <div class="scoresheet-col-score"><span data-bind="html: homeScore"></span>–<span data-bind="html: awayScore"></span></div>
+            <div class="scoresheet-col-team" style="text-align:right">@Model.Match.AwayTeam.Name</div>
         </div>
     </div>
 
-    <div class="container-fluid score-sheet" data-bind="foreach: gameGroups, visible: hasScorecard()">
-        <div class="row">
-            <div class="col-sm-12 col-md-12 game-group-header" data-bind="html: name"></div>
-        </div>
-        <div class="row" data-bind="template: {name: 'gameTemplate', foreach: games}"></div>
-    </div>
-
-    <div class="container-fluid" data-bind="visible: hasScorecard()">
-        <div class="row footer">
-            <div class="col-xs-5 col-sm-4 col-md-4 truncate" style="text-align: center;">
-                [H] @Model.Match.HomeTeam.Name
-            </div>
-            <div class="col-xs-2 col-sm-4 col-md-4" style="text-align: center;">
-                <span data-bind="html: homeScore"></span>-<span data-bind="html: awayScore"></span>
-            </div>
-            <div class="col-xs-5 col-sm-4 col-md-4 truncate" style="text-align: center;">
-                [A] @Model.Match.AwayTeam.Name
-            </div>
-        </div>
-    </div>
-
-    <div>
-        <a class="btn btn-default" href="/season/@Model.Season.Id">Back</a>
+    <div class="flex gap-3 mt-5">
+        <a href="/season/@Model.Season.Id" class="px-4 py-2 rounded-lg text-sm font-medium" style="background:rgba(255,255,255,0.08);color:#F5ECD7;text-decoration:none">Back</a>
         @if (Model.IsBoardMember)
         {
-            <a class="btn btn-primary" href="/season/@Model.Season.Id/match/@Model.Match.Id/edit">Edit</a>
+            <a href="/season/@Model.Season.Id/match/@Model.Match.Id/edit" class="px-4 py-2 rounded-lg text-sm font-medium" style="background:#C8962E;color:#0A0A0B;text-decoration:none">Edit</a>
         }
     </div>
 </div>
 
 <script type="text/html" id="gameTemplate">
-    <div class="row game">
-        <div class="col-xs-5 col-sm-4 col-md-4 players home truncate">
+    <div class="game">
+        <div class="game-home-players">
             <div data-bind="if: forfeitedBy == 'home'" class="forfeit">Forfeit</div>
-            <div data-bind="if: homePlayer">
-                <span data-bind="html: homePlayer().name"></span>
-            </div>
-            <div data-bind="if: homePlayer2">
-                <span data-bind="html: homePlayer2().name"></span>
-            </div>
-            <div data-bind="if: homePlayer3">
-                <span data-bind="html: homePlayer3().name"></span>
-            </div>
+            <div data-bind="if: homePlayer"><span data-bind="html: homePlayer().name"></span></div>
+            <div data-bind="if: homePlayer2"><span data-bind="html: homePlayer2().name"></span></div>
+            <div data-bind="if: homePlayer3"><span data-bind="html: homePlayer3().name"></span></div>
         </div>
-        <div class="hidden-xs col-sm-1 col-md-1 result home">
+        <div class="game-result">
             <div data-bind="if: winner() == 'away'"><span class="label label-danger">L</span></div>
             <div data-bind="if: winner() == 'home'"><span class="label label-success">W</span></div>
         </div>
-        <div class="col-xs-2 col-sm-2 col-md-2 result home truncate">
-            <div><span data-bind="html: homeScore"></span>-<span data-bind="html: awayScore"></span></div>
+        <div class="game-score">
+            <span data-bind="html: homeScore"></span>–<span data-bind="html: awayScore"></span>
         </div>
-        <div class="hidden-xs col-sm-1 col-md-1 result away">
+        <div class="game-result">
             <div data-bind="if: winner() == 'away'"><span class="label label-success">W</span></div>
             <div data-bind="if: winner() == 'home'"><span class="label label-danger">L</span></div>
         </div>
-        <div class="col-xs-4 col-sm-4 col-md-4 players away truncate">
+        <div class="game-away-players">
             <div data-bind="if: forfeitedBy == 'away'" class="forfeit">Forfeit</div>
-            <div data-bind="if: awayPlayer">
-                <span data-bind="html: awayPlayer().name"></span>
-            </div>
-            <div data-bind="if: awayPlayer2">
-                <span data-bind="html: awayPlayer2().name"></span>
-            </div>
-            <div data-bind="if: awayPlayer3">
-                <span data-bind="html: awayPlayer3().name"></span>
-            </div>
+            <div data-bind="if: awayPlayer"><span data-bind="html: awayPlayer().name"></span></div>
+            <div data-bind="if: awayPlayer2"><span data-bind="html: awayPlayer2().name"></span></div>
+            <div data-bind="if: awayPlayer3"><span data-bind="html: awayPlayer3().name"></span></div>
         </div>
-        <div class="col-sm-12 col-md-12" data-bind="foreach: awards">
-            <div class="center-block" style="text-align: center">
+        <div class="game-awards" data-bind="foreach: awards">
+            <div>
                 <strong><span data-bind="html: awardType"></span></strong>
-                <span data-bind="if: awardValue() !== '' && awardValue() !== 0"> (<span data-bind="html: awardValue"></span>) </span>
+                <span data-bind="if: awardValue() !== '' && awardValue() !== 0">(<span data-bind="html: awardValue"></span>)</span>
                 <span data-bind="html: player().name"></span>
             </div>
         </div>
@@ -127,9 +100,8 @@
     <script src="~/js/lodash.min.js"></script>
     <script src="~/js/postal.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
-    <script>
-        (window.ko || document.write("<script src='\/js\/knockout-3.3.0.js'><\/script>"));
-    </script>
+    <script>(window.ko || document.write("<script src='\/js\/knockout-3.3.0.js'><\/script>"));</script>
+    <script src="//code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
         (function(w){
             w.scoreCardConfig = {
@@ -143,12 +115,8 @@
     </script>
     <script src="~/js/scoresheet-edit.js"></script>
     <script>
-        (function($){
-            $(document).ready(function() {
-                $("#matchesThisWeek").change(function() {
-                    window.document.location = $('#matchesThisWeek').val();
-                });
-            });
-        })(jQuery);
+        document.getElementById('matchesThisWeek').addEventListener('change', function() {
+            window.location = this.value;
+        });
     </script>
 }

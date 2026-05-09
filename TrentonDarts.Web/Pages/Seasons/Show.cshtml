@@ -4,37 +4,38 @@
     ViewData["Title"] = Model.Season.Name;
 }
 
-<h2>@Model.Season.Name</h2>
+<h2 class="text-3xl font-bold mb-4" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">@Model.Season.Name</h2>
 
 @* Week navigation *@
-<div class="row">
-    <div class="col-md-12">
-        <div class="btn-group" role="group">
-            @if (Model.PreviousWeekDate.HasValue)
-            {
-                <a href="/season/@Model.Season.Id?week=@Model.PreviousWeekDate.Value.ToString("yyyy-MM-dd")"
-                   class="btn btn-default btn-sm">&laquo; Previous</a>
-            }
-            else
-            {
-                <button class="btn btn-default btn-sm" disabled>&laquo; Previous</button>
-            }
-
-            @if (Model.NextWeekDate.HasValue)
-            {
-                <a href="/season/@Model.Season.Id?week=@Model.NextWeekDate.Value.ToString("yyyy-MM-dd")"
-                   class="btn btn-default btn-sm">Next &raquo;</a>
-            }
-            else
-            {
-                <button class="btn btn-default btn-sm" disabled>Next &raquo;</button>
-            }
-        </div>
-        @if (Model.ResultWeekDate.HasValue)
-        {
-            <span class="text-muted"> Week of @Model.ResultWeekDate.Value.ToString("MMMM d, yyyy")</span>
-        }
-    </div>
+<div class="flex items-center gap-2 mb-6">
+    @if (Model.PreviousWeekDate.HasValue)
+    {
+        <a href="/season/@Model.Season.Id?week=@Model.PreviousWeekDate.Value.ToString("yyyy-MM-dd")"
+           class="px-3 py-1.5 text-sm rounded-lg transition-colors"
+           style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#F5ECD7;text-decoration:none">
+            &laquo; Previous
+        </a>
+    }
+    else
+    {
+        <span class="px-3 py-1.5 text-sm rounded-lg" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);color:#6B7280">&laquo; Previous</span>
+    }
+    @if (Model.NextWeekDate.HasValue)
+    {
+        <a href="/season/@Model.Season.Id?week=@Model.NextWeekDate.Value.ToString("yyyy-MM-dd")"
+           class="px-3 py-1.5 text-sm rounded-lg transition-colors"
+           style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#F5ECD7;text-decoration:none">
+            Next &raquo;
+        </a>
+    }
+    else
+    {
+        <span class="px-3 py-1.5 text-sm rounded-lg" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);color:#6B7280">Next &raquo;</span>
+    }
+    @if (Model.ResultWeekDate.HasValue)
+    {
+        <span class="text-sm" style="color:#9CA3AF">Week of @Model.ResultWeekDate.Value.ToString("MMMM d, yyyy")</span>
+    }
 </div>
 
 @* Weekly results *@
@@ -46,88 +47,133 @@
         {
             if (week.Matches.Any())
             {
-                <h4>Results — @week.Date.ToString("MMMM d, yyyy")</h4>
-                <table class="table table-condensed table-hover">
-                    <thead><tr><th>Division</th><th>Away</th><th></th><th>Home</th><th></th></tr></thead>
-                    <tbody>
-                    @foreach (var m in week.Matches)
-                    {
-                        <tr onclick="window.location='/season/@Model.Season.Id/match/@m.MatchId'" style="cursor:pointer">
-                            <td>@m.Division</td>
-                            <td>@m.AwayTeamName</td>
-                            <td>@(m.HasScorecard ? $"{m.AwayScore} - {m.HomeScore}" : "vs")</td>
-                            <td>@m.HomeTeamName</td>
-                            <td>@if (Model.IsBoardMember) {<a href="/season/@Model.Season.Id/match/@m.MatchId/edit" class="btn btn-xs btn-default">Edit</a>}</td>
-                        </tr>
-                    }
-                    </tbody>
-                </table>
-            }
-            @if (week.ByeTeamNames.Any())
-            {
-                <p><strong>Byes:</strong> @string.Join(", ", week.ByeTeamNames)</p>
+                <h4 class="text-base font-semibold mb-2 mt-4" style="color:#C8962E;font-family:'Rajdhani',sans-serif;text-transform:uppercase;letter-spacing:0.05em">
+                    Results — @week.Date.ToString("MMMM d, yyyy")
+                </h4>
+                <div class="glass-card overflow-hidden mb-6">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr style="border-bottom:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04)">
+                                <th class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wider" style="color:#6B7280">Division</th>
+                                <th class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wider" style="color:#6B7280">Away</th>
+                                <th class="px-3 py-2 text-center text-xs font-semibold uppercase tracking-wider" style="color:#6B7280">Score</th>
+                                <th class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wider" style="color:#6B7280">Home</th>
+                                <th class="px-3 py-2"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var m in week.Matches)
+                        {
+                            <tr class="clickable-row transition-colors"
+                                onclick="window.location='/season/@Model.Season.Id/match/@m.MatchId'"
+                                style="border-bottom:1px solid rgba(255,255,255,0.04)"
+                                onmouseover="this.style.background='rgba(255,255,255,0.04)'" onmouseout="this.style.background=''">
+                                <td class="px-3 py-2.5" style="color:#9CA3AF">@m.Division</td>
+                                <td class="px-3 py-2.5">@m.AwayTeamName</td>
+                                <td class="px-3 py-2.5 text-center font-mono font-semibold" style="color:#C8962E">
+                                    @(m.HasScorecard ? $"{m.AwayScore} – {m.HomeScore}" : "vs")
+                                </td>
+                                <td class="px-3 py-2.5 font-semibold">@m.HomeTeamName</td>
+                                <td class="px-3 py-2.5 text-right">
+                                    @if (Model.IsBoardMember)
+                                    {
+                                        <a href="/season/@Model.Season.Id/match/@m.MatchId/edit"
+                                           class="text-xs px-2 py-1 rounded"
+                                           style="background:rgba(200,150,46,0.15);color:#C8962E;text-decoration:none"
+                                           onclick="event.stopPropagation()">Edit</a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+                @if (week.ByeTeamNames.Any())
+                {
+                    <p class="text-sm mb-4" style="color:#6B7280"><strong style="color:#F5ECD7">Byes:</strong> @string.Join(", ", week.ByeTeamNames)</p>
+                }
             }
         }
     }
 }
 
 @* Division standings *@
-<h3>Standings — @(Model.SeasonPart == "regular" ? "Regular Season" : "Pre-Season")</h3>
+<h3 class="text-xl font-bold mt-6 mb-4" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">
+    Standings — @(Model.SeasonPart == "regular" ? "Regular Season" : "Pre-Season")
+</h3>
+<div class="grid gap-4 sm:grid-cols-2">
 @foreach (var div in Model.DivStandings)
 {
-    <h4>Division @div.Name</h4>
-    <table class="table table-condensed">
-        <thead>
-            <tr>
-                <th>Team</th>
-                @if (Model.Season.IsUsingMatchPoints) { <th>MP</th> }
-                <th>W</th><th>L</th><th>%</th>
-            </tr>
-        </thead>
-        <tbody>
-        @foreach (var s in div.Standings)
-        {
-            <tr>
-                <td><a href="/team/@s.TeamId">@s.Name</a></td>
-                @if (Model.Season.IsUsingMatchPoints) { <td>@s.MatchPoints</td> }
-                <td>@s.WonPoints</td>
-                <td>@s.LossPoints</td>
-                <td>@s.Percentage.ToString("P1")</td>
-            </tr>
-        }
-        </tbody>
-    </table>
+    <div class="glass-card overflow-hidden">
+        <div class="px-4 py-2" style="border-bottom:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04)">
+            <span class="text-sm font-bold uppercase tracking-wide" style="font-family:'Rajdhani',sans-serif;color:#C8962E">Division @div.Name</span>
+        </div>
+        <table class="w-full text-sm">
+            <thead>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.06)">
+                    <th class="px-3 py-1.5 text-left text-xs" style="color:#6B7280">Team</th>
+                    @if (Model.Season.IsUsingMatchPoints) { <th class="px-2 py-1.5 text-center text-xs" style="color:#6B7280">MP</th> }
+                    <th class="px-2 py-1.5 text-center text-xs" style="color:#6B7280">W</th>
+                    <th class="px-2 py-1.5 text-center text-xs" style="color:#6B7280">L</th>
+                    <th class="px-2 py-1.5 text-center text-xs" style="color:#6B7280">%</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var s in div.Standings)
+            {
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"
+                    onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background=''">
+                    <td class="px-3 py-2"><a href="/team/@s.TeamId" style="color:#F5ECD7;text-decoration:none">@s.Name</a></td>
+                    @if (Model.Season.IsUsingMatchPoints) { <td class="px-2 py-2 text-center">@s.MatchPoints</td> }
+                    <td class="px-2 py-2 text-center" style="color:#1A7A3C">@s.WonPoints</td>
+                    <td class="px-2 py-2 text-center" style="color:#C8101A">@s.LossPoints</td>
+                    <td class="px-2 py-2 text-center text-xs" style="color:#9CA3AF">@s.Percentage.ToString("P1")</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
 }
+</div>
 
 @* Next week schedule *@
 @if (Model.NextWeekSchedules.Any())
 {
-    <h3>Upcoming</h3>
+    <h3 class="text-xl font-bold mt-6 mb-3" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">Upcoming</h3>
     @foreach (var div in Model.NextWeekSchedules)
     {
         foreach (var week in div.Weeks)
         {
             if (week.Matches.Any())
             {
-                <h4>Week of @week.Date.ToString("MMMM d, yyyy")</h4>
-                <table class="table table-condensed">
-                    <thead><tr><th>Division</th><th>Away</th><th></th><th>Home</th></tr></thead>
-                    <tbody>
-                    @foreach (var m in week.Matches)
-                    {
-                        <tr>
-                            <td>@m.Division</td>
-                            <td>@m.AwayTeamName</td>
-                            <td>@@</td>
-                            <td>@m.HomeTeamName</td>
-                        </tr>
-                    }
-                    </tbody>
-                </table>
+                <h4 class="text-sm font-semibold mb-2" style="color:#C8962E">Week of @week.Date.ToString("MMMM d, yyyy")</h4>
+                <div class="glass-card overflow-hidden mb-4">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr style="border-bottom:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04)">
+                                <th class="px-3 py-2 text-left text-xs" style="color:#6B7280">Division</th>
+                                <th class="px-3 py-2 text-left text-xs" style="color:#6B7280">Away</th>
+                                <th class="px-3 py-2 text-center text-xs" style="color:#6B7280">vs</th>
+                                <th class="px-3 py-2 text-left text-xs" style="color:#6B7280">Home</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var m in week.Matches)
+                        {
+                            <tr style="border-bottom:1px solid rgba(255,255,255,0.04)">
+                                <td class="px-3 py-2" style="color:#9CA3AF">@m.Division</td>
+                                <td class="px-3 py-2">@m.AwayTeamName</td>
+                                <td class="px-3 py-2 text-center" style="color:#6B7280">@@</td>
+                                <td class="px-3 py-2 font-semibold">@m.HomeTeamName</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
             }
             @if (week.ByeTeamNames.Any())
             {
-                <p><strong>Byes:</strong> @string.Join(", ", week.ByeTeamNames)</p>
+                <p class="text-sm mb-3" style="color:#6B7280"><strong style="color:#F5ECD7">Byes:</strong> @string.Join(", ", week.ByeTeamNames)</p>
             }
         }
     }
@@ -136,18 +182,37 @@
 @* Awards for the week *@
 @if (Model.Awards.Any())
 {
-    <h3>Awards @(Model.ViewAllAwards ? "(All)" : "")</h3>
-    <table class="table table-condensed">
-        <thead><tr><th>Player</th><th>Team</th><th>Type</th><th>Value</th></tr></thead>
-        <tbody>
-        @foreach (var a in Model.Awards)
-        {
-            <tr><td>@a.PlayerName</td><td>@a.TeamName</td><td>@a.AwardType</td><td>@(a.Value > 0 ? a.Value.ToString() : "")</td></tr>
-        }
-        </tbody>
-    </table>
+    <h3 class="text-xl font-bold mt-6 mb-3" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">
+        Awards @(Model.ViewAllAwards ? "(All)" : "")
+    </h3>
+    <div class="glass-card overflow-hidden mb-4">
+        <table class="w-full text-sm">
+            <thead>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04)">
+                    <th class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wider" style="color:#6B7280">Player</th>
+                    <th class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wider" style="color:#6B7280">Team</th>
+                    <th class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wider" style="color:#6B7280">Award</th>
+                    <th class="px-3 py-2 text-center text-xs font-semibold uppercase tracking-wider" style="color:#6B7280">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var a in Model.Awards)
+            {
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"
+                    onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background=''">
+                    <td class="px-3 py-2">@a.PlayerName</td>
+                    <td class="px-3 py-2" style="color:#9CA3AF">@a.TeamName</td>
+                    <td class="px-3 py-2" style="color:#C8962E">@a.AwardType</td>
+                    <td class="px-3 py-2 text-center font-bold" style="font-family:'Rajdhani',sans-serif;font-size:1.1rem">
+                        @(a.Value > 0 ? a.Value.ToString() : "")
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
     @if (!Model.ViewAllAwards)
     {
-        <a href="/season/@Model.Season.Id?allAwards=true">View all awards</a>
+        <a href="/season/@Model.Season.Id?allAwards=true" class="text-sm" style="color:#C8962E;text-decoration:none">View all awards &rarr;</a>
     }
 }
