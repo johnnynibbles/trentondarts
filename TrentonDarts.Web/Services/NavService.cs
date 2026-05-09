@@ -11,6 +11,7 @@ public class NavItem
     public string Url { get; init; } = string.Empty;
     public bool IsHeader { get; init; }
     public bool IsSeparator { get; init; }
+    public bool OpenInNewTab { get; init; }
     public List<NavItem> SubItems { get; init; } = new();
 }
 
@@ -43,6 +44,7 @@ public class NavService
                     Url = ResolveUrl(i, sid),
                     IsHeader = i.IsHeader,
                     IsSeparator = i.IsSeparator,
+                    OpenInNewTab = i.ItemType is NavItemType.ExternalUrl or NavItemType.Document,
                 })
                 .ToList();
 

@@ -38,7 +38,7 @@
                                     }
                                     else
                                     {
-                                        <li><a href="@sub.Url">@sub.Title</a></li>
+                                        <li><a href="@sub.Url" @(sub.OpenInNewTab ? "target=\"_blank\" rel=\"noopener noreferrer\"" : "")>@sub.Title</a></li>
                                     }
                                 }
                             </ul>
