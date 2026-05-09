@@ -41,6 +41,8 @@ public class RegisterModel : PageModel
     {
         if (!ModelState.IsValid) return Page();
 
+        var isFirstUser = !_users.Users.Any();
+
         var user = new User { UserName = Email, Email = Email, Name = Name };
         var result = await _users.CreateAsync(user, Password);
 
@@ -51,8 +53,8 @@ public class RegisterModel : PageModel
             return Page();
         }
 
-        await _users.AddToRoleAsync(user, Roles.User);
+        await _users.AddToRoleAsync(user, isFirstUser ? Roles.Admin : Roles.User);
         await _signIn.SignInAsync(user, isPersistent: true);
-        return RedirectToPage("/Manage/Index");
+        return LocalRedirect("/");
     }
 }

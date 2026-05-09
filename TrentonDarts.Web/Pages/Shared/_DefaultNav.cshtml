@@ -3,6 +3,7 @@
 @{
     var nav = await NavService.GetDefaultNavAsync();
     var isAuthenticated = User.Identity?.IsAuthenticated ?? false;
+    var isAdmin = isAuthenticated && User.IsInRole("Admin");
     var isBoardMember = isAuthenticated && await NavService.IsBoardMemberAsync(User);
 }
 <nav class="navbar navbar-default">
@@ -55,7 +56,7 @@
                     <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@User.Identity!.Name <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            @if (isBoardMember)
+                            @if (isAdmin || isBoardMember)
                             {
                                 <li class="dropdown-header">Manage</li>
                                 <li><a href="/manage/1">League</a></li>
