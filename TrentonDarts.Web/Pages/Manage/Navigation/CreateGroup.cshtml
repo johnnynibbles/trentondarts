@@ -1,0 +1,26 @@
+@page "/Manage/{leagueId:int}/navigation/group/create"
+@model TrentonDarts.Web.Pages.Manage.Navigation.CreateGroupModel
+@{
+    ViewData["Title"] = "New Group";
+    Layout = "_ManageLayout";
+}
+
+<h2>New Group</h2>
+<a href="/Manage/@Model.LeagueId/navigation" class="btn btn-default">Back</a>
+<br/><br/>
+
+<form method="post" class="form-horizontal">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Title *</label>
+        <div class="col-sm-4">
+            <input asp-for="Title" class="form-control" placeholder="e.g. Current Season" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+</form>

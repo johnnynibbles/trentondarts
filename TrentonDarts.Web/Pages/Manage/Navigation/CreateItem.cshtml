@@ -1,0 +1,78 @@
+@page "/Manage/{leagueId:int}/navigation/group/{groupId:int}/item/create"
+@model TrentonDarts.Web.Pages.Manage.Navigation.CreateItemModel
+@{
+    ViewData["Title"] = "New Item";
+    Layout = "_ManageLayout";
+}
+
+<h2>New Item</h2>
+<a href="/Manage/@Model.LeagueId/navigation" class="btn btn-default">Back</a>
+<br/><br/>
+
+<form method="post" class="form-horizontal">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Title *</label>
+        <div class="col-sm-4">
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Type *</label>
+        <div class="col-sm-4">
+            <select asp-for="ItemType" class="form-control" id="itemTypeSelect">
+                <option value="0">Internal Link</option>
+                <option value="1">External URL</option>
+                <option value="2">Document</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group" id="urlTemplateGroup">
+        <label class="col-sm-2 control-label">URL</label>
+        <div class="col-sm-4">
+            <input asp-for="UrlTemplate" class="form-control" placeholder="/season/{currentSeasonId}/standings" />
+            <span class="help-block">Use <code>{currentSeasonId}</code> to link to the current season (e.g. <code>/season/{currentSeasonId}/standings</code>). For external links use the full URL (e.g. <code>https://example.com</code>).</span>
+            <span asp-validation-for="UrlTemplate" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group" id="documentGroup" style="display:none">
+        <label class="col-sm-2 control-label">Document</label>
+        <div class="col-sm-4">
+            <select asp-for="BrowsableFileId" class="form-control" asp-items="Model.DocumentOptions">
+                <option value="">— select a document —</option>
+            </select>
+            <span asp-validation-for="BrowsableFileId" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+                <label><input asp-for="IsHeader" /> Is Section Header</label>
+            </div>
+            <div class="checkbox">
+                <label><input asp-for="IsSeparator" /> Is Divider Line</label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    (function () {
+        var sel = document.getElementById('itemTypeSelect');
+        var urlGroup = document.getElementById('urlTemplateGroup');
+        var docGroup = document.getElementById('documentGroup');
+        function toggle() {
+            var v = sel.value;
+            urlGroup.style.display = v === '2' ? 'none' : '';
+            docGroup.style.display = v === '2' ? '' : 'none';
+        }
+        sel.addEventListener('change', toggle);
+        toggle();
+    })();
+</script>

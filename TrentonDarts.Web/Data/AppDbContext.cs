@@ -33,6 +33,8 @@ public class AppDbContext : IdentityDbContext<User>
     public DbSet<DartEvent> DartEvents => Set<DartEvent>();
     public DbSet<DartEventResult> DartEventResults => Set<DartEventResult>();
     public DbSet<PagePart> PageParts => Set<PagePart>();
+    public DbSet<NavGroup> NavGroups => Set<NavGroup>();
+    public DbSet<NavGroupItem> NavGroupItems => Set<NavGroupItem>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -440,6 +442,30 @@ public class AppDbContext : IdentityDbContext<User>
             e.ToTable("page_parts");
             e.Property(p => p.CreatedAt).HasColumnName("created_at");
             e.Property(p => p.UpdatedAt).HasColumnName("updated_at");
+        });
+
+        // ── NavGroup ──────────────────────────────────────────────────────────
+        builder.Entity<NavGroup>(e =>
+        {
+            e.ToTable("nav_groups");
+            e.Property(p => p.CreatedAt).HasColumnName("created_at");
+            e.Property(p => p.UpdatedAt).HasColumnName("updated_at");
+            e.Property(p => p.DeletedAt).HasColumnName("deleted_at");
+            e.HasQueryFilter(p => p.DeletedAt == null);
+            e.HasMany(g => g.Items).WithOne(i => i.NavGroup).HasForeignKey(i => i.NavGroupId);
+        });
+
+        // ── NavGroupItem ──────────────────────────────────────────────────────
+        builder.Entity<NavGroupItem>(e =>
+        {
+            e.ToTable("nav_group_items");
+            e.Property(p => p.NavGroupId).HasColumnName("NavGroupId");
+            e.Property(p => p.BrowsableFileId).HasColumnName("BrowsableFileId");
+            e.Property(p => p.CreatedAt).HasColumnName("created_at");
+            e.Property(p => p.UpdatedAt).HasColumnName("updated_at");
+            e.Property(p => p.DeletedAt).HasColumnName("deleted_at");
+            e.HasQueryFilter(p => p.DeletedAt == null);
+            e.HasOne(i => i.BrowsableFile).WithMany().HasForeignKey(i => i.BrowsableFileId);
         });
     }
 }

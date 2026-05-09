@@ -21,6 +21,9 @@ public class GetModel : PageModel
         var file = await _db.BrowsableFiles.FindAsync(id);
         if (file == null || string.IsNullOrEmpty(file.RelativePath)) return NotFound();
 
-        return Redirect(_storage.GetPublicUrl(file.RelativePath));
+        var (stream, contentType) = await _storage.DownloadAsync(file.RelativePath);
+        Response.Headers.ContentDisposition =
+            $"inline; filename*=UTF-8''{Uri.EscapeDataString(file.FileName)}";
+        return File(stream, contentType);
     }
 }

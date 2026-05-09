@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using TrentonDarts.Web.Data;
+using TrentonDarts.Web.Data.Entities;
 
 namespace TrentonDarts.Web.Services;
 
@@ -22,46 +23,33 @@ public class NavService
     public async Task<List<NavItem>> GetDefaultNavAsync()
     {
         var season = await _db.WinterSeasons.Where(s => s.IsCurrent).FirstOrDefaultAsync();
-        var sid = season?.Id ?? 0;
+        var sid = season?.Id.ToString() ?? "0";
 
-        var docs = await _db.BrowsableFiles
-            .Where(f => f.Category == "document")
-            .OrderBy(f => f.Title)
+        var groups = await _db.NavGroups
+            .Include(g => g.Items.Where(i => i.DeletedAt == null).OrderBy(i => i.SortOrder))
+                .ThenInclude(i => i.BrowsableFile)
+            .Where(g => g.DeletedAt == null)
+            .OrderBy(g => g.SortOrder)
             .ToListAsync();
 
-        var nav = new List<NavItem>
+        var nav = new List<NavItem>();
+        foreach (var group in groups)
         {
-            new() { Title = "Current", Url = "#", SubItems = new List<NavItem>
-            {
-                new() { Title = "Weekly Standings", Url = $"/season/{sid}" },
-                new() { Title = "Full Schedule", Url = $"/season/{sid}/schedule" },
-                new() { Title = "Stats", Url = $"/season/{sid}/stats" },
-                new() { Title = "Leaderboards", Url = $"/season/{sid}/leaderboard" },
-                new() { Title = "Awards", Url = $"/season/{sid}/awards" },
-                new() { Title = "Teams", Url = "/teams" },
-                new() { Title = "GTDL on DartConnect", Url = "https://tv.dartconnect.com/leaguemenu/gtdl" },
-                new() { Title = "GTDL Singles on DartConnect", Url = "https://tv.dartconnect.com/leaguemenu/gtdls" },
-            }},
-            new() { Title = "Activities and Events", Url = "#", SubItems = new List<NavItem>
-            {
-                new() { Title = "GTDL Player Results at Events", Url = "/event/results" },
-                new() { Title = "Darts for Dreams Info", Url = "/old/charity" },
-            }},
-            new() { Title = "League", Url = "#", SubItems = new List<NavItem>
-            {
-                new() { Title = "Where we Play", Url = "/teams" },
-                new() { Title = "Sponsors and Partners", Url = "/sponsor" },
-            }},
-        };
+            var subItems = group.Items
+                .Where(i => i.ItemType != NavItemType.Document || i.BrowsableFile != null)
+                .Select(i => new NavItem
+                {
+                    Title = i.Title,
+                    Url = ResolveUrl(i, sid),
+                    IsHeader = i.IsHeader,
+                    IsSeparator = i.IsSeparator,
+                })
+                .ToList();
 
-        if (docs.Any())
-        {
-            nav.Add(new() { Title = "Other", Url = "#", SubItems = docs
-                .Select(d => new NavItem { Title = d.Title, Url = $"/file/{d.Id}" })
-                .ToList()
-            });
+            if (!subItems.Any()) continue;
+
+            nav.Add(new() { Title = group.Title, Url = "#", SubItems = subItems });
         }
-
         return nav;
     }
 
@@ -71,4 +59,9 @@ public class NavService
         if (userId == null) return false;
         return await _db.BoardMembers.AnyAsync(b => b.UserId == userId);
     }
+
+    private static string ResolveUrl(NavGroupItem item, string seasonId) =>
+        item.ItemType == NavItemType.Document
+            ? $"/file/{item.BrowsableFileId}"
+            : (item.UrlTemplate ?? "#").Replace("{currentSeasonId}", seasonId);
 }

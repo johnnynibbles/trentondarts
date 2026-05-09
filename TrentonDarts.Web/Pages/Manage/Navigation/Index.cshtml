@@ -1,0 +1,99 @@
+@page "/Manage/{leagueId:int}/navigation"
+@model TrentonDarts.Web.Pages.Manage.Navigation.NavigationIndexModel
+@{
+    ViewData["Title"] = "Navigation";
+    Layout = "_ManageLayout";
+}
+
+<h2>Navigation</h2>
+<a href="/Manage/@Model.LeagueId" class="btn btn-default">Back</a>
+<a href="/Manage/@Model.LeagueId/navigation/group/create" class="btn btn-primary" style="margin-left:8px">New Group</a>
+<br/><br/>
+
+@if (!Model.Groups.Any())
+{
+    <p class="text-muted">No navigation groups yet. Create one to get started.</p>
+}
+else
+{
+    @foreach (var group in Model.Groups)
+    {
+        <div class="panel panel-default" style="margin-bottom:16px">
+            <div class="panel-heading">
+                <strong>@group.Title</strong>
+                <span class="text-muted" style="margin-left:8px">(@group.Items.Count items, order: @group.SortOrder)</span>
+                <span style="float:right">
+                    <form method="post" style="display:inline">
+                        <input type="hidden" name="groupId" value="@group.Id" />
+                        <button type="submit" asp-page-handler="MoveGroupUp" class="btn btn-xs btn-default">↑</button>
+                        <button type="submit" asp-page-handler="MoveGroupDown" class="btn btn-xs btn-default">↓</button>
+                    </form>
+                    <a href="/Manage/@Model.LeagueId/navigation/group/@group.Id/edit" class="btn btn-xs btn-default">Edit</a>
+                    <form method="post" style="display:inline" onsubmit="return confirm('Delete this group and all its items?')">
+                        <input type="hidden" name="groupId" value="@group.Id" />
+                        <button type="submit" asp-page-handler="DeleteGroup" class="btn btn-xs btn-danger">Delete</button>
+                    </form>
+                </span>
+            </div>
+            <div class="panel-body" style="padding:0">
+                <table class="table table-condensed" style="margin:0">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Type</th>
+                            <th>URL / Document</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in group.Items)
+                        {
+                            <tr>
+                                <td>@item.Title @if (item.IsHeader) { <span class="label label-default">Header</span> } @if (item.IsSeparator) { <span class="label label-default">Divider</span> }</td>
+                                <td>
+                                    @switch (item.ItemType)
+                                    {
+                                        case TrentonDarts.Web.Data.Entities.NavItemType.InternalLink:
+                                            <span class="label label-info">Internal</span>
+                                            break;
+                                        case TrentonDarts.Web.Data.Entities.NavItemType.ExternalUrl:
+                                            <span class="label label-warning">External</span>
+                                            break;
+                                        case TrentonDarts.Web.Data.Entities.NavItemType.Document:
+                                            <span class="label label-success">Document</span>
+                                            break;
+                                    }
+                                </td>
+                                <td class="text-muted" style="max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">
+                                    @if (item.ItemType == TrentonDarts.Web.Data.Entities.NavItemType.Document)
+                                    {
+                                        @(item.BrowsableFile?.Title ?? item.BrowsableFile?.FileName ?? "—")
+                                    }
+                                    else
+                                    {
+                                        @item.UrlTemplate
+                                    }
+                                </td>
+                                <td style="white-space:nowrap">
+                                    <form method="post" style="display:inline">
+                                        <input type="hidden" name="itemId" value="@item.Id" />
+                                        <button type="submit" asp-page-handler="MoveItemUp" class="btn btn-xs btn-default">↑</button>
+                                        <button type="submit" asp-page-handler="MoveItemDown" class="btn btn-xs btn-default">↓</button>
+                                    </form>
+                                    <a href="/Manage/@Model.LeagueId/navigation/group/@group.Id/item/@item.Id/edit" class="btn btn-xs btn-default">Edit</a>
+                                    <form method="post" style="display:inline" onsubmit="return confirm('Delete this item?')">
+                                        <input type="hidden" name="itemId" value="@item.Id" />
+                                        <button type="submit" asp-page-handler="DeleteItem" class="btn btn-xs btn-danger">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div style="padding:8px 12px">
+                    <a href="/Manage/@Model.LeagueId/navigation/group/@group.Id/item/create" class="btn btn-xs btn-primary">+ Add Item</a>
+                </div>
+            </div>
+        </div>
+    }
+}

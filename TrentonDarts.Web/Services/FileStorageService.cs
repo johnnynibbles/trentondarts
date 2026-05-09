@@ -9,8 +9,8 @@ namespace TrentonDarts.Web.Services;
 public interface IFileStorageService
 {
     Task UploadAsync(Stream content, string objectKey, string contentType);
+    Task<(Stream Stream, string ContentType)> DownloadAsync(string objectKey);
     Task DeleteAsync(string objectKey);
-    string GetPublicUrl(string objectKey);
 }
 
 public class S3FileStorageService : IFileStorageService, IDisposable
@@ -34,15 +34,23 @@ public class S3FileStorageService : IFileStorageService, IDisposable
 
     public async Task UploadAsync(Stream content, string objectKey, string contentType)
     {
-        var request = new PutObjectRequest
+        await _client.PutObjectAsync(new PutObjectRequest
         {
             BucketName = _options.BucketName,
             Key = objectKey,
             InputStream = content,
-            ContentType = contentType,
-            CannedACL = S3CannedACL.PublicRead
-        };
-        await _client.PutObjectAsync(request);
+            ContentType = contentType
+        });
+    }
+
+    public async Task<(Stream Stream, string ContentType)> DownloadAsync(string objectKey)
+    {
+        var response = await _client.GetObjectAsync(new GetObjectRequest
+        {
+            BucketName = _options.BucketName,
+            Key = objectKey
+        });
+        return (response.ResponseStream, response.Headers.ContentType);
     }
 
     public async Task DeleteAsync(string objectKey)
@@ -53,9 +61,6 @@ public class S3FileStorageService : IFileStorageService, IDisposable
             Key = objectKey
         });
     }
-
-    public string GetPublicUrl(string objectKey) =>
-        $"{_options.PublicBaseUrl.TrimEnd('/')}/{objectKey}";
 
     public void Dispose() => _client.Dispose();
 }
