@@ -46,7 +46,7 @@
                                                @(sub.OpenInNewTab ? "target=\"_blank\" rel=\"noopener noreferrer\"" : "")
                                                onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background=''">
                                                 @sub.Title
-                                                @if (sub.OpenInNewTab)
+                                                @if (sub.OpenInNewTab && !sub.IsDocument)
                                                 {
                                                     <i class="fa-solid fa-arrow-up-right-from-square text-xs ml-1" style="color:#6B7280"></i>
                                                 }
@@ -140,7 +140,7 @@
                                 <a href="@sub.Url" class="block py-2 text-sm border-b" style="color:#F5ECD7;text-decoration:none;border-color:rgba(255,255,255,0.05)"
                                    @(sub.OpenInNewTab ? "target=\"_blank\" rel=\"noopener noreferrer\"" : "")>
                                     @sub.Title
-                                    @if (sub.OpenInNewTab) { <i class="fa-solid fa-arrow-up-right-from-square text-xs ml-1" style="color:#6B7280"></i> }
+                                    @if (sub.OpenInNewTab && !sub.IsDocument) { <i class="fa-solid fa-arrow-up-right-from-square text-xs ml-1" style="color:#6B7280"></i> }
                                 </a>
                             }
                         }

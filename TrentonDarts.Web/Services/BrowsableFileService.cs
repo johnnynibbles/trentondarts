@@ -15,7 +15,7 @@ public class BrowsableFileService
         _storage = storage;
     }
 
-    public async Task<BrowsableFile> UploadDocumentAsync(IFormFile file, string title)
+    public async Task<BrowsableFile> UploadDocumentAsync(IFormFile file, string title, string? slug = null)
     {
         var ext = Path.GetExtension(file.FileName);
         var objectKey = $"documents/{Guid.NewGuid()}{ext}";
@@ -26,6 +26,7 @@ public class BrowsableFileService
         var record = new BrowsableFile
         {
             Title = title,
+            Slug = string.IsNullOrWhiteSpace(slug) ? null : slug.ToLowerInvariant(),
             Category = "document",
             FileName = file.FileName,
             RelativePath = objectKey,

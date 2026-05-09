@@ -18,6 +18,12 @@
         <span asp-validation-for="Title" class="text-xs mt-1 block" style="color:#C8101A"></span>
     </div>
     <div class="mb-4">
+        <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">URL Slug <span style="font-weight:400;text-transform:none">(optional)</span></label>
+        <input asp-for="Slug" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" placeholder="e.g. league-rules" />
+        <p class="text-xs mt-1" style="color:#6B7280">Lowercase letters, numbers, hyphens. Enables URL: /file/league-rules</p>
+        <span asp-validation-for="Slug" class="text-xs mt-1 block" style="color:#C8101A"></span>
+    </div>
+    <div class="mb-4">
         <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">File *</label>
         <input asp-for="UploadFile" type="file" class="text-sm" style="color:#F5ECD7" accept=".pdf,.doc,.docx,.xls,.xlsx,.png,.jpg,.jpeg,.gif" />
         <span asp-validation-for="UploadFile" class="text-xs mt-1 block" style="color:#C8101A"></span>

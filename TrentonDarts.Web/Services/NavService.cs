@@ -12,6 +12,7 @@ public class NavItem
     public bool IsHeader { get; init; }
     public bool IsSeparator { get; init; }
     public bool OpenInNewTab { get; init; }
+    public bool IsDocument { get; init; }
     public List<NavItem> SubItems { get; init; } = new();
 }
 
@@ -45,6 +46,7 @@ public class NavService
                     IsHeader = i.IsHeader,
                     IsSeparator = i.IsSeparator,
                     OpenInNewTab = i.ItemType is NavItemType.ExternalUrl or NavItemType.Document,
+                    IsDocument = i.ItemType == NavItemType.Document,
                 })
                 .ToList();
 
@@ -64,6 +66,6 @@ public class NavService
 
     private static string ResolveUrl(NavGroupItem item, string seasonId) =>
         item.ItemType == NavItemType.Document
-            ? $"/file/{item.BrowsableFileId}"
+            ? $"/file/{item.BrowsableFile?.Slug ?? item.BrowsableFileId?.ToString()}"
             : (item.UrlTemplate ?? "#").Replace("{currentSeasonId}", seasonId);
 }

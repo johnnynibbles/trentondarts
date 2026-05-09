@@ -149,12 +149,14 @@ public class AppDbContext : IdentityDbContext<User>
         builder.Entity<BrowsableFile>(e =>
         {
             e.ToTable("browsable_files");
+            e.Property(p => p.Slug).HasColumnName("slug");
             e.Property(p => p.FileName).HasColumnName("fileName");
             e.Property(p => p.RelativePath).HasColumnName("relativePath");
             e.Property(p => p.MimeType).HasColumnName("mimeType");
             e.Property(p => p.CreatedAt).HasColumnName("created_at");
             e.Property(p => p.UpdatedAt).HasColumnName("updated_at");
             e.Property(p => p.DeletedAt).HasColumnName("deleted_at");
+            e.HasIndex(p => p.Slug).IsUnique().HasFilter("\"slug\" IS NOT NULL");
             e.HasQueryFilter(p => p.DeletedAt == null);
         });
 
