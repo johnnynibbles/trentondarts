@@ -9,7 +9,12 @@
       "Bash(dotnet ef database *)",
       "Bash(dotnet ef migrations *)",
       "Bash(git add *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(dotnet build *)",
+      "Bash(Select-String -Pattern \"\\(warning|error|Warning|Error\\)\")",
+      "Bash(Select-String -NotMatch \"CS\\\\d{4}\")",
+      "Bash(git *)",
+      "Bash(Get-ChildItem *)"
     ]
   }
 }
