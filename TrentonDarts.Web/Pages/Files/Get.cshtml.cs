@@ -1,28 +1,26 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TrentonDarts.Web.Data;
+using TrentonDarts.Web.Services;
 
 namespace TrentonDarts.Web.Pages.Files;
 
 public class GetModel : PageModel
 {
     private readonly AppDbContext _db;
-    private readonly IWebHostEnvironment _env;
+    private readonly IFileStorageService _storage;
 
-    public GetModel(AppDbContext db, IWebHostEnvironment env)
+    public GetModel(AppDbContext db, IFileStorageService storage)
     {
         _db = db;
-        _env = env;
+        _storage = storage;
     }
 
     public async Task<IActionResult> OnGetAsync(int id)
     {
         var file = await _db.BrowsableFiles.FindAsync(id);
-        if (file == null) return NotFound();
+        if (file == null || string.IsNullOrEmpty(file.RelativePath)) return NotFound();
 
-        var filePath = Path.Combine(_env.WebRootPath, file.RelativePath ?? "", file.FileName ?? "");
-        if (!System.IO.File.Exists(filePath)) return NotFound();
-
-        return PhysicalFile(filePath, file.MimeType ?? "application/octet-stream", file.FileName);
+        return Redirect(_storage.GetPublicUrl(file.RelativePath));
     }
 }

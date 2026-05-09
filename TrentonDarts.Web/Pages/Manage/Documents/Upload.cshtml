@@ -1,0 +1,33 @@
+@page "/Manage/{leagueId:int}/documents/upload"
+@model TrentonDarts.Web.Pages.Manage.Documents.UploadModel
+@{
+    ViewData["Title"] = "Upload Document";
+    Layout = "_ManageLayout";
+}
+
+<h2>Upload Document</h2>
+<a href="/Manage/@Model.LeagueId/documents" class="btn btn-default">Back</a>
+<br/><br/>
+
+<form method="post" enctype="multipart/form-data" class="form-horizontal">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Title *</label>
+        <div class="col-sm-4">
+            <input asp-for="Title" class="form-control" placeholder="e.g. League Rules" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">File *</label>
+        <div class="col-sm-4">
+            <input asp-for="UploadFile" type="file" class="form-control" accept=".pdf,.doc,.docx,.xls,.xlsx,.png,.jpg,.jpeg,.gif" />
+            <span asp-validation-for="UploadFile" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">Upload</button>
+        </div>
+    </div>
+</form>

@@ -38,6 +38,10 @@ builder.Services.ConfigureApplicationCookie(opts =>
 
 builder.Services.AddAntiforgery(opts => opts.HeaderName = "X-CSRF-Token");
 
+builder.Services.Configure<StorageOptions>(builder.Configuration.GetSection("Storage"));
+builder.Services.AddSingleton<IFileStorageService, S3FileStorageService>();
+builder.Services.AddScoped<BrowsableFileService>();
+
 builder.Services.AddScoped<NavService>();
 builder.Services.AddScoped<SeasonService>();
 builder.Services.AddScoped<StatsService>();

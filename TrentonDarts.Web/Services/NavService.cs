@@ -24,7 +24,12 @@ public class NavService
         var season = await _db.WinterSeasons.Where(s => s.IsCurrent).FirstOrDefaultAsync();
         var sid = season?.Id ?? 0;
 
-        return new List<NavItem>
+        var docs = await _db.BrowsableFiles
+            .Where(f => f.Category == "document")
+            .OrderBy(f => f.Title)
+            .ToListAsync();
+
+        var nav = new List<NavItem>
         {
             new() { Title = "Current", Url = "#", SubItems = new List<NavItem>
             {
@@ -33,7 +38,7 @@ public class NavService
                 new() { Title = "Stats", Url = $"/season/{sid}/stats" },
                 new() { Title = "Leaderboards", Url = $"/season/{sid}/leaderboard" },
                 new() { Title = "Awards", Url = $"/season/{sid}/awards" },
-                new() { Title = "Teams", Url = "/team" },
+                new() { Title = "Teams", Url = "/teams" },
                 new() { Title = "GTDL on DartConnect", Url = "https://tv.dartconnect.com/leaguemenu/gtdl" },
                 new() { Title = "GTDL Singles on DartConnect", Url = "https://tv.dartconnect.com/leaguemenu/gtdls" },
             }},
@@ -44,18 +49,20 @@ public class NavService
             }},
             new() { Title = "League", Url = "#", SubItems = new List<NavItem>
             {
-                new() { Title = "Where we Play", Url = "/team" },
+                new() { Title = "Where we Play", Url = "/teams" },
                 new() { Title = "Sponsors and Partners", Url = "/sponsor" },
             }},
-            new() { Title = "Other", Url = "#", SubItems = new List<NavItem>
-            {
-                new() { Title = "League Rules", Url = "/documents/static/gtdlrules.pdf" },
-                new() { Title = "Scoresheet", Url = "/documents/static/scoresheet.pdf" },
-                new() { Title = "01 Strategy", Url = "/documents/static/playersseries1.pdf" },
-                new() { Title = "Cricket Strategy", Url = "/documents/static/playersseries2.pdf" },
-                new() { Title = "Advanced 01 Strategy", Url = "/documents/static/playerseries3.pdf" },
-            }},
         };
+
+        if (docs.Any())
+        {
+            nav.Add(new() { Title = "Other", Url = "#", SubItems = docs
+                .Select(d => new NavItem { Title = d.Title, Url = $"/file/{d.Id}" })
+                .ToList()
+            });
+        }
+
+        return nav;
     }
 
     public async Task<bool> IsBoardMemberAsync(ClaimsPrincipal user)

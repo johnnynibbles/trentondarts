@@ -1,0 +1,43 @@
+@page "/Manage/{leagueId:int}/documents"
+@model TrentonDarts.Web.Pages.Manage.Documents.DocumentsIndexModel
+@{
+    ViewData["Title"] = "Documents";
+    Layout = "_ManageLayout";
+}
+
+<h2>Documents</h2>
+<a href="/Manage/@Model.LeagueId/documents/upload" class="btn btn-primary">Upload Document</a>
+<br/><br/>
+
+@if (!Model.Documents.Any())
+{
+    <p class="text-muted">No documents uploaded yet. Upload PDFs here to make them available in the navigation.</p>
+}
+else
+{
+    <table class="table table-bordered table-condensed table-hover">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>File Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var doc in Model.Documents)
+        {
+            <tr>
+                <td>@doc.Title</td>
+                <td><a href="/file/@doc.Id" target="_blank">@doc.FileName</a></td>
+                <td>
+                    <form method="post" asp-page-handler="Delete" style="display:inline">
+                        <input type="hidden" name="id" value="@doc.Id" />
+                        <button type="submit" class="btn btn-xs btn-danger"
+                                onclick="return confirm('Delete this document?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

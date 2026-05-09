@@ -3,6 +3,7 @@ namespace TrentonDarts.Web.Data.Entities;
 public class BrowsableFile
 {
     public int Id { get; set; }
+    public string Title { get; set; } = string.Empty;
     public string? Category { get; set; }
     public string? FileName { get; set; }
     public string? RelativePath { get; set; }

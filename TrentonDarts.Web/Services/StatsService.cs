@@ -94,8 +94,8 @@ public class StatsService
 
         var sql = $"""
             SELECT
-              teams.id AS "TeamId",
-              teams.name AS "TeamName",
+              teams."Id" AS "TeamId",
+              teams."Name" AS "TeamName",
               players."Id" AS "PlayerId",
               (players."firstName" || ' ' || players."lastName") AS "PlayerName",
               SUM(CASE WHEN winter_stats_player_games."playerId" IS NOT NULL AND "isForfeit" = false THEN 1 ELSE 0 END) AS "GamesPlayed",
@@ -127,8 +127,8 @@ public class StatsService
             WHERE winter_season_teams."seasonId" = {seasonId}
             {divFilter}
             {partFilter}
-            GROUP BY teams."Id", teams."name", players."Id", players."firstName", players."lastName"
-            ORDER BY teams."name"
+            GROUP BY teams."Id", teams."Name", players."Id", players."firstName", players."lastName"
+            ORDER BY teams."Name"
             """;
 
         var rows = await _db.Database.SqlQueryRaw<PlayerStatRow>(sql).ToListAsync();
@@ -193,7 +193,7 @@ public class StatsService
         var sql = $"""
             SELECT
               teams."Id" AS "TeamId",
-              teams."name" AS "TeamName",
+              teams."Name" AS "TeamName",
               winter_season_teams."preSeasonDiv" AS "PreSeasonDiv",
               winter_season_teams."regularSeasonDiv" AS "RegularSeasonDiv",
               SUM(CASE WHEN "isWon" = true  AND "isForfeitGame" = false THEN "numberOfPoints" ELSE 0 END) AS "PointsWon",
@@ -223,8 +223,8 @@ public class StatsService
             WHERE winter_season_teams."seasonId" = {seasonId}
             {divFilter}
             {partFilter}
-            GROUP BY teams."Id", teams."name", winter_season_teams."preSeasonDiv", winter_season_teams."regularSeasonDiv"
-            ORDER BY teams."name"
+            GROUP BY teams."Id", teams."Name", winter_season_teams."preSeasonDiv", winter_season_teams."regularSeasonDiv"
+            ORDER BY teams."Name"
             """;
 
         var rows = await _db.Database.SqlQueryRaw<TeamStatRow>(sql).ToListAsync();
