@@ -1,0 +1,84 @@
+@page "/Manage/{leagueId:int}/matchtypes/{matchTypeId:int}/rules/{id:int}/edit"
+@model TrentonDarts.Web.Pages.Manage.MatchTypes.Rules.EditRuleModel
+@{
+    ViewData["Title"] = "Edit Rule";
+    Layout = "_ManageLayout";
+}
+
+<h2>Edit Rule — @Model.MatchTypeName</h2>
+<a href="/Manage/@Model.LeagueId/matchtypes/@Model.MatchTypeId/rules" class="btn btn-default">Back</a>
+<br/><br/>
+
+<form method="post" class="form-horizontal">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Order *</label>
+        <div class="col-sm-2">
+            <input asp-for="Input.OrderId" class="form-control" type="number" min="1" />
+            <span asp-validation-for="Input.OrderId" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Game Type *</label>
+        <div class="col-sm-3">
+            <select asp-for="Input.GameType" class="form-control" asp-items="Model.GameTypeOptions"></select>
+            <span asp-validation-for="Input.GameType" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Group Name</label>
+        <div class="col-sm-3">
+            <input asp-for="Input.GroupName" class="form-control" placeholder="e.g. Cricket" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Who Starts</label>
+        <div class="col-sm-3">
+            <select asp-for="Input.WhoStarts" class="form-control" asp-items="Model.WhoStartsOptions"></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Players</label>
+        <div class="col-sm-2">
+            <input asp-for="Input.NumberOfPlayers" class="form-control" type="number" min="1" max="8" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Legs</label>
+        <div class="col-sm-2">
+            <input asp-for="Input.NumberOfLegs" class="form-control" type="number" min="1" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Best Of Legs</label>
+        <div class="col-sm-2">
+            <input asp-for="Input.BestOfNumberOfLegs" class="form-control" type="number" min="0" />
+            <span class="help-block">0 = fixed number of legs</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Game Points</label>
+        <div class="col-sm-2">
+            <input asp-for="Input.GamePointValue" class="form-control" type="number" min="0" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Leg Points</label>
+        <div class="col-sm-2">
+            <input asp-for="Input.LegPointValue" class="form-control" type="number" min="0" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox"><label><input asp-for="Input.DoubleIn" /> Double In</label></div>
+            <div class="checkbox"><label><input asp-for="Input.DoubleOut" /> Double Out</label></div>
+            <div class="checkbox"><label><input asp-for="Input.ForfeitIfNoPlayers" /> Forfeit If No Players</label></div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+</form>

@@ -45,6 +45,15 @@ public class EditModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
+        if (!Input.IsUsingMatchPoints)
+        {
+            Input.WinPoints = 0;
+            Input.HalfPoints = 0;
+            Input.MinPointForHalfPoints = 0;
+            ModelState.Clear();
+            TryValidateModel(Input);
+        }
+
         if (!ModelState.IsValid)
         {
             MatchTypes = await _db.MatchTypes.OrderBy(m => m.Name).ToListAsync();

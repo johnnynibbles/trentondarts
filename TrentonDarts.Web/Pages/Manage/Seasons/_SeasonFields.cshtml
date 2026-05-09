@@ -1,4 +1,8 @@
 @model TrentonDarts.Web.Pages.Manage.Seasons.SeasonInput
+@{
+    var matchTypes = ViewData["MatchTypes"] as List<TrentonDarts.Web.Data.Entities.MatchType>
+                     ?? new List<TrentonDarts.Web.Data.Entities.MatchType>();
+}
 
 <div class="form-group">
     <label class="col-sm-2 control-label">Name *</label>
@@ -29,21 +33,59 @@
     </div>
 </div>
 <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-        <div class="checkbox"><label><input asp-for="IsCurrent" /> Is Current Season</label></div>
-        <div class="checkbox"><label><input asp-for="IsUsingMatchPoints" /> Use Match Points</label></div>
-        <div class="checkbox"><label><input asp-for="AccumulatePointsForAllParts" /> Accumulate Points for All Parts</label></div>
+    <label class="col-sm-2 control-label">Default Match Type</label>
+    <div class="col-sm-3">
+        <select asp-for="DefaultMatchTypeId" class="form-control">
+            <option value="">-- none --</option>
+            @foreach (var mt in matchTypes)
+            {
+                if (Model?.DefaultMatchTypeId == mt.Id) { <option value="@mt.Id" selected>@mt.Name</option> }
+                else { <option value="@mt.Id">@mt.Name</option> }
+            }
+        </select>
     </div>
 </div>
 <div class="form-group">
-    <label class="col-sm-2 control-label">Win Points</label>
-    <div class="col-sm-2"><input asp-for="WinPoints" class="form-control" type="number" /></div>
+    <div class="col-sm-offset-2 col-sm-10">
+        <div class="checkbox"><label><input asp-for="IsCurrent" /> Is Current Season</label></div>
+        <div class="checkbox"><label><input asp-for="AccumulatePointsForAllParts" /> Accumulate Points for All Parts</label></div>
+        <div class="checkbox"><label><input asp-for="IsUsingMatchPoints" /> Use Match Points</label></div>
+    </div>
 </div>
-<div class="form-group">
-    <label class="col-sm-2 control-label">Half Points</label>
-    <div class="col-sm-2"><input asp-for="HalfPoints" class="form-control" type="number" /></div>
+<div id="matchPointsGroup">
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Win Points *</label>
+        <div class="col-sm-2">
+            <input asp-for="WinPoints" class="form-control" type="number" min="1" />
+            <span asp-validation-for="WinPoints" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Half Points *</label>
+        <div class="col-sm-2">
+            <input asp-for="HalfPoints" class="form-control" type="number" min="0" />
+            <span asp-validation-for="HalfPoints" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Min for Half Points *</label>
+        <div class="col-sm-2">
+            <input asp-for="MinPointForHalfPoints" class="form-control" type="number" min="0" />
+            <span asp-validation-for="MinPointForHalfPoints" class="text-danger"></span>
+        </div>
+    </div>
 </div>
-<div class="form-group">
-    <label class="col-sm-2 control-label">Min for Half Points</label>
-    <div class="col-sm-2"><input asp-for="MinPointForHalfPoints" class="form-control" type="number" /></div>
-</div>
+
+<script>
+    (function () {
+        var cb = document.querySelector('[name="IsUsingMatchPoints"]');
+        var grp = document.getElementById('matchPointsGroup');
+        function toggle() {
+            var active = cb.checked;
+            grp.style.display = active ? '' : 'none';
+            grp.querySelectorAll('input').forEach(function (inp) { inp.disabled = !active; });
+        }
+        cb.addEventListener('change', toggle);
+        toggle();
+    })();
+</script>

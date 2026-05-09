@@ -1,0 +1,59 @@
+@page "/Manage/{leagueId:int}/matchtypes/{matchTypeId:int}/rules"
+@model TrentonDarts.Web.Pages.Manage.MatchTypes.Rules.RulesIndexModel
+@{
+    ViewData["Title"] = $"Rules — {Model.MatchTypeName}";
+    Layout = "_ManageLayout";
+}
+
+<h2>Rules — @Model.MatchTypeName</h2>
+<a href="/Manage/@Model.LeagueId/matchtypes" class="btn btn-default">Back</a>
+<a href="/Manage/@Model.LeagueId/matchtypes/@Model.MatchTypeId/rules/create" class="btn btn-primary" style="margin-left:8px">Add Rule</a>
+<br/><br/>
+
+<table class="table table-bordered table-condensed table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Game Type</th>
+            <th>Group</th>
+            <th>Who Starts</th>
+            <th>Players</th>
+            <th>Pts</th>
+            <th>Legs</th>
+            <th>Dbl In</th>
+            <th>Dbl Out</th>
+            <th>Forfeit</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var r in Model.Rules)
+    {
+        <tr>
+            <td>@r.OrderId</td>
+            <td>@r.GameType</td>
+            <td>@r.GroupName</td>
+            <td>@(r.WhoStarts == "H" ? "Home" : r.WhoStarts == "A" ? "Away" : "—")</td>
+            <td>@r.NumberOfPlayers</td>
+            <td>@r.GamePointValue</td>
+            <td>@r.NumberOfLegs</td>
+            <td>@(r.DoubleIn ? "✓" : "")</td>
+            <td>@(r.DoubleOut ? "✓" : "")</td>
+            <td>@(r.ForfeitIfNoPlayers ? "✓" : "")</td>
+            <td style="white-space:nowrap">
+                <form method="post" style="display:inline">
+                    <input type="hidden" name="id" value="@r.Id" />
+                    <button type="submit" asp-page-handler="MoveUp" class="btn btn-xs btn-default">↑</button>
+                    <button type="submit" asp-page-handler="MoveDown" class="btn btn-xs btn-default">↓</button>
+                </form>
+                <a href="/Manage/@Model.LeagueId/matchtypes/@Model.MatchTypeId/rules/@r.Id/edit" class="btn btn-xs btn-default">Edit</a>
+                <form method="post" asp-page-handler="Delete" style="display:inline"
+                      onsubmit="return confirm('Delete this rule?')">
+                    <input type="hidden" name="id" value="@r.Id" />
+                    <button type="submit" class="btn btn-xs btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

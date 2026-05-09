@@ -126,7 +126,6 @@ public class AppDbContext : IdentityDbContext<User>
         builder.Entity<MatchTypeGameRule>(e =>
         {
             e.ToTable("match_type_game_rules");
-            e.HasQueryFilter(r => r.MatchType.DeletedAt == null);
             e.Property(p => p.MatchTypeId).HasColumnName("matchTypeId");
             e.Property(p => p.GameType).HasColumnName("gameType");
             e.Property(p => p.DoubleIn).HasColumnName("doubleIn");
@@ -142,6 +141,8 @@ public class AppDbContext : IdentityDbContext<User>
             e.Property(p => p.GroupName).HasColumnName("groupName");
             e.Property(p => p.CreatedAt).HasColumnName("created_at");
             e.Property(p => p.UpdatedAt).HasColumnName("updated_at");
+            e.Property(p => p.DeletedAt).HasColumnName("deleted_at");
+            e.HasQueryFilter(r => r.MatchType.DeletedAt == null && r.DeletedAt == null);
         });
 
         // ── BrowsableFile ─────────────────────────────────────────────────────

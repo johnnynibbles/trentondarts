@@ -1,0 +1,38 @@
+@page "/Manage/{leagueId:int}/matchtypes"
+@model TrentonDarts.Web.Pages.Manage.MatchTypes.IndexModel
+@{
+    ViewData["Title"] = "Match Types";
+    Layout = "_ManageLayout";
+}
+
+<h2>Match Types</h2>
+<a href="/Manage/@Model.LeagueId/matchtypes/create" class="btn btn-primary">Add Match Type</a>
+<br/><br/>
+
+<table class="table table-bordered table-condensed table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Rules</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var mt in Model.MatchTypes)
+    {
+        <tr>
+            <td>@mt.Name</td>
+            <td>@mt.GameRules.Count</td>
+            <td>
+                <a href="/Manage/@Model.LeagueId/matchtypes/@mt.Id/rules" class="btn btn-xs btn-default">Rules</a>
+                <a href="/Manage/@Model.LeagueId/matchtypes/@mt.Id/edit" class="btn btn-xs btn-default">Edit</a>
+                <form method="post" asp-page-handler="Delete" style="display:inline"
+                      onsubmit="return confirm('Delete @mt.Name and all its rules?')">
+                    <input type="hidden" name="id" value="@mt.Id" />
+                    <button type="submit" class="btn btn-xs btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

@@ -1,0 +1,26 @@
+@page "/Manage/{leagueId:int}/matchtypes/{id:int}/edit"
+@model TrentonDarts.Web.Pages.Manage.MatchTypes.EditModel
+@{
+    ViewData["Title"] = "Edit Match Type";
+    Layout = "_ManageLayout";
+}
+
+<h2>Edit Match Type</h2>
+<a href="/Manage/@Model.LeagueId/matchtypes" class="btn btn-default">Back</a>
+<br/><br/>
+
+<form method="post" class="form-horizontal">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Name *</label>
+        <div class="col-sm-4">
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+</form>

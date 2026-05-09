@@ -8,7 +8,7 @@ using MatchType = TrentonDarts.Web.Data.Entities.MatchType;
 
 namespace TrentonDarts.Web.Pages.Manage.Seasons;
 
-public class SeasonInput
+public class SeasonInput : IValidatableObject
 {
     [Required] public string Name { get; set; } = "";
     [Required] public int StartYear { get; set; } = DateTime.Now.Year;
@@ -21,6 +21,18 @@ public class SeasonInput
     public int HalfPoints { get; set; } = 1;
     public int MinPointForHalfPoints { get; set; } = 7;
     public bool AccumulatePointsForAllParts { get; set; }
+
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        if (!IsUsingMatchPoints) yield break;
+
+        if (WinPoints < 1)
+            yield return new ValidationResult("Win Points must be at least 1.", new[] { nameof(WinPoints) });
+        if (HalfPoints < 0)
+            yield return new ValidationResult("Half Points must be 0 or greater.", new[] { nameof(HalfPoints) });
+        if (MinPointForHalfPoints < 0)
+            yield return new ValidationResult("Min for Half Points must be 0 or greater.", new[] { nameof(MinPointForHalfPoints) });
+    }
 }
 
 public class CreateModel : PageModel
@@ -44,6 +56,15 @@ public class CreateModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
+        if (!Input.IsUsingMatchPoints)
+        {
+            Input.WinPoints = 0;
+            Input.HalfPoints = 0;
+            Input.MinPointForHalfPoints = 0;
+            ModelState.Clear();
+            TryValidateModel(Input);
+        }
+
         if (!ModelState.IsValid)
         {
             MatchTypes = await _db.MatchTypes.OrderBy(m => m.Name).ToListAsync();
