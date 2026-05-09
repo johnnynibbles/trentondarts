@@ -27,17 +27,15 @@ public class IndexModel : PageModel
 
     public async Task OnGetAsync()
     {
-        await Task.WhenAll(
-            _db.Players.CountAsync().ContinueWith(t => PlayerCount = t.Result),
-            _db.Teams.CountAsync().ContinueWith(t => TeamCount = t.Result),
-            _db.Sponsors.CountAsync().ContinueWith(t => SponsorCount = t.Result),
-            _db.BoardMembers.CountAsync().ContinueWith(t => BoardMemberCount = t.Result),
-            _db.MatchTypes.CountAsync().ContinueWith(t => MatchTypeCount = t.Result),
-            _db.DartEvents.CountAsync().ContinueWith(t => DartEventCount = t.Result),
-            _db.PageParts.CountAsync().ContinueWith(t => PagePartCount = t.Result),
-            _db.BrowsableFiles.CountAsync().ContinueWith(t => DocumentCount = t.Result),
-            _db.NavGroups.CountAsync().ContinueWith(t => NavGroupCount = t.Result),
-            _db.WinterSeasons.CountAsync().ContinueWith(t => SeasonCount = t.Result)
-        );
+        PlayerCount = await _db.Players.CountAsync();
+        TeamCount = await _db.Teams.CountAsync();
+        SponsorCount = await _db.Sponsors.CountAsync();
+        BoardMemberCount = await _db.BoardMembers.CountAsync();
+        MatchTypeCount = await _db.MatchTypes.CountAsync();
+        DartEventCount = await _db.DartEvents.CountAsync();
+        PagePartCount = await _db.PageParts.CountAsync();
+        DocumentCount = await _db.BrowsableFiles.CountAsync();
+        NavGroupCount = await _db.NavGroups.CountAsync();
+        SeasonCount = await _db.WinterSeasons.CountAsync();
     }
 }
