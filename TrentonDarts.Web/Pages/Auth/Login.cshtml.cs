@@ -36,7 +36,7 @@ public class LoginModel : PageModel
 
         var result = await _signIn.PasswordSignInAsync(Email, Password, isPersistent: true, lockoutOnFailure: false);
         if (result.Succeeded)
-            return LocalRedirect(returnUrl ?? "/Manage/Index");
+            return LocalRedirect(returnUrl ?? "/");
 
         ErrorMessage = "Invalid email or password.";
         return Page();

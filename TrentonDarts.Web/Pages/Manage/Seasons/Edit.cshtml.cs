@@ -68,6 +68,6 @@ public class EditModel : PageModel
         s.UpdatedAt = DateTime.UtcNow;
 
         await _db.SaveChangesAsync();
-        return RedirectToPage("Index");
+        return RedirectToPage("Index", new { leagueId = LeagueId });
     }
 }

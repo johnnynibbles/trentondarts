@@ -69,6 +69,6 @@ public class CreateModel : PageModel
 
         _db.Players.Add(player);
         await _db.SaveChangesAsync();
-        return RedirectToPage("Index");
+        return RedirectToPage("Index", new { leagueId = LeagueId });
     }
 }

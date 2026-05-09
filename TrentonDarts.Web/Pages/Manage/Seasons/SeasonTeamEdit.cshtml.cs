@@ -46,6 +46,6 @@ public class SeasonTeamEditModel : PageModel
         st.UpdatedAt = DateTime.UtcNow;
 
         await _db.SaveChangesAsync();
-        return RedirectToPage("Show");
+        return RedirectToPage("Show", new { leagueId = LeagueId, id = Id });
     }
 }

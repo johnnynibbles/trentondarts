@@ -35,6 +35,6 @@ public class ResetStatsModel : PageModel
             await _statsService.UpdateAsync(matchId);
         }
 
-        return RedirectToPage("Show");
+        return RedirectToPage("Show", new { leagueId = LeagueId, id = Id });
     }
 }

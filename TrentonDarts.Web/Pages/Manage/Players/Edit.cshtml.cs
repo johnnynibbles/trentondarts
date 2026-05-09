@@ -72,6 +72,6 @@ public class EditModel : PageModel
         player.UpdatedAt = DateTime.UtcNow;
 
         await _db.SaveChangesAsync();
-        return RedirectToPage("Index");
+        return RedirectToPage("Index", new { leagueId = LeagueId });
     }
 }
