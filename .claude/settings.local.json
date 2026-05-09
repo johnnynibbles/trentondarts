@@ -14,7 +14,22 @@
       "Bash(Select-String -Pattern \"\\(warning|error|Warning|Error\\)\")",
       "Bash(Select-String -NotMatch \"CS\\\\d{4}\")",
       "Bash(git *)",
-      "Bash(Get-ChildItem *)"
+      "Bash(Get-ChildItem *)",
+      "Bash(npm run *)",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "PowerShell(dotnet build *)",
+      "Bash(Select-Object -First 40)",
+      "Bash(dotnet add *)",
+      "Bash(Select-Object Name)",
+      "Bash(dotnet run *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5099/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5099/Manage/1/navigation)",
+      "Bash(kill %1)",
+      "PowerShell(ls *)",
+      "Bash(npm install *)",
+      "Bash(powershell -Command ' *)",
+      "Bash(grep -n \"\\\\\\\\$\\\\|jQuery\\\\|ajax\" C:/dev/trentondarts-dotnet/TrentonDarts.Web/wwwroot/js/scoresheet-edit.js)",
+      "Bash(grep *)"
     ]
   }
 }

@@ -5,39 +5,42 @@
     Layout = "_ManageLayout";
 }
 
-<h2>Documents</h2>
-<a href="/Manage/@Model.LeagueId/documents/upload" class="btn btn-primary">Upload Document</a>
-<br/><br/>
+<h2 class="text-2xl font-bold mb-4" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">Documents</h2>
+<div class="flex flex-wrap gap-2 mb-5">
+    <a href="/Manage/@Model.LeagueId/documents/upload" class="inline-block px-3 py-1.5 rounded text-sm font-medium" style="background:#C8962E;color:#0A0A0B;text-decoration:none">Upload Document</a>
+</div>
 
 @if (!Model.Documents.Any())
 {
-    <p class="text-muted">No documents uploaded yet. Upload PDFs here to make them available in the navigation.</p>
+    <p style="color:#9CA3AF">No documents uploaded yet. Upload PDFs here to make them available in the navigation.</p>
 }
 else
 {
-    <table class="table table-bordered table-condensed table-hover">
+    <div class="glass-card overflow-x-auto">
+    <table class="w-full text-sm">
         <thead>
-            <tr>
-                <th>Title</th>
-                <th>File Name</th>
-                <th>Actions</th>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04)">
+                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Title</th>
+                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">File Name</th>
+                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Actions</th>
             </tr>
         </thead>
         <tbody>
         @foreach (var doc in Model.Documents)
         {
-            <tr>
-                <td>@doc.Title</td>
-                <td><a href="/file/@doc.Id" target="_blank">@doc.FileName</a></td>
-                <td>
-                    <form method="post" asp-page-handler="Delete" style="display:inline">
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.06)"
+                onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background=''">
+                <td class="px-3 py-2" style="color:#F5ECD7">@doc.Title</td>
+                <td class="px-3 py-2"><a href="/file/@doc.Id" target="_blank" style="color:#C8962E;text-decoration:none">@doc.FileName</a></td>
+                <td class="px-3 py-2">
+                    <form method="post" asp-page-handler="Delete" style="display:inline" onsubmit="return confirm('Delete this document?')">
                         <input type="hidden" name="id" value="@doc.Id" />
-                        <button type="submit" class="btn btn-xs btn-danger"
-                                onclick="return confirm('Delete this document?')">Delete</button>
+                        <button type="submit" class="px-2 py-0.5 rounded text-xs font-medium cursor-pointer" style="background:#C8101A;color:#fff;border:none">Delete</button>
                     </form>
                 </td>
             </tr>
         }
         </tbody>
     </table>
+    </div>
 }

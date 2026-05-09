@@ -5,37 +5,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google" content="notranslate">
     <meta name="csrf-token" content="@Antiforgery.GetAndStoreTokens(Context).RequestToken" />
     <title>Greater Trenton Dart League - Manage</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="~/dist/main.css" rel="stylesheet" type="text/css" asp-append-version="true">
 </head>
-<body>
-<div class="container-fluid">
-    <div id="header">
-        <a href="/"><img src="~/images/header.jpg" class="img-rounded" alt="Trenton NJ Dart League" /></a>
-    </div>
-</div>
-<div class="container-fluid">
-    @await Html.PartialAsync("_ManageNav")
-</div>
-<div class="container-fluid">
-    <div id="body-content">
-        @RenderBody()
-    </div>
-    <div id="footer">
-        <div style="width: 190px;" class="pull-left">
-            <a href="http://www.facebook.com/GreaterTrentonDartLeague" target="_blank"><img src="~/images/facebook.png" title="Facebook"></a>
-        </div>
-        <div style="display: block" class="pull-right">
-            <img src="~/images/footer-copy.png" alt="footer" />
-        </div>
-        <div class="clearfix"></div>
-    </div>
-</div>
-<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<body class="min-h-screen flex flex-col" style="background-color:#0A0A0B;color:#F5ECD7">
+
+@await Html.PartialAsync("_ManageNav")
+
+<main class="flex-1 w-full max-w-7xl mx-auto px-4 py-6">
+    @RenderBody()
+</main>
+
+<footer class="py-4 text-center text-xs" style="border-top:1px solid rgba(255,255,255,0.06);color:#6B7280">
+    &copy; Greater Trenton Dart League — <a href="/" style="color:#C8962E;text-decoration:none">Public Site</a>
+</footer>
 
 @await RenderSectionAsync("Scripts", required: false)
 </body>
