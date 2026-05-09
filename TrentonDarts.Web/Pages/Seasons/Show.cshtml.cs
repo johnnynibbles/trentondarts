@@ -32,6 +32,8 @@ public class ShowModel : PageModel
     public List<WinterStatAward> Awards { get; private set; } = new();
     public bool ViewAllAwards { get; private set; }
     public bool IsBoardMember { get; private set; }
+    public int CurrentWeekNumber { get; private set; }
+    public int TotalWeeks { get; private set; }
 
     public async Task<IActionResult> OnGetAsync(int id,
         [FromQuery] string? week, [FromQuery] bool allAwards = false)
@@ -54,6 +56,16 @@ public class ShowModel : PageModel
             : null;
         NextWeekDate = await _seasonService.GetNextWeekDateAsync(Season,
             ResultWeekDate ?? today);
+
+        var allWeekDates = await _db.WinterSeasonWeeks
+            .Where(w => w.SeasonId == Season.Id)
+            .OrderBy(w => w.Date)
+            .Select(w => w.Date)
+            .ToListAsync();
+        TotalWeeks = allWeekDates.Count;
+        CurrentWeekNumber = ResultWeekDate.HasValue
+            ? allWeekDates.IndexOf(ResultWeekDate.Value.Date) + 1
+            : 0;
 
         if (ResultWeekDate.HasValue)
             DivSchedules = await _seasonService.GetWeekScheduleAsync(Season, ResultWeekDate.Value);

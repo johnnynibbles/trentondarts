@@ -7,14 +7,44 @@
 
 <h2 class="text-2xl font-bold mb-5" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">League Management</h2>
 <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-lg">
-    <a href="/Manage/@Model.LeagueId/players" class="glass-card p-4 text-sm font-medium text-center" style="color:#F5ECD7;text-decoration:none;display:block" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background=''">Players</a>
-    <a href="/Manage/@Model.LeagueId/teams" class="glass-card p-4 text-sm font-medium text-center" style="color:#F5ECD7;text-decoration:none;display:block" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background=''">Teams</a>
-    <a href="/Manage/@Model.LeagueId/sponsors" class="glass-card p-4 text-sm font-medium text-center" style="color:#F5ECD7;text-decoration:none;display:block" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background=''">Sponsors</a>
-    <a href="/Manage/@Model.LeagueId/boardmembers" class="glass-card p-4 text-sm font-medium text-center" style="color:#F5ECD7;text-decoration:none;display:block" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background=''">Board Members</a>
-    <a href="/Manage/@Model.LeagueId/matchtypes" class="glass-card p-4 text-sm font-medium text-center" style="color:#F5ECD7;text-decoration:none;display:block" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background=''">Match Types</a>
-    <a href="/Manage/@Model.LeagueId/dartevents" class="glass-card p-4 text-sm font-medium text-center" style="color:#F5ECD7;text-decoration:none;display:block" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background=''">Dart Events</a>
-    <a href="/Manage/@Model.LeagueId/pageparts" class="glass-card p-4 text-sm font-medium text-center" style="color:#F5ECD7;text-decoration:none;display:block" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background=''">Page Parts</a>
-    <a href="/Manage/@Model.LeagueId/documents" class="glass-card p-4 text-sm font-medium text-center" style="color:#F5ECD7;text-decoration:none;display:block" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background=''">Documents</a>
-    <a href="/Manage/@Model.LeagueId/navigation" class="glass-card p-4 text-sm font-medium text-center" style="color:#F5ECD7;text-decoration:none;display:block" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background=''">Navigation</a>
-    <a href="/Manage/@Model.LeagueId/seasons" class="glass-card p-4 text-sm font-medium text-center" style="color:#F5ECD7;text-decoration:none;display:block" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background=''">Seasons</a>
+    <a href="/Manage/@Model.LeagueId/players" class="glass-card p-4 flex flex-col items-center gap-1" style="color:#F5ECD7;text-decoration:none;display:flex" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background=''">
+        <span class="text-2xl font-bold" style="font-family:'Rajdhani',sans-serif;color:#C8962E">@Model.PlayerCount</span>
+        <span class="text-sm font-medium">Players</span>
+    </a>
+    <a href="/Manage/@Model.LeagueId/teams" class="glass-card p-4 flex flex-col items-center gap-1" style="color:#F5ECD7;text-decoration:none;display:flex" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background=''">
+        <span class="text-2xl font-bold" style="font-family:'Rajdhani',sans-serif;color:#C8962E">@Model.TeamCount</span>
+        <span class="text-sm font-medium">Teams</span>
+    </a>
+    <a href="/Manage/@Model.LeagueId/sponsors" class="glass-card p-4 flex flex-col items-center gap-1" style="color:#F5ECD7;text-decoration:none;display:flex" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background=''">
+        <span class="text-2xl font-bold" style="font-family:'Rajdhani',sans-serif;color:#C8962E">@Model.SponsorCount</span>
+        <span class="text-sm font-medium">Sponsors</span>
+    </a>
+    <a href="/Manage/@Model.LeagueId/boardmembers" class="glass-card p-4 flex flex-col items-center gap-1" style="color:#F5ECD7;text-decoration:none;display:flex" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background=''">
+        <span class="text-2xl font-bold" style="font-family:'Rajdhani',sans-serif;color:#C8962E">@Model.BoardMemberCount</span>
+        <span class="text-sm font-medium">Board Members</span>
+    </a>
+    <a href="/Manage/@Model.LeagueId/matchtypes" class="glass-card p-4 flex flex-col items-center gap-1" style="color:#F5ECD7;text-decoration:none;display:flex" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background=''">
+        <span class="text-2xl font-bold" style="font-family:'Rajdhani',sans-serif;color:#C8962E">@Model.MatchTypeCount</span>
+        <span class="text-sm font-medium">Match Types</span>
+    </a>
+    <a href="/Manage/@Model.LeagueId/dartevents" class="glass-card p-4 flex flex-col items-center gap-1" style="color:#F5ECD7;text-decoration:none;display:flex" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background=''">
+        <span class="text-2xl font-bold" style="font-family:'Rajdhani',sans-serif;color:#C8962E">@Model.DartEventCount</span>
+        <span class="text-sm font-medium">Dart Events</span>
+    </a>
+    <a href="/Manage/@Model.LeagueId/pageparts" class="glass-card p-4 flex flex-col items-center gap-1" style="color:#F5ECD7;text-decoration:none;display:flex" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background=''">
+        <span class="text-2xl font-bold" style="font-family:'Rajdhani',sans-serif;color:#C8962E">@Model.PagePartCount</span>
+        <span class="text-sm font-medium">Page Parts</span>
+    </a>
+    <a href="/Manage/@Model.LeagueId/documents" class="glass-card p-4 flex flex-col items-center gap-1" style="color:#F5ECD7;text-decoration:none;display:flex" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background=''">
+        <span class="text-2xl font-bold" style="font-family:'Rajdhani',sans-serif;color:#C8962E">@Model.DocumentCount</span>
+        <span class="text-sm font-medium">Documents</span>
+    </a>
+    <a href="/Manage/@Model.LeagueId/navigation" class="glass-card p-4 flex flex-col items-center gap-1" style="color:#F5ECD7;text-decoration:none;display:flex" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background=''">
+        <span class="text-2xl font-bold" style="font-family:'Rajdhani',sans-serif;color:#C8962E">@Model.NavGroupCount</span>
+        <span class="text-sm font-medium">Navigation</span>
+    </a>
+    <a href="/Manage/@Model.LeagueId/seasons" class="glass-card p-4 flex flex-col items-center gap-1" style="color:#F5ECD7;text-decoration:none;display:flex" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background=''">
+        <span class="text-2xl font-bold" style="font-family:'Rajdhani',sans-serif;color:#C8962E">@Model.SeasonCount</span>
+        <span class="text-sm font-medium">Seasons</span>
+    </a>
 </div>
