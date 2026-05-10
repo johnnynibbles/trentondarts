@@ -1,0 +1,80 @@
+name: trentondarts
+region: nyc
+
+services:
+  - name: web
+    image:
+      registry_type: DOCR
+      registry: trentondarts
+      repository: web
+      deploy_on_push: true
+    http_port: 8080
+    instance_size_slug: apps-s-1vcpu-0.5gb
+    instance_count: 1
+    health_check:
+      http_path: /
+      initial_delay_seconds: 15
+    envs:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+        scope: RUN_TIME
+      - key: ASPNETCORE_FORWARDEDHEADERS_ENABLED
+        value: "true"
+        scope: RUN_TIME
+      - key: ConnectionStrings__DefaultConnection
+        value: ${db.DATABASE_URL}
+        scope: RUN_TIME
+      - key: Storage__ServiceUrl
+        value: https://nyc3.digitaloceanspaces.com
+        scope: RUN_TIME
+      - key: Storage__Region
+        value: nyc3
+        scope: RUN_TIME
+      - key: Storage__BucketName
+        value: trentondarts-assets
+        scope: RUN_TIME
+      - key: Storage__ForcePathStyle
+        value: "false"
+        scope: RUN_TIME
+      - key: Storage__AccessKey
+        scope: RUN_TIME
+        type: SECRET
+      - key: Storage__SecretKey
+        scope: RUN_TIME
+        type: SECRET
+      - key: Storage__PublicBaseUrl
+        scope: RUN_TIME
+        type: SECRET
+      - key: Smtp__Host
+        value: mail.trentondarts.com
+        scope: RUN_TIME
+      - key: Smtp__Port
+        value: "465"
+        scope: RUN_TIME
+      - key: Smtp__UserName
+        value: noreply@trentondarts.com
+        scope: RUN_TIME
+      - key: Smtp__FromAddress
+        value: noreply@trentondarts.com
+        scope: RUN_TIME
+      - key: Smtp__FromName
+        value: Trenton Darts
+        scope: RUN_TIME
+      - key: Smtp__UseSsl
+        value: "true"
+        scope: RUN_TIME
+      - key: Smtp__Password
+        scope: RUN_TIME
+        type: SECRET
+      - key: Turnstile__SiteKey
+        scope: RUN_TIME
+        type: SECRET
+      - key: Turnstile__SecretKey
+        scope: RUN_TIME
+        type: SECRET
+
+databases:
+  - name: db
+    engine: PG
+    version: "16"
+    production: false

@@ -1,0 +1,13 @@
+**/bin/
+**/obj/
+**/.vs/
+**/node_modules/
+TrentonDarts.Web/wwwroot/dist/
+docker-compose.yml
+.git/
+.github/
+*.md
+Tools/
+.playwright-mcp/
+auth-*.png
+design.md
