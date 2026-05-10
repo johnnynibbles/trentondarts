@@ -131,9 +131,11 @@ public class MatchRepository
                 var hasAway = gameResult.AwayPlayers.Any(p => p != null);
                 gameResult.ForfeitedBy = (!hasHome && !hasAway) ? "" : !hasHome ? "home" : !hasAway ? "away" : "";
 
-                // Legs
+                // Legs: prefer explicit array (multi-leg), fall back to single Winner value
                 var legs = new List<string>();
-                if (game.Winner != null)
+                if (game.Legs is { Count: > 0 })
+                    legs = game.Legs.Where(l => !string.IsNullOrEmpty(l)).ToList();
+                else if (game.Winner != null)
                     legs.Add(game.Winner);
                 gameResult.SetLegs(legs);
 
@@ -303,6 +305,6 @@ public record GameDto(
     int Id,
     GamePlayerDto? AwayPlayer, GamePlayerDto? AwayPlayer2, GamePlayerDto? AwayPlayer3,
     GamePlayerDto? HomePlayer, GamePlayerDto? HomePlayer2, GamePlayerDto? HomePlayer3,
-    string? Winner, List<AwardDto>? Awards);
+    string? Winner, List<string>? Legs, List<AwardDto>? Awards);
 public record GamePlayerDto(int Id, string? Name);
 public record AwardDto(int Id, int GameId, string AwardType, int AwardValue, GamePlayerDto? Player);

@@ -201,22 +201,17 @@
                 </div>
                 @foreach (var a in Model.Awards)
                 {
-                    <div class="award-tag clearfix">
-                        <div class="award-header clearfix">
-                            <div class="award-year pull-left">@a.Date.Year</div>
-                            <div class="award-date">@a.Date.ToString("MM-dd")</div>
+                    <div class="flex items-center gap-2 px-3 py-2 text-sm" style="border-bottom:1px solid rgba(255,255,255,0.04)">
+                        <span class="text-xs w-12 shrink-0 tabular-nums" style="color:#6B7280">@a.Date.ToString("MM/dd")</span>
+                        <div class="award-img @a.AwardType.ToLower().Replace(" ","-") shrink-0"></div>
+                        <div class="flex-1 min-w-0">
+                            <div class="truncate" style="color:#F5ECD7">@a.PlayerName</div>
+                            <div class="text-xs truncate" style="color:#6B7280">@a.AwardType</div>
                         </div>
-                        <div class="award-body clearfix">
-                            <div class="award-img @a.AwardType.ToLower().Replace(" ","-")"></div>
-                            <div class="name-tag pull-left">
-                                <div class="player-name">@a.PlayerName</div>
-                                <div class="player-team">@a.TeamName</div>
-                            </div>
-                            @if (a.Value > 0)
-                            {
-                                <div class="award-value pull-right">@a.Value</div>
-                            }
-                        </div>
+                        @if (a.Value > 0)
+                        {
+                            <span class="text-xs font-bold shrink-0 tabular-nums" style="color:#C8962E;font-family:'Rajdhani',sans-serif">@a.Value</span>
+                        }
                     </div>
                 }
             </div>

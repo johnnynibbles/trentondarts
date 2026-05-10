@@ -169,34 +169,20 @@ a:hover { color: #fff; }
   .score-sheet .game-group-header { font-size: 0.9rem; }
 }
 
-/* ── Award tag sprite (background-image sprite — must remain as CSS) ────────  */
-.award-tag {
-  border-radius: 0.75rem;
-  border: 1px solid rgba(255,255,255,0.12);
-  width: 98%;
-  margin: 1%;
-  background: rgba(255,255,255,0.04);
-  color: var(--color-text);
-}
-.award-tag .award-header { font-size: .8em; }
-.award-tag .award-header .award-year { margin-left: 48px; }
-.award-tag .award-header .award-date { margin-right: 5px; text-align: right; }
-.award-tag .award-body { border-top: 1px solid rgba(255,255,255,0.1); }
-.award-tag .award-body .award-img {
-  width: 48px; height: 48px;
-  border-bottom-left-radius: 0.75rem;
+/* ── Award sprite icon (40×40, scaled from 144×144 sprite sheet 3×3 grid of 48px tiles) */
+.award-img {
+  width: 40px; height: 40px; flex-shrink: 0;
   background: #31b0d5 url('../images/award-tags-md.jpg');
+  background-size: 120px 120px;
+  border-radius: 4px;
 }
-.award-tag .award-body .award-img.high-out  { background-position: -48px 0; }
-.award-tag .award-body .award-img.round-9   { background-position: -96px 0; }
-.award-tag .award-body .award-img.ton-71    { background-position: 0 -48px; }
-.award-tag .award-body .award-img.ton-74    { background-position: -48px -48px; }
-.award-tag .award-body .award-img.ton-77    { background-position: -96px -48px; }
-.award-tag .award-body .award-img.ton-80    { background-position: 0 -96px; }
-.award-tag .name-tag { padding: 5px; }
-.award-tag .name-tag .player-name { font-weight: 700; font-size: 1em; }
-.award-tag .name-tag .player-team { font-weight: 700; font-size: .8em; color: var(--color-muted); }
-.award-tag .award-value { padding: 2px; font-size: 1.75em; color: var(--color-gold); }
+.award-img.high-on   { background-position: 0 0; }
+.award-img.high-out  { background-position: -40px 0; }
+.award-img.round-9   { background-position: -80px 0; }
+.award-img.t-71      { background-position: 0 -40px; }
+.award-img.t-74      { background-position: -40px -40px; }
+.award-img.t-77      { background-position: -80px -40px; }
+.award-img.t-80      { background-position: 0 -80px; }
 
 /* ── Misc named classes used across multiple pages ───────────────────────── */
 .clickable-row { cursor: pointer; }

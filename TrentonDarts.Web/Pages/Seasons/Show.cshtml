@@ -78,7 +78,7 @@
                                 <td class="px-3 py-2.5" style="color:#9CA3AF">@m.Division</td>
                                 <td class="px-3 py-2.5">@m.AwayTeamName</td>
                                 <td class="px-3 py-2.5 text-center font-mono font-semibold" style="color:#C8962E">
-                                    @(m.HasScorecard ? $"{m.AwayScore} – {m.HomeScore}" : "vs")
+                                    @(m.HasScorecard || m.AwayScore > 0 || m.HomeScore > 0 ? $"{m.AwayScore} – {m.HomeScore}" : "vs")
                                 </td>
                                 <td class="px-3 py-2.5 font-semibold">@m.HomeTeamName</td>
                                 <td class="px-3 py-2.5 text-right">

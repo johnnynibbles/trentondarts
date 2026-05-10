@@ -82,6 +82,7 @@ public class EditModel : PageModel
 
     private async Task<bool> IsBoardMemberAsync()
     {
+        if (User.IsInRole("Admin") || User.IsInRole("Owner")) return true;
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         if (userId == null) return false;
         return await _db.BoardMembers.AnyAsync(b => b.UserId == userId);
