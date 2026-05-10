@@ -1,0 +1,69 @@
+@page "/Manage/{leagueId:int}/users"
+@model TrentonDarts.Web.Pages.Manage.Users.IndexModel
+@{
+    ViewData["Title"] = "Users";
+    Layout = "_ManageLayout";
+}
+
+<h2 class="text-2xl font-bold mb-4" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">Users</h2>
+
+<div class="flex flex-wrap items-center gap-2 mb-5">
+    <input id="user-search" type="search" placeholder="Search users…" autocomplete="off"
+           class="rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12);min-width:200px" />
+</div>
+
+<div class="glass-card overflow-x-auto">
+<table class="w-full text-sm" id="users-table">
+    <thead>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04)">
+            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Name</th>
+            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Email</th>
+            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Role</th>
+            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Player</th>
+            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Board Member</th>
+            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var u in Model.Users)
+    {
+        var role = Model.UserRoles.GetValueOrDefault(u.Id, "—");
+        var player = Model.PlayersByUser.GetValueOrDefault(u.Id, "—");
+        var boardMember = Model.BoardMembersByUser.GetValueOrDefault(u.Id, "—");
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06)"
+            onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background=''">
+            <td class="px-3 py-2">@u.Name</td>
+            <td class="px-3 py-2" style="color:#9CA3AF">@u.Email</td>
+            <td class="px-3 py-2">
+                <span class="px-2 py-0.5 rounded text-xs font-medium"
+                      style="background:rgba(200,150,46,0.15);color:#C8962E">@role</span>
+            </td>
+            <td class="px-3 py-2" style="color:@(player == "—" ? "#6B7280" : "#F5ECD7")">@player</td>
+            <td class="px-3 py-2" style="color:@(boardMember == "—" ? "#6B7280" : "#F5ECD7")">@boardMember</td>
+            <td class="px-3 py-2">
+                <a href="/Manage/@Model.LeagueId/users/@u.Id/edit"
+                   class="inline-block px-2 py-0.5 rounded text-xs font-medium"
+                   style="background:rgba(255,255,255,0.08);color:#F5ECD7;text-decoration:none">Edit</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+</div>
+
+@section Scripts {
+<script>
+(function () {
+    var input = document.getElementById('user-search');
+    var rows = document.querySelectorAll('#users-table tbody tr');
+    input.addEventListener('input', function () {
+        var q = input.value.trim().toLowerCase();
+        rows.forEach(function (row) {
+            var name = row.cells[0].textContent.toLowerCase();
+            var email = row.cells[1].textContent.toLowerCase();
+            row.style.display = (name.includes(q) || email.includes(q)) ? '' : 'none';
+        });
+    });
+})();
+</script>
+}

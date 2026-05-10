@@ -7,6 +7,7 @@
         : "color:#F5ECD7;text-decoration:none";
     bool SiteGroupActive() => IsActive("dartevents") || IsActive("pageparts") || IsActive("navigation") || IsActive("documents");
     bool LeagueGroupActive() => IsActive("players") || IsActive("teams") || IsActive("sponsors") || IsActive("boardmembers") || IsActive("matchtypes");
+    bool CanManageUsers() => User.IsInRole("Owner") || User.IsInRole("Admin");
 }
 <nav style="background:rgba(10,10,11,0.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08);position:sticky;top:0;z-index:50">
     <div class="max-w-7xl mx-auto px-4">
@@ -45,6 +46,10 @@
                     </ul>
                 </li>
                 <li style="list-style:none"><a href="/Manage/@leagueId/seasons" class="px-3 py-2 text-sm rounded-md block" style="@ActiveLinkStyle("seasons")" onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background=''">Seasons</a></li>
+                @if (CanManageUsers())
+                {
+                    <li style="list-style:none"><a href="/Manage/@leagueId/users" class="px-3 py-2 text-sm rounded-md block" style="@ActiveLinkStyle("users")" onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background=''">Users</a></li>
+                }
             </ul>
 
             <div class="hidden md:flex items-center gap-3">
@@ -71,6 +76,10 @@
         <a href="/Manage/@leagueId/boardmembers" class="block py-2 text-sm border-b" style="color:#F5ECD7;text-decoration:none;border-color:rgba(255,255,255,0.05)">Board Members</a>
         <a href="/Manage/@leagueId/matchtypes" class="block py-2 text-sm border-b" style="color:#F5ECD7;text-decoration:none;border-color:rgba(255,255,255,0.05)">Match Types</a>
         <a href="/Manage/@leagueId/seasons" class="block py-2 text-sm border-b" style="color:#F5ECD7;text-decoration:none;border-color:rgba(255,255,255,0.05)">Seasons</a>
+        @if (CanManageUsers())
+        {
+            <a href="/Manage/@leagueId/users" class="block py-2 text-sm border-b" style="color:#F5ECD7;text-decoration:none;border-color:rgba(255,255,255,0.05)">Users</a>
+        }
         <div class="mt-3 pt-3 flex gap-4" style="border-top:1px solid rgba(255,255,255,0.08)">
             <a href="/" class="text-sm" style="color:#6B7280;text-decoration:none">Public Site</a>
             <a href="/Auth/Logout" class="text-sm" style="color:#F5ECD7;text-decoration:none">Logout</a>
