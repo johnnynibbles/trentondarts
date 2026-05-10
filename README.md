@@ -150,6 +150,59 @@ Uses ASP.NET Core Identity with a custom `LaravelPasswordHasher` that accepts th
 
 ---
 
+## Data Migration (MySQL → PostgreSQL)
+
+The script `Tools/migrate-mysql-to-postgres.ps1` converts a phpMyAdmin MySQL dump of the original Laravel database into a PostgreSQL-compatible SQL file.
+
+### One-time import
+
+```powershell
+# 1. Export from MySQL (phpMyAdmin: Export → Quick → SQL, or via CLI)
+mysqldump -u root -p trentondarts > C:\Users\johnn\Downloads\trentondarts_export.sql
+
+# 2. Generate the PostgreSQL SQL file (~20 min — large stats tables)
+.\Tools\migrate-mysql-to-postgres.ps1
+
+# 3. Apply to PostgreSQL
+psql -U postgres -d trentondarts -f '.\Tools\migration-output.sql'
+```
+
+### Re-importing updated data
+
+If you need to refresh from a newer MySQL export, truncate the existing data first:
+
+```sql
+SET session_replication_role = replica;
+TRUNCATE TABLE winter_stats_awards, winter_stats_player_games, winter_stats_team_games,
+  winter_stats_matches, winter_season_team_payments, winter_season_player_payments,
+  winter_game_awards, winter_game_results, winter_match_results, winter_season_matches,
+  winter_season_team_players, winter_season_teams, winter_season_weeks, winter_seasons,
+  match_type_game_rules, dart_event_results, dart_events, page_parts, browsable_files,
+  board_members, teams, players, match_types, sponsors CASCADE;
+SET session_replication_role = DEFAULT;
+```
+
+Then re-run steps 1–3 above. To use a different source file:
+
+```powershell
+.\Tools\migrate-mysql-to-postgres.ps1 -SourceFile "C:\path\to\export.sql"
+```
+
+### What the script handles
+
+- Column renames from MySQL camelCase to EF PascalCase (e.g. `name` → `"Name"`, `id` → `"Id"`)
+- Boolean conversion: MySQL `TINYINT(1)` `0`/`1` → PostgreSQL `false`/`true`
+- Invalid MySQL timestamps (`'0000-00-00 00:00:00'`, `'0000-00-00'`) → `'1970-01-01 00:00:00'`
+- NULL timestamps in non-nullable columns → `'1970-01-01 00:00:00'`
+- `userId` forced to `NULL` in `players` and `board_members` (no Identity mapping)
+- `leagueId` injected as `1` where absent from MySQL data
+- `division` excluded from `winter_stats_*` tables (not in EF entities)
+- Sequence resets after import so new rows don't conflict with migrated IDs
+
+> **Note:** Do not run multiple instances of the script simultaneously — the 101K-row `winter_stats_player_games` table requires significant memory and concurrent runs will crash.
+
+---
+
 ## Database
 
 PostgreSQL via Npgsql EF Core. All entities use soft deletes (`DeletedAt` nullable column) with a global EF query filter. The original MySQL schema used camelCase column names (e.g. `leagueId`, `homeTeamId`) — the .NET EF model preserves those names via `HasColumnName` overrides.
