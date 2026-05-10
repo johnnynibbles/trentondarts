@@ -1,32 +1,38 @@
 @page "/Auth/ConfirmEmail"
 @model TrentonDarts.Web.Pages.Auth.ConfirmEmailModel
 @{
-    ViewData["Title"] = "Confirm Email";
+    ViewData["Title"] = Model.Succeeded ? "Email Confirmed" : "Confirmation Failed";
 }
 
-<div class="flex items-center justify-center min-h-[60vh]">
-    <div class="glass-card p-8 w-full max-w-sm text-center">
+<div class="auth-wrap">
+    <div class="auth-card" style="text-align:center">
         @if (Model.Succeeded)
         {
-            <div class="mb-4" style="color:#1A7A3C">
-                <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto mb-3" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <div class="auth-status-icon success">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
             </div>
-            <h2 class="text-2xl font-bold mb-2" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">Email Confirmed</h2>
-            <p class="text-sm mb-6" style="color:#9CA3AF">Your email address has been verified. You can now sign in.</p>
-            <a href="/Auth/Login" class="block w-full py-2 rounded-lg text-sm font-semibold text-center" style="background:#C8962E;color:#0A0A0B;text-decoration:none">Sign In</a>
+            <div class="auth-eyebrow" style="display:block">Verification Complete</div>
+            <h1 class="auth-title" style="font-size:1.6rem;margin-bottom:0.75rem">Email Confirmed</h1>
+            <p style="color:#9CA3AF;font-size:0.82rem;line-height:1.65;margin-bottom:1.75rem">
+                Your email address has been verified.<br>You can now sign in to your account.
+            </p>
+            <a href="/Auth/Login" class="auth-btn">Sign In</a>
         }
         else
         {
-            <div class="mb-4" style="color:#C8101A">
-                <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto mb-3" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <div class="auth-status-icon error">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
                 </svg>
             </div>
-            <h2 class="text-2xl font-bold mb-2" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">Confirmation Failed</h2>
-            <p class="text-sm mb-6" style="color:#9CA3AF">The confirmation link is invalid or has expired. Please register again or contact support.</p>
-            <a href="/Auth/Register" class="block w-full py-2 rounded-lg text-sm text-center" style="background:rgba(255,255,255,0.08);color:#F5ECD7;text-decoration:none">Back to Register</a>
+            <div class="auth-eyebrow" style="display:block;color:#f87171">Verification Failed</div>
+            <h1 class="auth-title" style="font-size:1.6rem;margin-bottom:0.75rem">Link Expired</h1>
+            <p style="color:#9CA3AF;font-size:0.82rem;line-height:1.65;margin-bottom:1.75rem">
+                The confirmation link is invalid or has expired.<br>Please register again or contact support.
+            </p>
+            <a href="/Auth/Register" class="auth-btn" style="background:rgba(255,255,255,0.08);color:#F5ECD7">Back to Register</a>
         }
     </div>
 </div>

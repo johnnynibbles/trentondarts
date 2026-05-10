@@ -6,6 +6,6 @@
     "migrate": "dotnet ef database update --project TrentonDarts.Web",
     "migrate:add": "dotnet ef migrations add --project TrentonDarts.Web",
     "start": "dotnet run --project TrentonDarts.Web",
-    "dev": "npm run migrate && dotnet run --project TrentonDarts.Web"
+    "dev": "npm run migrate && dotnet run --project TrentonDarts.Web --launch-profile https"
   }
 }

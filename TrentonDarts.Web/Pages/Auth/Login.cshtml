@@ -1,26 +1,29 @@
 @page "/Auth/Login"
 @model TrentonDarts.Web.Pages.Auth.LoginModel
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Sign In";
 }
 
-<div class="flex items-center justify-center min-h-[60vh]">
-    <div class="glass-card p-8 w-full max-w-sm">
-        <h2 class="text-2xl font-bold mb-6 text-center" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">Login</h2>
+<div class="auth-wrap">
+    <div class="auth-card">
+        <div class="auth-eyebrow">Greater Trenton Dart League</div>
+        <h1 class="auth-title">Sign In</h1>
         @if (!string.IsNullOrEmpty(Model.ErrorMessage))
         {
-            <div class="mb-4 p-3 rounded-lg text-sm" style="background:rgba(200,16,26,0.15);color:#fca5a5;border:1px solid rgba(200,16,26,0.3)">@Model.ErrorMessage</div>
+            <div class="auth-error">@Model.ErrorMessage</div>
         }
         <form method="post">
-            <div class="mb-4">
-                <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Email</label>
-                <input asp-for="Email" type="email" class="w-full rounded-lg px-3 py-2 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+            <div class="auth-field">
+                <label class="auth-label" asp-for="Email">Email</label>
+                <input asp-for="Email" type="email" class="auth-input" autocomplete="email" />
             </div>
-            <div class="mb-6">
-                <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Password</label>
-                <input asp-for="Password" type="password" class="w-full rounded-lg px-3 py-2 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+            <div class="auth-field" style="margin-bottom:1.75rem">
+                <label class="auth-label" asp-for="Password">Password</label>
+                <input asp-for="Password" type="password" class="auth-input" autocomplete="current-password" />
             </div>
-            <button type="submit" class="w-full py-2 rounded-lg text-sm font-semibold cursor-pointer" style="background:#C8962E;color:#0A0A0B;border:none">Login</button>
+            <button type="submit" class="auth-btn">Sign In</button>
         </form>
+        <div class="auth-divider"></div>
+        <a href="/Auth/Register" class="auth-btn-ghost">Create an account</a>
     </div>
 </div>

@@ -29,7 +29,32 @@
       "Bash(npm install *)",
       "Bash(powershell -Command ' *)",
       "Bash(grep -n \"\\\\\\\\$\\\\|jQuery\\\\|ajax\" C:/dev/trentondarts-dotnet/TrentonDarts.Web/wwwroot/js/scoresheet-edit.js)",
-      "Bash(grep *)"
+      "Bash(grep *)",
+      "Bash(Select-Object -First 20)",
+      "PowerShell(New-Item *)",
+      "PowerShell(Select-String *)",
+      "Bash(powershell *)",
+      "Bash(Get-Content \"C:\\\\Users\\\\johnn\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--dev-trentondarts-dotnet\\\\a6843a18-2acb-424d-979b-6a28d945f0b6\\\\tasks\\\\bsz3f5mqf.output\")",
+      "Bash(Select-Object -Last 10)",
+      "Bash(Remove-Item \"C:\\\\dev\\\\trentondarts-dotnet\\\\Tools\\\\migration-output.sql\" -ErrorAction SilentlyContinue)",
+      "Bash(Write-Host \"cleared\")",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_snapshot",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_fill_form",
+      "mcp__playwright__browser_take_screenshot",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5042/)",
+      "Bash(Start-Process dotnet *)",
+      "Bash(Start-Sleep -Seconds 5)",
+      "Bash(Write-Host \"Started\")",
+      "Bash(python3 -c ' *)",
+      "Bash(identify \"C:/dev/trentondarts-dotnet/TrentonDarts.Web/wwwroot/images/award-tags-md.jpg\")",
+      "Bash(dir \"C:\\\\dev\\\\trentondarts-dotnet\" /s /b)",
+      "PowerShell(head *)",
+      "Bash(awk '{print $NF}')",
+      "PowerShell(dotnet add *)",
+      "PowerShell(dotnet dev-certs https *)",
+      "PowerShell(git *)"
     ]
   }
 }
