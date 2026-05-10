@@ -24,6 +24,7 @@ builder.Services.AddIdentity<User, IdentityRole>(opts =>
     opts.Password.RequireNonAlphanumeric = false;
     opts.Password.RequireUppercase = false;
     opts.Password.RequiredLength = 6;
+    opts.SignIn.RequireConfirmedAccount = true;
 })
 .AddEntityFrameworkStores<AppDbContext>()
 .AddDefaultTokenProviders();
@@ -41,6 +42,11 @@ builder.Services.AddAntiforgery(opts => opts.HeaderName = "X-CSRF-Token");
 builder.Services.Configure<StorageOptions>(builder.Configuration.GetSection("Storage"));
 builder.Services.AddSingleton<IFileStorageService, S3FileStorageService>();
 builder.Services.AddScoped<BrowsableFileService>();
+
+builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp"));
+builder.Services.Configure<TurnstileOptions>(builder.Configuration.GetSection("Turnstile"));
+builder.Services.AddHttpClient<TurnstileService>();
+builder.Services.AddScoped<SmtpEmailSender>();
 
 builder.Services.AddScoped<NavService>();
 builder.Services.AddScoped<SeasonService>();

@@ -38,6 +38,12 @@ public class LoginModel : PageModel
         if (result.Succeeded)
             return LocalRedirect(returnUrl ?? "/");
 
+        if (result.IsNotAllowed)
+        {
+            ErrorMessage = "Please confirm your email address before signing in.";
+            return Page();
+        }
+
         ErrorMessage = "Invalid email or password.";
         return Page();
     }
