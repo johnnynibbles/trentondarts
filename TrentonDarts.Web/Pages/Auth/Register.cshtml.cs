@@ -15,17 +15,20 @@ public class RegisterModel : PageModel
     private readonly TurnstileService _turnstile;
     private readonly SmtpEmailSender _email;
     private readonly TurnstileOptions _turnstileOpts;
+    private readonly ILogger<RegisterModel> _logger;
 
     public RegisterModel(
         UserManager<User> users,
         TurnstileService turnstile,
         SmtpEmailSender email,
-        IOptions<TurnstileOptions> turnstileOpts)
+        IOptions<TurnstileOptions> turnstileOpts,
+        ILogger<RegisterModel> logger)
     {
         _users = users;
         _turnstile = turnstile;
         _email = email;
         _turnstileOpts = turnstileOpts.Value;
+        _logger = logger;
     }
 
     public string TurnstileSiteKey => _turnstileOpts.SiteKey;
@@ -81,11 +84,18 @@ public class RegisterModel : PageModel
             values: new { userId = user.Id, token = encodedToken },
             protocol: Request.Scheme)!;
 
-        await _email.SendEmailAsync(
-            Email,
-            "Confirm your Trenton Darts account",
-            $"<p>Thanks for registering! Please <a href='{confirmLink}'>click here to confirm your email</a>.</p>" +
-            $"<p>If you didn't register for a Trenton Darts account, you can ignore this email.</p>");
+        try
+        {
+            await _email.SendEmailAsync(
+                Email,
+                "Confirm your Trenton Darts account",
+                $"<p>Thanks for registering! Please <a href='{confirmLink}'>click here to confirm your email</a>.</p>" +
+                $"<p>If you didn't register for a Trenton Darts account, you can ignore this email.</p>");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to send confirmation email to {Email}", Email);
+        }
 
         return RedirectToPage("/Auth/RegisterConfirmation");
     }

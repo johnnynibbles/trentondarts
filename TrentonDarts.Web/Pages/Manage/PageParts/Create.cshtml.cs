@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
@@ -13,6 +14,7 @@ public class PagePartInput
     public string? Html { get; set; }
 }
 
+[Authorize(Roles = "Owner,Admin")]
 public class CreateModel : PageModel
 {
     private readonly AppDbContext _db;

@@ -34,7 +34,7 @@ public class LoginModel : PageModel
     {
         if (!ModelState.IsValid) return Page();
 
-        var result = await _signIn.PasswordSignInAsync(Email, Password, isPersistent: true, lockoutOnFailure: false);
+        var result = await _signIn.PasswordSignInAsync(Email, Password, isPersistent: true, lockoutOnFailure: true);
         if (result.Succeeded)
             return LocalRedirect(returnUrl ?? "/");
 

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using TrentonDarts.Web.Data;
 
 namespace TrentonDarts.Web.Pages.Manage.Players;
@@ -21,7 +22,7 @@ public class EditModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var player = await _db.Players.FindAsync(Id);
+        var player = await _db.Players.FirstOrDefaultAsync(p => p.Id == Id && p.LeagueId == LeagueId);
         if (player == null) return NotFound();
 
         Input = new PlayerInput
@@ -50,7 +51,7 @@ public class EditModel : PageModel
     {
         if (!ModelState.IsValid) return Page();
 
-        var player = await _db.Players.FindAsync(Id);
+        var player = await _db.Players.FirstOrDefaultAsync(p => p.Id == Id && p.LeagueId == LeagueId);
         if (player == null) return NotFound();
 
         player.UserId = Input.UserId;

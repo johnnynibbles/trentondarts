@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TrentonDarts.Web.Data;
 
 namespace TrentonDarts.Web.Pages.Manage.PageParts;
 
+[Authorize(Roles = "Owner,Admin")]
 public class EditModel : PageModel
 {
     private readonly AppDbContext _db;

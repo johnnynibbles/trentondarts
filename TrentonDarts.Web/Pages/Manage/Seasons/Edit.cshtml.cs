@@ -26,7 +26,7 @@ public class EditModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var s = await _db.WinterSeasons.FindAsync(Id);
+        var s = await _db.WinterSeasons.FirstOrDefaultAsync(s => s.Id == Id && s.LeagueId == LeagueId);
         if (s == null) return NotFound();
 
         Input = new SeasonInput
@@ -60,7 +60,7 @@ public class EditModel : PageModel
             return Page();
         }
 
-        var s = await _db.WinterSeasons.FindAsync(Id);
+        var s = await _db.WinterSeasons.FirstOrDefaultAsync(s => s.Id == Id && s.LeagueId == LeagueId);
         if (s == null) return NotFound();
 
         s.Name = Input.Name;

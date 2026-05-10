@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using TrentonDarts.Web.Services;
 
 namespace TrentonDarts.Web.Pages.Manage.Seasons;
 
+[Authorize(Roles = "Owner,Admin")]
 public class ResetStatsModel : PageModel
 {
     private readonly AppDbContext _db;
@@ -23,7 +25,10 @@ public class ResetStatsModel : PageModel
     [BindProperty(SupportsGet = true)]
     public int Id { get; set; }
 
-    public async Task<IActionResult> OnGetAsync()
+    public IActionResult OnGet() =>
+        RedirectToPage("Show", new { leagueId = LeagueId, id = Id });
+
+    public async Task<IActionResult> OnPostAsync()
     {
         var matchIds = await _db.WinterSeasonMatches
             .Where(m => m.SeasonId == Id)

@@ -25,7 +25,7 @@ public class EditModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var team = await _db.Teams.FindAsync(Id);
+        var team = await _db.Teams.FirstOrDefaultAsync(t => t.Id == Id && t.LeagueId == LeagueId);
         if (team == null) return NotFound();
 
         Input = new TeamInput { Name = team.Name, SponsorId = team.SponsorId, Notes = team.Notes };
@@ -41,7 +41,7 @@ public class EditModel : PageModel
             return Page();
         }
 
-        var team = await _db.Teams.FindAsync(Id);
+        var team = await _db.Teams.FirstOrDefaultAsync(t => t.Id == Id && t.LeagueId == LeagueId);
         if (team == null) return NotFound();
 
         team.Name = Input.Name;

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using TrentonDarts.Web.Data;
 
 namespace TrentonDarts.Web.Pages.Manage.Seasons;
 
+[Authorize(Roles = "Owner,Admin")]
 public class ExportPlayersModel : PageModel
 {
     private readonly AppDbContext _db;

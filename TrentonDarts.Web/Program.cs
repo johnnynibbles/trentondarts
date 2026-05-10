@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using TrentonDarts.Web.Authorization;
 using TrentonDarts.Web.Data;
 using TrentonDarts.Web.Data.Entities;
@@ -25,6 +26,9 @@ builder.Services.AddIdentity<User, IdentityRole>(opts =>
     opts.Password.RequireUppercase = false;
     opts.Password.RequiredLength = 6;
     opts.SignIn.RequireConfirmedAccount = true;
+    opts.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    opts.Lockout.MaxFailedAccessAttempts = 5;
+    opts.Lockout.AllowedForNewUsers = true;
 })
 .AddEntityFrameworkStores<AppDbContext>()
 .AddDefaultTokenProviders();
@@ -70,7 +74,6 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
@@ -78,14 +81,20 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Append("X-Content-Type-Options", "nosniff");
+    context.Response.Headers.Append("X-Frame-Options", "SAMEORIGIN");
+    context.Response.Headers.Append("Referrer-Policy", "strict-origin-when-cross-origin");
+    context.Response.Headers.Append("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
+    await next();
+});
+
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-
-// Temporary DB connectivity test endpoint
-app.MapGet("/dbtest", async (AppDbContext db) =>
-    Results.Json(new { players = await db.Players.CountAsync() }));
 
 // Scorecard save endpoint — consumed by scoresheet-edit.js
 app.MapPost("/season/{seasonId:int}/match/{matchId:int}",
@@ -93,10 +102,21 @@ app.MapPost("/season/{seasonId:int}/match/{matchId:int}",
            [FromBody] ScorecardSaveDto data,
            MatchRepository matchRepo,
            UpdateMatchStatsService stats,
+           AppDbContext db,
            HttpContext ctx,
            IAntiforgery antiforgery) =>
     {
         await antiforgery.ValidateRequestAsync(ctx);
+
+        var user = ctx.User;
+        if (!user.IsInRole(Roles.Admin) && !user.IsInRole(Roles.Owner))
+        {
+            var userId = user.FindFirstValue(ClaimTypes.NameIdentifier);
+            var isBoardMember = userId != null && await db.BoardMembers.AnyAsync(b => b.UserId == userId);
+            if (!isBoardMember)
+                return Results.StatusCode(StatusCodes.Status403Forbidden);
+        }
+
         await matchRepo.SaveMatchResultsDataAsync(matchId, data);
         await stats.UpdateAsync(matchId);
         return Results.Ok(new { redirectUrl = $"/season/{seasonId}/schedule" });
