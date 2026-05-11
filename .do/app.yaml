@@ -22,7 +22,7 @@ services:
         value: "true"
         scope: RUN_TIME
       - key: ConnectionStrings__DefaultConnection
-        value: ${db.DATABASE_URL}
+        value: ${trentondarts.DATABASE_URL}
         scope: RUN_TIME
       - key: Storage__ServiceUrl
         value: https://nyc3.digitaloceanspaces.com
@@ -74,10 +74,10 @@ services:
         type: SECRET
 
 databases:
-- cluster_name: app-6640e157-0f32-42d0-b926-dcd9126ced4b
-  db_name: trentondarts
-  db_user: trentondarts
-  engine: PG
-  name: trentondarts
-  production: true
-  version: "18"
+  - cluster_name: app-6640e157-0f32-42d0-b926-dcd9126ced4b
+    db_name: trentondarts
+    db_user: trentondarts
+    engine: PG
+    name: trentondarts
+    production: true
+    version: "18"
