@@ -7,7 +7,8 @@ services:
       registry_type: DOCR
       registry: trentondarts
       repository: web
-      deploy_on_push: true
+      deploy_on_push:
+        enabled: true
     http_port: 8080
     instance_size_slug: apps-s-1vcpu-0.5gb
     instance_count: 1
