@@ -31,7 +31,7 @@ services:
         value: nyc3
         scope: RUN_TIME
       - key: Storage__BucketName
-        value: trentondarts-assets
+        value: gtdl-league
         scope: RUN_TIME
       - key: Storage__ForcePathStyle
         value: "false"
