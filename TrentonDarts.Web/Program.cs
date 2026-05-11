@@ -17,7 +17,23 @@ var builder = WebApplication.CreateBuilder(args);
 
 // EF Core + PostgreSQL
 builder.Services.AddDbContext<AppDbContext>(opts =>
-    opts.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    opts.UseNpgsql(ResolveConnectionString(builder.Configuration)));
+
+// DO App Platform injects DATABASE_URL as a postgres:// URI; Npgsql expects key-value format.
+static string ResolveConnectionString(IConfiguration config)
+{
+    var raw = config.GetConnectionString("DefaultConnection") ?? string.Empty;
+    if (!raw.StartsWith("postgresql://") && !raw.StartsWith("postgres://"))
+        return raw;
+
+    var withoutQuery = raw.Split('?')[0];
+    var uri = new Uri(withoutQuery);
+    var parts = uri.UserInfo.Split(':', 2);
+    var user = Uri.UnescapeDataString(parts[0]);
+    var pass = parts.Length > 1 ? Uri.UnescapeDataString(parts[1]) : string.Empty;
+    var db = uri.AbsolutePath.TrimStart('/');
+    return $"Host={uri.Host};Port={uri.Port};Database={db};Username={user};Password={pass};SSL Mode=Require;Trust Server Certificate=true";
+}
 
 // ASP.NET Core Identity mapped to existing users table
 builder.Services.AddIdentity<User, IdentityRole>(opts =>
