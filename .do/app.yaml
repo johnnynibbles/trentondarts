@@ -74,7 +74,10 @@ services:
         type: SECRET
 
 databases:
-  - name: db
-    engine: PG
-    version: "16"
-    production: false
+- cluster_name: app-6640e157-0f32-42d0-b926-dcd9126ced4b
+  db_name: trentondarts
+  db_user: trentondarts
+  engine: PG
+  name: trentondarts
+  production: true
+  version: "18"

@@ -54,7 +54,12 @@
       "Bash(awk '{print $NF}')",
       "PowerShell(dotnet add *)",
       "PowerShell(dotnet dev-certs https *)",
-      "PowerShell(git *)"
+      "PowerShell(git *)",
+      "Bash(Select-String -Pattern \"\\(error|warning\\) \\(RZ|CS\\)\")",
+      "PowerShell(Get-Process *)",
+      "PowerShell(Get-NetTCPConnection *)",
+      "Bash(Select-String -Pattern \"LocalRedirect\" -List)",
+      "Bash(xargs cat)"
     ]
   }
 }
