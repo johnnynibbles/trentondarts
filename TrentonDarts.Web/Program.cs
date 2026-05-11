@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Antiforgery;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -56,6 +57,9 @@ builder.Services.ConfigureApplicationCookie(opts =>
     opts.LoginPath = "/Auth/Login";
     opts.AccessDeniedPath = "/Auth/Login";
 });
+
+builder.Services.AddDataProtection()
+    .PersistKeysToDbContext<AppDbContext>();
 
 builder.Services.AddAntiforgery(opts => opts.HeaderName = "X-CSRF-Token");
 

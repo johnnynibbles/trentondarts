@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TrentonDarts.Web.Data.Entities;
@@ -5,9 +6,11 @@ using MatchType = TrentonDarts.Web.Data.Entities.MatchType;
 
 namespace TrentonDarts.Web.Data;
 
-public class AppDbContext : IdentityDbContext<User>
+public class AppDbContext : IdentityDbContext<User>, IDataProtectionKeyContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+
+    public DbSet<DataProtectionKey> DataProtectionKeys => Set<DataProtectionKey>();
 
     public DbSet<Player> Players => Set<Player>();
     public DbSet<Team> Teams => Set<Team>();
