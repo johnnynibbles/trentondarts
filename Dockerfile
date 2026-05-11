@@ -4,6 +4,8 @@ WORKDIR /app
 COPY TrentonDarts.Web/ClientApp/package*.json ./
 RUN npm ci
 COPY TrentonDarts.Web/ClientApp ./
+# app.css has @source "../Pages/**/*.cshtml" — supply those files so Tailwind generates the full stylesheet
+COPY TrentonDarts.Web/Pages ../Pages
 RUN npm run build
 # outDir '../wwwroot/dist' → output lands at /wwwroot/dist
 
