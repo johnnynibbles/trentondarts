@@ -4,6 +4,12 @@
     ViewData["Title"] = "Add Page Part";
     Layout = "_ManageLayout";
 }
+@section Scripts {
+    <script src="/dist/tiptap-editor.js"></script>
+    <script>
+        initTipTapEditor('tiptap-editor', 'Input_Html', '');
+    </script>
+}
 
 <h2 class="text-2xl font-bold mb-4" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">Add Page Part</h2>
 <div class="flex flex-wrap gap-2 mb-5">
@@ -22,7 +28,8 @@
     </div>
     <div class="mb-4">
         <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">HTML</label>
-        <textarea asp-for="Input.Html" rows="10" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)"></textarea>
+        <input type="hidden" asp-for="Input.Html" id="Input_Html" />
+        <div id="tiptap-editor" style="border-radius:0.5rem;overflow:hidden"></div>
     </div>
     <div class="flex gap-3 mt-6">
         <button type="submit" class="px-4 py-2 rounded-lg text-sm font-medium cursor-pointer" style="background:#C8962E;color:#0A0A0B;border:none">Save</button>

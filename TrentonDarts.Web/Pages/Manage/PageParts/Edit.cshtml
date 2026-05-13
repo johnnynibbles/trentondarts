@@ -5,32 +5,9 @@
     Layout = "_ManageLayout";
 }
 @section Scripts {
-    <link href="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.snow.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.js"></script>
-    <style>
-        #quill-editor .ql-toolbar { border: none; border-bottom: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.06); border-radius: 0.5rem 0.5rem 0 0; }
-        #quill-editor .ql-container { border: none; border-radius: 0 0 0.5rem 0.5rem; font-size: 14px; }
-        #quill-editor .ql-editor { min-height: 200px; color: #F5ECD7; }
-        #quill-editor .ql-stroke { stroke: #9CA3AF; }
-        #quill-editor .ql-fill { fill: #9CA3AF; }
-        #quill-editor .ql-picker { color: #9CA3AF; }
-        #quill-editor .ql-picker-options { background: #1a1a1b; border-color: rgba(255,255,255,0.12); }
-        #quill-editor button:hover .ql-stroke, #quill-editor .ql-active .ql-stroke { stroke: #C8962E; }
-        #quill-editor button:hover .ql-fill, #quill-editor .ql-active .ql-fill { fill: #C8962E; }
-    </style>
+    <script src="/dist/tiptap-editor.js"></script>
     <script>
-        const quill = new Quill('#quill-editor', { theme: 'snow' });
-        const hiddenInput = document.getElementById('Input_Html');
-
-        // Load existing HTML into the editor
-        if (hiddenInput.value) {
-            quill.clipboard.dangerouslyPasteHTML(hiddenInput.value);
-        }
-
-        // Sync editor content to hidden input before form submit
-        document.querySelector('form').addEventListener('submit', function () {
-            hiddenInput.value = quill.getSemanticHTML();
-        });
+        initTipTapEditor('tiptap-editor', 'Input_Html', document.getElementById('Input_Html').value);
     </script>
 }
 
@@ -52,7 +29,7 @@
     <div class="mb-4">
         <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">HTML</label>
         <input type="hidden" asp-for="Input.Html" id="Input_Html" />
-        <div id="quill-editor" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12);border-radius:0.5rem;min-height:200px"></div>
+        <div id="tiptap-editor" style="border-radius:0.5rem;overflow:hidden"></div>
     </div>
     <div class="flex gap-3 mt-6">
         <button type="submit" class="px-4 py-2 rounded-lg text-sm font-medium cursor-pointer" style="background:#C8962E;color:#0A0A0B;border:none">Save</button>

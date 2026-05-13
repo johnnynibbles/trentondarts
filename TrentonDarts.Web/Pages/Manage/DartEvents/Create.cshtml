@@ -4,6 +4,12 @@
     ViewData["Title"] = "Add Dart Event";
     Layout = "_ManageLayout";
 }
+@section Scripts {
+    <script src="/dist/tiptap-editor.js"></script>
+    <script>
+        initTipTapEditor('tiptap-description', 'Description', '');
+    </script>
+}
 
 <h2 class="text-2xl font-bold mb-4" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">Add Dart Event</h2>
 

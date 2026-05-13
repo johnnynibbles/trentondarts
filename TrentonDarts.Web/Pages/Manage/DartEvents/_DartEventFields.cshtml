@@ -104,7 +104,8 @@
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Description</label>
-    <textarea asp-for="Description" rows="4" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)"></textarea>
+    <input type="hidden" asp-for="Description" id="Description" />
+    <div id="tiptap-description" style="border-radius:0.5rem;overflow:hidden"></div>
 </div>
 <div class="mb-4">
     <label class="flex items-center gap-2 text-sm cursor-pointer" style="color:#F5ECD7">

@@ -7,7 +7,7 @@ export default defineConfig({
     outDir: '../wwwroot/dist',
     emptyOutDir: true,
     rollupOptions: {
-      input: { main: './main.js' },
+      input: { main: './main.js', 'tiptap-editor': './tiptap-editor.js' },
       output: {
         entryFileNames: '[name].js',
         chunkFileNames: '[name].js',
