@@ -6,62 +6,21 @@
 }
 
 @* ── Hero ─────────────────────────────────────────────────────────────────── *@
-<section style="padding:56px 0 64px;border-bottom:1px solid #E5E7EB;margin:0 -24px">
-    <div style="max-width:1200px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1fr;gap:40px;align-items:center">
-        <div>
-            <div style="display:inline-flex;align-items:center;gap:7px;padding:4px 10px;border-radius:100px;background:#EFF6FF;border:1px solid #BFDBFE;font-size:12px;font-weight:600;color:#2563EB;letter-spacing:0.02em;text-transform:uppercase;margin-bottom:18px">
-                <span style="width:7px;height:7px;border-radius:50%;background:#16A34A;display:inline-block;flex-shrink:0"></span>
-                @if (Model.CurrentSeasonId.HasValue)
-                {
-                    <text>Season in progress</text>
-                }
-                else
-                {
-                    <text>Greater Trenton Dart League</text>
-                }
-            </div>
-            <h1 style="font-size:clamp(30px,5vw,54px);font-weight:800;letter-spacing:-0.03em;line-height:1.1;margin-bottom:16px;color:#111827">
-                Greater Trenton<br>Dart League
-            </h1>
-            <p style="font-size:clamp(15px,1.6vw,17px);color:#6B7280;max-width:480px;margin-bottom:32px;line-height:1.65">
-                Competitive darts in Trenton, NJ. Weekly match nights, year-round community. Follow standings, results, and news.
-            </p>
-            <div style="display:flex;gap:10px;flex-wrap:wrap">
-                @if (Model.Standings.Any() && Model.CurrentSeasonId.HasValue)
-                {
-                    <a href="/season/@Model.CurrentSeasonId"
-                       style="display:inline-flex;align-items:center;padding:9px 18px;border-radius:6px;font-size:14px;font-weight:600;background:#2563EB;color:#fff;border:1px solid #2563EB;text-decoration:none">
-                        View Standings
-                    </a>
-                }
-                @if (!User.Identity!.IsAuthenticated)
-                {
-                    <a href="/Auth/Login"
-                       style="display:inline-flex;align-items:center;padding:9px 18px;border-radius:6px;font-size:14px;font-weight:600;background:transparent;color:#374151;border:1px solid #E5E7EB;text-decoration:none">
-                        Member Login
-                    </a>
-                }
-            </div>
-        </div>
-
-        @* Dartboard watermark — desktop only *@
-        <div style="opacity:0.055;pointer-events:none;user-select:none;display:none" class="lg:block">
-            <svg width="260" height="260" viewBox="0 0 260 260" fill="none" aria-hidden="true">
-                <circle cx="130" cy="130" r="126" stroke="#111827" stroke-width="2.5"/>
-                <circle cx="130" cy="130" r="106" stroke="#111827" stroke-width="2"/>
-                <circle cx="130" cy="130" r="86"  stroke="#111827" stroke-width="2"/>
-                <circle cx="130" cy="130" r="66"  stroke="#111827" stroke-width="2"/>
-                <circle cx="130" cy="130" r="48"  stroke="#111827" stroke-width="2"/>
-                <circle cx="130" cy="130" r="32"  stroke="#111827" stroke-width="2"/>
-                <circle cx="130" cy="130" r="18"  stroke="#111827" stroke-width="2"/>
-                <circle cx="130" cy="130" r="7"   stroke="#111827" stroke-width="2"/>
-                <line x1="130" y1="4"   x2="130" y2="256" stroke="#111827" stroke-width="1.5"/>
-                <line x1="4"   y1="130" x2="256" y2="130" stroke="#111827" stroke-width="1.5"/>
-                <line x1="46"  y1="46"  x2="214" y2="214" stroke="#111827" stroke-width="1.2"/>
-                <line x1="214" y1="46"  x2="46"  y2="214" stroke="#111827" stroke-width="1.2"/>
-            </svg>
+<section style="border-bottom:1px solid #E5E7EB;margin:0 -24px">
+    <div style="max-width:1200px;margin:0 auto;padding:24px 24px 20px">
+        <div style="display:inline-flex;align-items:center;gap:7px;padding:4px 10px;border-radius:100px;background:#EFF6FF;border:1px solid #BFDBFE;font-size:12px;font-weight:600;color:#2563EB;letter-spacing:0.02em;text-transform:uppercase">
+            <span style="width:7px;height:7px;border-radius:50%;background:#16A34A;display:inline-block;flex-shrink:0"></span>
+            @if (Model.CurrentSeasonId.HasValue)
+            {
+                <text>Season in progress</text>
+            }
+            else
+            {
+                <text>Greater Trenton Dart League</text>
+            }
         </div>
     </div>
+    <img src="/images/trenton-makes-thin.jpg" alt="Trenton Makes, The World Takes" style="width:100%;height:auto;display:block">
 </section>
 
 @* ── Main: content + sidebar ──────────────────────────────────────────────── *@
