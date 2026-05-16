@@ -1,18 +1,18 @@
-@page "/Manage/{leagueId:int}"
+﻿@page "/Manage/{leagueId:int}"
 @model TrentonDarts.Web.Pages.Manage.IndexModel
 @{
     ViewData["Title"] = "Manage";
     Layout = "_ManageLayout";
 }
 
-<h2 class="text-2xl font-bold mb-5" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">League Management</h2>
+<h2 class="text-2xl font-bold mb-5" style="color:#111827">League Management</h2>
 
 @if (Model.CurrentSeason != null)
 {
-    <div class="glass-card p-5 mb-6" style="border-left:2px solid #C8962E">
-        <p class="text-xs font-semibold uppercase tracking-widest mb-1" style="color:#C8962E">Active Season</p>
-        <h3 class="text-xl font-bold mb-1" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">@Model.CurrentSeason.Name</h3>
-        <p class="text-sm mb-4" style="color:#9CA3AF">
+    <div class="glass-card p-5 mb-6" style="border-left:2px solid #2563EB">
+        <p class="text-xs font-semibold uppercase tracking-widest mb-1" style="color:#2563EB">Active Season</p>
+        <h3 class="text-xl font-bold mb-1" style="color:#111827">@Model.CurrentSeason.Name</h3>
+        <p class="text-sm mb-4" style="color:#6B7280">
             @Model.CurrentSeasonTeamCount team@(Model.CurrentSeasonTeamCount != 1 ? "s" : "")
             @if (Model.CurrentSeasonTotalWeeks > 0)
             {
@@ -23,30 +23,30 @@
         <div class="flex flex-wrap gap-2">
             <a href="/Manage/@Model.LeagueId/seasons/@Model.CurrentSeason.Id"
                class="inline-block px-3 py-1.5 rounded text-sm font-medium"
-               style="background:#C8962E;color:#0A0A0B;text-decoration:none">
+               style="background:#2563EB;color:#fff;text-decoration:none">
                 <i class="fa-solid fa-calendar-days mr-1.5"></i>Manage Season
             </a>
             <a href="/season/@Model.CurrentSeason.Id/schedule"
                class="inline-block px-3 py-1.5 rounded text-sm font-medium"
-               style="background:rgba(255,255,255,0.08);color:#F5ECD7;text-decoration:none">
-                <i class="fa-solid fa-table-list mr-1.5" style="color:#9CA3AF"></i>View Schedule
+               style="background:#F3F4F6;color:#374151;border:1px solid #E5E7EB;text-decoration:none">
+                <i class="fa-solid fa-table-list mr-1.5" style="color:#6B7280"></i>View Schedule
             </a>
             <a href="/Manage/@Model.LeagueId/seasons/@Model.CurrentSeason.Id/exportPlayers"
                class="inline-block px-3 py-1.5 rounded text-sm font-medium"
-               style="background:rgba(255,255,255,0.08);color:#F5ECD7;text-decoration:none">
-                <i class="fa-solid fa-file-csv mr-1.5" style="color:#9CA3AF"></i>Export Players
+               style="background:#F3F4F6;color:#374151;border:1px solid #E5E7EB;text-decoration:none">
+                <i class="fa-solid fa-file-csv mr-1.5" style="color:#6B7280"></i>Export Players
             </a>
         </div>
     </div>
 }
 else
 {
-    <div class="glass-card p-5 mb-6" style="border-left:2px solid rgba(255,255,255,0.15)">
+    <div class="glass-card p-5 mb-6" style="border-left:2px solid #E5E7EB">
         <p class="text-xs font-semibold uppercase tracking-widest mb-1" style="color:#6B7280">No Active Season</p>
-        <p class="text-sm mb-3" style="color:#9CA3AF">No season is currently marked as active.</p>
+        <p class="text-sm mb-3" style="color:#6B7280">No season is currently marked as active.</p>
         <a href="/Manage/@Model.LeagueId/seasons"
            class="inline-block px-3 py-1.5 rounded text-sm font-medium"
-           style="background:rgba(255,255,255,0.08);color:#F5ECD7;text-decoration:none">
+           style="background:#F3F4F6;color:#374151;border:1px solid #E5E7EB;text-decoration:none">
             View Seasons
         </a>
     </div>
@@ -55,95 +55,95 @@ else
 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-3">
     <a href="/Manage/@Model.LeagueId/players"
        class="glass-card p-4 flex flex-col items-center gap-1.5 transition-colors"
-       style="color:#F5ECD7;text-decoration:none"
-       onmouseover="this.style.background='rgba(255,255,255,0.08)'"
+       style="color:#111827;text-decoration:none"
+       onmouseover="this.style.background='#F3F4F6'"
        onmouseout="this.style.background=''">
-        <i class="fa-solid fa-user" style="color:#C8962E"></i>
-        <span class="text-2xl font-bold" style="font-family:'Rajdhani',sans-serif">@Model.PlayerCount</span>
-        <span class="text-xs" style="color:#9CA3AF">Players</span>
+        <i class="fa-solid fa-user" style="color:#2563EB"></i>
+        <span class="text-2xl font-bold" style="">@Model.PlayerCount</span>
+        <span class="text-xs" style="color:#6B7280">Players</span>
     </a>
     <a href="/Manage/@Model.LeagueId/teams"
        class="glass-card p-4 flex flex-col items-center gap-1.5 transition-colors"
-       style="color:#F5ECD7;text-decoration:none"
-       onmouseover="this.style.background='rgba(255,255,255,0.08)'"
+       style="color:#111827;text-decoration:none"
+       onmouseover="this.style.background='#F3F4F6'"
        onmouseout="this.style.background=''">
-        <i class="fa-solid fa-shield-halved" style="color:#C8962E"></i>
-        <span class="text-2xl font-bold" style="font-family:'Rajdhani',sans-serif">@Model.TeamCount</span>
-        <span class="text-xs" style="color:#9CA3AF">Teams</span>
+        <i class="fa-solid fa-shield-halved" style="color:#2563EB"></i>
+        <span class="text-2xl font-bold" style="">@Model.TeamCount</span>
+        <span class="text-xs" style="color:#6B7280">Teams</span>
     </a>
     <a href="/Manage/@Model.LeagueId/boardmembers"
        class="glass-card p-4 flex flex-col items-center gap-1.5 transition-colors"
-       style="color:#F5ECD7;text-decoration:none"
-       onmouseover="this.style.background='rgba(255,255,255,0.08)'"
+       style="color:#111827;text-decoration:none"
+       onmouseover="this.style.background='#F3F4F6'"
        onmouseout="this.style.background=''">
-        <i class="fa-solid fa-user-tie" style="color:#C8962E"></i>
-        <span class="text-2xl font-bold" style="font-family:'Rajdhani',sans-serif">@Model.BoardMemberCount</span>
-        <span class="text-xs" style="color:#9CA3AF">Board Members</span>
+        <i class="fa-solid fa-user-tie" style="color:#2563EB"></i>
+        <span class="text-2xl font-bold" style="">@Model.BoardMemberCount</span>
+        <span class="text-xs" style="color:#6B7280">Board Members</span>
     </a>
     <a href="/Manage/@Model.LeagueId/sponsors"
        class="glass-card p-4 flex flex-col items-center gap-1.5 transition-colors"
-       style="color:#F5ECD7;text-decoration:none"
-       onmouseover="this.style.background='rgba(255,255,255,0.08)'"
+       style="color:#111827;text-decoration:none"
+       onmouseover="this.style.background='#F3F4F6'"
        onmouseout="this.style.background=''">
-        <i class="fa-solid fa-handshake" style="color:#C8962E"></i>
-        <span class="text-2xl font-bold" style="font-family:'Rajdhani',sans-serif">@Model.SponsorCount</span>
-        <span class="text-xs" style="color:#9CA3AF">Sponsors</span>
+        <i class="fa-solid fa-handshake" style="color:#2563EB"></i>
+        <span class="text-2xl font-bold" style="">@Model.SponsorCount</span>
+        <span class="text-xs" style="color:#6B7280">Sponsors</span>
     </a>
     <a href="/Manage/@Model.LeagueId/seasons"
        class="glass-card p-4 flex flex-col items-center gap-1.5 transition-colors"
-       style="color:#F5ECD7;text-decoration:none"
-       onmouseover="this.style.background='rgba(255,255,255,0.08)'"
+       style="color:#111827;text-decoration:none"
+       onmouseover="this.style.background='#F3F4F6'"
        onmouseout="this.style.background=''">
-        <i class="fa-solid fa-calendar-week" style="color:#C8962E"></i>
-        <span class="text-2xl font-bold" style="font-family:'Rajdhani',sans-serif">@Model.SeasonCount</span>
-        <span class="text-xs" style="color:#9CA3AF">Seasons</span>
+        <i class="fa-solid fa-calendar-week" style="color:#2563EB"></i>
+        <span class="text-2xl font-bold" style="">@Model.SeasonCount</span>
+        <span class="text-xs" style="color:#6B7280">Seasons</span>
     </a>
 </div>
 
 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
     <a href="/Manage/@Model.LeagueId/matchtypes"
        class="glass-card p-4 flex flex-col items-center gap-1.5 transition-colors"
-       style="color:#F5ECD7;text-decoration:none"
-       onmouseover="this.style.background='rgba(255,255,255,0.08)'"
+       style="color:#111827;text-decoration:none"
+       onmouseover="this.style.background='#F3F4F6'"
        onmouseout="this.style.background=''">
-        <i class="fa-solid fa-dice" style="color:#C8962E"></i>
-        <span class="text-2xl font-bold" style="font-family:'Rajdhani',sans-serif">@Model.MatchTypeCount</span>
-        <span class="text-xs" style="color:#9CA3AF">Match Types</span>
+        <i class="fa-solid fa-dice" style="color:#2563EB"></i>
+        <span class="text-2xl font-bold" style="">@Model.MatchTypeCount</span>
+        <span class="text-xs" style="color:#6B7280">Match Types</span>
     </a>
     <a href="/Manage/@Model.LeagueId/dartevents"
        class="glass-card p-4 flex flex-col items-center gap-1.5 transition-colors"
-       style="color:#F5ECD7;text-decoration:none"
-       onmouseover="this.style.background='rgba(255,255,255,0.08)'"
+       style="color:#111827;text-decoration:none"
+       onmouseover="this.style.background='#F3F4F6'"
        onmouseout="this.style.background=''">
-        <i class="fa-solid fa-bullseye" style="color:#C8962E"></i>
-        <span class="text-2xl font-bold" style="font-family:'Rajdhani',sans-serif">@Model.DartEventCount</span>
-        <span class="text-xs" style="color:#9CA3AF">Dart Events</span>
+        <i class="fa-solid fa-bullseye" style="color:#2563EB"></i>
+        <span class="text-2xl font-bold" style="">@Model.DartEventCount</span>
+        <span class="text-xs" style="color:#6B7280">Dart Events</span>
     </a>
     <a href="/Manage/@Model.LeagueId/pageparts"
        class="glass-card p-4 flex flex-col items-center gap-1.5 transition-colors"
-       style="color:#F5ECD7;text-decoration:none"
-       onmouseover="this.style.background='rgba(255,255,255,0.08)'"
+       style="color:#111827;text-decoration:none"
+       onmouseover="this.style.background='#F3F4F6'"
        onmouseout="this.style.background=''">
-        <i class="fa-solid fa-file-lines" style="color:#C8962E"></i>
-        <span class="text-2xl font-bold" style="font-family:'Rajdhani',sans-serif">@Model.PagePartCount</span>
-        <span class="text-xs" style="color:#9CA3AF">Page Parts</span>
+        <i class="fa-solid fa-file-lines" style="color:#2563EB"></i>
+        <span class="text-2xl font-bold" style="">@Model.PagePartCount</span>
+        <span class="text-xs" style="color:#6B7280">Page Parts</span>
     </a>
     <a href="/Manage/@Model.LeagueId/documents"
        class="glass-card p-4 flex flex-col items-center gap-1.5 transition-colors"
-       style="color:#F5ECD7;text-decoration:none"
-       onmouseover="this.style.background='rgba(255,255,255,0.08)'"
+       style="color:#111827;text-decoration:none"
+       onmouseover="this.style.background='#F3F4F6'"
        onmouseout="this.style.background=''">
-        <i class="fa-solid fa-folder-open" style="color:#C8962E"></i>
-        <span class="text-2xl font-bold" style="font-family:'Rajdhani',sans-serif">@Model.DocumentCount</span>
-        <span class="text-xs" style="color:#9CA3AF">Documents</span>
+        <i class="fa-solid fa-folder-open" style="color:#2563EB"></i>
+        <span class="text-2xl font-bold" style="">@Model.DocumentCount</span>
+        <span class="text-xs" style="color:#6B7280">Documents</span>
     </a>
     <a href="/Manage/@Model.LeagueId/navigation"
        class="glass-card p-4 flex flex-col items-center gap-1.5 transition-colors"
-       style="color:#F5ECD7;text-decoration:none"
-       onmouseover="this.style.background='rgba(255,255,255,0.08)'"
+       style="color:#111827;text-decoration:none"
+       onmouseover="this.style.background='#F3F4F6'"
        onmouseout="this.style.background=''">
-        <i class="fa-solid fa-bars" style="color:#C8962E"></i>
-        <span class="text-2xl font-bold" style="font-family:'Rajdhani',sans-serif">@Model.NavGroupCount</span>
-        <span class="text-xs" style="color:#9CA3AF">Navigation</span>
+        <i class="fa-solid fa-bars" style="color:#2563EB"></i>
+        <span class="text-2xl font-bold" style="">@Model.NavGroupCount</span>
+        <span class="text-xs" style="color:#6B7280">Navigation</span>
     </a>
 </div>

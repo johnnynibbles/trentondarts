@@ -1,62 +1,62 @@
-@page "/Manage/{leagueId:int}/navigation"
+﻿@page "/Manage/{leagueId:int}/navigation"
 @model TrentonDarts.Web.Pages.Manage.Navigation.NavigationIndexModel
 @{
     ViewData["Title"] = "Navigation";
     Layout = "_ManageLayout";
 }
 
-<h2 class="text-2xl font-bold mb-4" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">Navigation</h2>
+<h2 class="text-2xl font-bold mb-4" style="color:#111827">Navigation</h2>
 <div class="flex flex-wrap gap-2 mb-5">
-    <a href="/Manage/@Model.LeagueId" class="inline-block px-3 py-1.5 rounded text-sm font-medium" style="background:rgba(255,255,255,0.08);color:#F5ECD7;text-decoration:none">Back</a>
-    <a href="/Manage/@Model.LeagueId/navigation/group/create" class="inline-block px-3 py-1.5 rounded text-sm font-medium" style="background:#C8962E;color:#0A0A0B;text-decoration:none">New Group</a>
+    <a href="/Manage/@Model.LeagueId" class="inline-block px-3 py-1.5 rounded text-sm font-medium" style="background:#F3F4F6;color:#374151;border:1px solid #E5E7EB;text-decoration:none">Back</a>
+    <a href="/Manage/@Model.LeagueId/navigation/group/create" class="inline-block px-3 py-1.5 rounded text-sm font-medium" style="background:#2563EB;color:#fff;text-decoration:none">New Group</a>
 </div>
 
 @if (!Model.Groups.Any())
 {
-    <p style="color:#9CA3AF">No navigation groups yet. Create one to get started.</p>
+    <p style="color:#6B7280">No navigation groups yet. Create one to get started.</p>
 }
 else
 {
     @foreach (var group in Model.Groups)
     {
         <div class="glass-card mb-4">
-            <div class="px-4 py-3 flex items-center justify-between" style="border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04)">
+            <div class="px-4 py-3 flex items-center justify-between" style="border-bottom:1px solid #E5E7EB;background:#F9FAFB">
                 <div>
-                    <span class="font-semibold text-sm" style="color:#F5ECD7">@group.Title</span>
-                    <span class="text-xs ml-2" style="color:#9CA3AF">(@group.Items.Count items, order: @group.SortOrder)</span>
+                    <span class="font-semibold text-sm" style="color:#111827">@group.Title</span>
+                    <span class="text-xs ml-2" style="color:#6B7280">(@group.Items.Count items, order: @group.SortOrder)</span>
                 </div>
                 <div class="flex items-center gap-1">
                     <form method="post" style="display:inline">
                         <input type="hidden" name="groupId" value="@group.Id" />
-                        <button type="submit" asp-page-handler="MoveGroupUp" class="px-2 py-0.5 rounded text-xs font-medium cursor-pointer" style="background:rgba(255,255,255,0.08);color:#F5ECD7;border:none">↑</button>
-                        <button type="submit" asp-page-handler="MoveGroupDown" class="px-2 py-0.5 rounded text-xs font-medium cursor-pointer" style="background:rgba(255,255,255,0.08);color:#F5ECD7;border:none">↓</button>
+                        <button type="submit" asp-page-handler="MoveGroupUp" class="px-2 py-0.5 rounded text-xs font-medium cursor-pointer" style="background:#F3F4F6;color:#374151;border:1px solid #E5E7EB;border:none">↑</button>
+                        <button type="submit" asp-page-handler="MoveGroupDown" class="px-2 py-0.5 rounded text-xs font-medium cursor-pointer" style="background:#F3F4F6;color:#374151;border:1px solid #E5E7EB;border:none">↓</button>
                     </form>
-                    <a href="/Manage/@Model.LeagueId/navigation/group/@group.Id/edit" class="inline-block px-2 py-0.5 rounded text-xs font-medium" style="background:rgba(255,255,255,0.08);color:#F5ECD7;text-decoration:none">Edit</a>
+                    <a href="/Manage/@Model.LeagueId/navigation/group/@group.Id/edit" class="inline-block px-2 py-0.5 rounded text-xs font-medium" style="background:#F3F4F6;color:#374151;border:1px solid #E5E7EB;text-decoration:none">Edit</a>
                     <form method="post" style="display:inline" onsubmit="return confirm('Delete this group and all its items?')">
                         <input type="hidden" name="groupId" value="@group.Id" />
-                        <button type="submit" asp-page-handler="DeleteGroup" class="px-2 py-0.5 rounded text-xs font-medium cursor-pointer" style="background:#C8101A;color:#fff;border:none">Delete</button>
+                        <button type="submit" asp-page-handler="DeleteGroup" class="px-2 py-0.5 rounded text-xs font-medium cursor-pointer" style="background:#DC2626;color:#fff;border:none">Delete</button>
                     </form>
                 </div>
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full text-sm">
                     <thead>
-                        <tr style="border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04)">
-                            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Title</th>
-                            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Type</th>
-                            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">URL / Document</th>
-                            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF"></th>
+                        <tr style="border-bottom:1px solid #E5E7EB;background:#F9FAFB">
+                            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#6B7280">Title</th>
+                            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#6B7280">Type</th>
+                            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#6B7280">URL / Document</th>
+                            <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#6B7280"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in group.Items)
                         {
-                            <tr style="border-bottom:1px solid rgba(255,255,255,0.06)"
-                                onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background=''">
-                                <td class="px-3 py-2" style="color:#F5ECD7">
+                            <tr style="border-bottom:1px solid #F3F4F6"
+                                onmouseover="this.style.background='#F9FAFB'" onmouseout="this.style.background=''">
+                                <td class="px-3 py-2" style="color:#111827">
                                     @item.Title
-                                    @if (item.IsHeader) { <span class="ml-1 px-1.5 py-0.5 rounded text-xs" style="background:rgba(255,255,255,0.1);color:#9CA3AF">Header</span> }
-                                    @if (item.IsSeparator) { <span class="ml-1 px-1.5 py-0.5 rounded text-xs" style="background:rgba(255,255,255,0.1);color:#9CA3AF">Divider</span> }
+                                    @if (item.IsHeader) { <span class="ml-1 px-1.5 py-0.5 rounded text-xs" style="background:#E5E7EB;color:#6B7280">Header</span> }
+                                    @if (item.IsSeparator) { <span class="ml-1 px-1.5 py-0.5 rounded text-xs" style="background:#E5E7EB;color:#6B7280">Divider</span> }
                                 </td>
                                 <td class="px-3 py-2">
                                     @switch (item.ItemType)
@@ -72,7 +72,7 @@ else
                                             break;
                                     }
                                 </td>
-                                <td class="px-3 py-2 text-xs" style="color:#9CA3AF;max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">
+                                <td class="px-3 py-2 text-xs" style="color:#6B7280;max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">
                                     @if (item.ItemType == TrentonDarts.Web.Data.Entities.NavItemType.Document)
                                     {
                                         @(item.BrowsableFile?.Title ?? item.BrowsableFile?.FileName ?? "—")
@@ -85,13 +85,13 @@ else
                                 <td class="px-3 py-2" style="white-space:nowrap">
                                     <form method="post" style="display:inline">
                                         <input type="hidden" name="itemId" value="@item.Id" />
-                                        <button type="submit" asp-page-handler="MoveItemUp" class="px-2 py-0.5 rounded text-xs font-medium cursor-pointer" style="background:rgba(255,255,255,0.08);color:#F5ECD7;border:none">↑</button>
-                                        <button type="submit" asp-page-handler="MoveItemDown" class="px-2 py-0.5 rounded text-xs font-medium cursor-pointer" style="background:rgba(255,255,255,0.08);color:#F5ECD7;border:none">↓</button>
+                                        <button type="submit" asp-page-handler="MoveItemUp" class="px-2 py-0.5 rounded text-xs font-medium cursor-pointer" style="background:#F3F4F6;color:#374151;border:1px solid #E5E7EB;border:none">↑</button>
+                                        <button type="submit" asp-page-handler="MoveItemDown" class="px-2 py-0.5 rounded text-xs font-medium cursor-pointer" style="background:#F3F4F6;color:#374151;border:1px solid #E5E7EB;border:none">↓</button>
                                     </form>
-                                    <a href="/Manage/@Model.LeagueId/navigation/group/@group.Id/item/@item.Id/edit" class="inline-block px-2 py-0.5 rounded text-xs font-medium" style="background:rgba(255,255,255,0.08);color:#F5ECD7;text-decoration:none">Edit</a>
+                                    <a href="/Manage/@Model.LeagueId/navigation/group/@group.Id/item/@item.Id/edit" class="inline-block px-2 py-0.5 rounded text-xs font-medium" style="background:#F3F4F6;color:#374151;border:1px solid #E5E7EB;text-decoration:none">Edit</a>
                                     <form method="post" style="display:inline" onsubmit="return confirm('Delete this item?')">
                                         <input type="hidden" name="itemId" value="@item.Id" />
-                                        <button type="submit" asp-page-handler="DeleteItem" class="px-2 py-0.5 rounded text-xs font-medium cursor-pointer" style="background:#C8101A;color:#fff;border:none">Delete</button>
+                                        <button type="submit" asp-page-handler="DeleteItem" class="px-2 py-0.5 rounded text-xs font-medium cursor-pointer" style="background:#DC2626;color:#fff;border:none">Delete</button>
                                     </form>
                                 </td>
                             </tr>
@@ -99,7 +99,7 @@ else
                     </tbody>
                 </table>
                 <div class="px-3 py-2">
-                    <a href="/Manage/@Model.LeagueId/navigation/group/@group.Id/item/create" class="inline-block px-3 py-1.5 rounded text-sm font-medium" style="background:#C8962E;color:#0A0A0B;text-decoration:none">+ Add Item</a>
+                    <a href="/Manage/@Model.LeagueId/navigation/group/@group.Id/item/create" class="inline-block px-3 py-1.5 rounded text-sm font-medium" style="background:#2563EB;color:#fff;text-decoration:none">+ Add Item</a>
                 </div>
             </div>
         </div>

@@ -1,4 +1,4 @@
-@model TrentonDarts.Web.Pages.Manage.Seasons.SeasonInput
+﻿@model TrentonDarts.Web.Pages.Manage.Seasons.SeasonInput
 @{
     var matchTypes = ViewData["MatchTypes"] as List<TrentonDarts.Web.Data.Entities.MatchType>
                      ?? new List<TrentonDarts.Web.Data.Entities.MatchType>();
@@ -6,23 +6,23 @@
 
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Name *</label>
-    <input asp-for="Name" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="Name" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
     <span asp-validation-for="Name" class="text-xs mt-1 block" style="color:#C8101A"></span>
 </div>
 
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Start Year *</label>
-    <input asp-for="StartYear" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" type="number" />
+    <input asp-for="StartYear" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" type="number" />
 </div>
 
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">End Year *</label>
-    <input asp-for="EndYear" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" type="number" />
+    <input asp-for="EndYear" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" type="number" />
 </div>
 
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Season Type</label>
-    <select asp-for="SeasonType" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)">
+    <select asp-for="SeasonType" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB">
         <option value="">-- select --</option>
         @foreach (var opt in new[] { ("winter","Winter"), ("summer","Summer") })
         {
@@ -34,7 +34,7 @@
 
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Default Match Type</label>
-    <select asp-for="DefaultMatchTypeId" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)">
+    <select asp-for="DefaultMatchTypeId" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB">
         <option value="">-- none --</option>
         @foreach (var mt in matchTypes)
         {
@@ -45,21 +45,21 @@
 </div>
 
 <div class="mb-4">
-    <label class="flex items-center gap-2 text-sm cursor-pointer" style="color:#F5ECD7">
+    <label class="flex items-center gap-2 text-sm cursor-pointer" style="color:#111827">
         <input asp-for="IsCurrent" type="checkbox" class="rounded" />
         Is Current Season
     </label>
 </div>
 
 <div class="mb-4">
-    <label class="flex items-center gap-2 text-sm cursor-pointer" style="color:#F5ECD7">
+    <label class="flex items-center gap-2 text-sm cursor-pointer" style="color:#111827">
         <input asp-for="AccumulatePointsForAllParts" type="checkbox" class="rounded" />
         Accumulate Points for All Parts
     </label>
 </div>
 
 <div class="mb-4">
-    <label class="flex items-center gap-2 text-sm cursor-pointer" style="color:#F5ECD7">
+    <label class="flex items-center gap-2 text-sm cursor-pointer" style="color:#111827">
         <input asp-for="IsUsingMatchPoints" type="checkbox" class="rounded" />
         Use Match Points
     </label>
@@ -68,17 +68,17 @@
 <div id="matchPointsGroup">
     <div class="mb-4">
         <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Win Points *</label>
-        <input asp-for="WinPoints" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" type="number" min="1" />
+        <input asp-for="WinPoints" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" type="number" min="1" />
         <span asp-validation-for="WinPoints" class="text-xs mt-1 block" style="color:#C8101A"></span>
     </div>
     <div class="mb-4">
         <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Half Points *</label>
-        <input asp-for="HalfPoints" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" type="number" min="0" />
+        <input asp-for="HalfPoints" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" type="number" min="0" />
         <span asp-validation-for="HalfPoints" class="text-xs mt-1 block" style="color:#C8101A"></span>
     </div>
     <div class="mb-4">
         <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Min for Half Points *</label>
-        <input asp-for="MinPointForHalfPoints" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" type="number" min="0" />
+        <input asp-for="MinPointForHalfPoints" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" type="number" min="0" />
         <span asp-validation-for="MinPointForHalfPoints" class="text-xs mt-1 block" style="color:#C8101A"></span>
     </div>
 </div>

@@ -1,48 +1,48 @@
-@page "/Manage/{leagueId:int}/documents"
+﻿@page "/Manage/{leagueId:int}/documents"
 @model TrentonDarts.Web.Pages.Manage.Documents.DocumentsIndexModel
 @{
     ViewData["Title"] = "Documents";
     Layout = "_ManageLayout";
 }
 
-<h2 class="text-2xl font-bold mb-4" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">Documents</h2>
+<h2 class="text-2xl font-bold mb-4" style="color:#111827">Documents</h2>
 <div class="flex flex-wrap gap-2 mb-5">
-    <a href="/Manage/@Model.LeagueId/documents/upload" class="inline-block px-3 py-1.5 rounded text-sm font-medium" style="background:#C8962E;color:#0A0A0B;text-decoration:none">Upload Document</a>
+    <a href="/Manage/@Model.LeagueId/documents/upload" class="inline-block px-3 py-1.5 rounded text-sm font-medium" style="background:#2563EB;color:#fff;text-decoration:none">Upload Document</a>
 </div>
 
 @if (!Model.Documents.Any())
 {
-    <p style="color:#9CA3AF">No documents uploaded yet. Upload PDFs here to make them available in the navigation.</p>
+    <p style="color:#6B7280">No documents uploaded yet. Upload PDFs here to make them available in the navigation.</p>
 }
 else
 {
     <div class="glass-card overflow-x-auto">
     <table class="w-full text-sm">
         <thead>
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04)">
-                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Title</th>
-                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">File Name</th>
-                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">URL</th>
-                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Actions</th>
+            <tr style="border-bottom:1px solid #E5E7EB;background:#F9FAFB">
+                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#6B7280">Title</th>
+                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#6B7280">File Name</th>
+                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#6B7280">URL</th>
+                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#6B7280">Actions</th>
             </tr>
         </thead>
         <tbody>
         @foreach (var doc in Model.Documents)
         {
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.06)"
-                onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background=''">
+            <tr style="border-bottom:1px solid #F3F4F6"
+                onmouseover="this.style.background='#F9FAFB'" onmouseout="this.style.background=''">
                 @{ var fileUrl = doc.Slug != null ? $"/file/{doc.Slug}" : $"/file/{doc.Id}"; }
-                <td class="px-3 py-2" style="color:#F5ECD7">@doc.Title</td>
-                <td class="px-3 py-2"><a href="@fileUrl" target="_blank" style="color:#C8962E;text-decoration:none">@doc.FileName</a></td>
+                <td class="px-3 py-2" style="color:#111827">@doc.Title</td>
+                <td class="px-3 py-2"><a href="@fileUrl" target="_blank" style="color:#2563EB;text-decoration:none">@doc.FileName</a></td>
                 <td class="px-3 py-2">
-                    <a href="@fileUrl" target="_blank" style="color:#9CA3AF;text-decoration:none;font-size:0.75rem">
+                    <a href="@fileUrl" target="_blank" style="color:#6B7280;text-decoration:none;font-size:0.75rem">
                         @(doc.Slug != null ? $"/file/{doc.Slug}" : $"#{doc.Id}")
                     </a>
                 </td>
                 <td class="px-3 py-2">
                     <form method="post" asp-page-handler="Delete" style="display:inline" onsubmit="return confirm('Delete this document?')">
                         <input type="hidden" name="id" value="@doc.Id" />
-                        <button type="submit" class="px-2 py-0.5 rounded text-xs font-medium cursor-pointer" style="background:#C8101A;color:#fff;border:none">Delete</button>
+                        <button type="submit" class="px-2 py-0.5 rounded text-xs font-medium cursor-pointer" style="background:#DC2626;color:#fff;border:none">Delete</button>
                     </form>
                 </td>
             </tr>

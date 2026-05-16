@@ -1,38 +1,38 @@
-@model TrentonDarts.Web.Pages.Manage.Players.PlayerInput
+﻿@model TrentonDarts.Web.Pages.Manage.Players.PlayerInput
 
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">User ID</label>
-    <input asp-for="UserId" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="UserId" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">First Name *</label>
-    <input asp-for="FirstName" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="FirstName" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
     <span asp-validation-for="FirstName" class="text-xs mt-1 block" style="color:#C8101A"></span>
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Last Name *</label>
-    <input asp-for="LastName" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="LastName" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
     <span asp-validation-for="LastName" class="text-xs mt-1 block" style="color:#C8101A"></span>
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Nickname</label>
-    <input asp-for="Nickname" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="Nickname" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Email</label>
-    <input asp-for="Email" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" type="email" />
+    <input asp-for="Email" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" type="email" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Home Phone</label>
-    <input asp-for="HomePhone" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="HomePhone" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Cell Phone</label>
-    <input asp-for="CellPhone" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="CellPhone" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Shirt Size</label>
-    <select asp-for="ShirtSize" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)">
+    <select asp-for="ShirtSize" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB">
         <option value="">-- select --</option>
         @foreach (var s in new[] { "S","M","L","XL","XXL","XXXL" })
         {
@@ -43,34 +43,34 @@
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Address</label>
-    <input asp-for="Address1" class="w-full rounded-lg px-3 py-1.5 text-sm mb-2" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" placeholder="Address Line 1" />
-    <input asp-for="Address2" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" placeholder="Address Line 2" />
+    <input asp-for="Address1" class="w-full rounded-lg px-3 py-1.5 text-sm mb-2" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" placeholder="Address Line 1" />
+    <input asp-for="Address2" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" placeholder="Address Line 2" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">City</label>
-    <input asp-for="City" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="City" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">State</label>
-    <input asp-for="State" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" maxlength="2" />
+    <input asp-for="State" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" maxlength="2" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Zip</label>
-    <input asp-for="Zip" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="Zip" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
 </div>
 <div class="mb-4">
-    <label class="flex items-center gap-2 text-sm cursor-pointer" style="color:#F5ECD7">
+    <label class="flex items-center gap-2 text-sm cursor-pointer" style="color:#111827">
         <input asp-for="AcceptEmail" type="checkbox" class="rounded" />
         Accept Email
     </label>
 </div>
 <div class="mb-4">
-    <label class="flex items-center gap-2 text-sm cursor-pointer" style="color:#F5ECD7">
+    <label class="flex items-center gap-2 text-sm cursor-pointer" style="color:#111827">
         <input asp-for="AcceptText" type="checkbox" class="rounded" />
         Accept Text
     </label>
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Notes</label>
-    <textarea asp-for="Notes" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" rows="3"></textarea>
+    <textarea asp-for="Notes" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" rows="3"></textarea>
 </div>

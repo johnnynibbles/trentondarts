@@ -1,13 +1,13 @@
-@model TrentonDarts.Web.Pages.Manage.DartEvents.DartEventInput
+﻿@model TrentonDarts.Web.Pages.Manage.DartEvents.DartEventInput
 
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Name *</label>
-    <input asp-for="Name" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="Name" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
     <span asp-validation-for="Name" class="text-xs mt-1 block" style="color:#C8101A"></span>
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Event Type</label>
-    <select asp-for="EventTypeId" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)">
+    <select asp-for="EventTypeId" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB">
         <option value="">-- select --</option>
         @foreach (var kv in TrentonDarts.Web.Data.Entities.DartEvent.EventTypes)
         {
@@ -18,17 +18,17 @@
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Event Date</label>
-    <input asp-for="EventDate" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" type="date"
+    <input asp-for="EventDate" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" type="date"
            value="@Model?.EventDate?.ToString("yyyy-MM-dd")" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">End Date</label>
-    <input asp-for="EventEndDate" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" type="date"
+    <input asp-for="EventEndDate" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" type="date"
            value="@Model?.EventEndDate?.ToString("yyyy-MM-dd")" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Dart Type</label>
-    <select asp-for="DartType" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)">
+    <select asp-for="DartType" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB">
         <option value="">-- select --</option>
         @foreach (var opt in new[] { ("Steel", "Steel Tip"), ("Soft", "Soft Tip"), ("Both", "Both") })
         {
@@ -39,68 +39,68 @@
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Contact</label>
-    <input asp-for="EventContact" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="EventContact" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Contact 2</label>
-    <input asp-for="EventContact2" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="EventContact2" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Host Name</label>
-    <input asp-for="HostName" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="HostName" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Host URL</label>
-    <input asp-for="HostUrl" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="HostUrl" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Host Phone</label>
-    <input asp-for="HostPhone" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="HostPhone" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Location</label>
-    <input asp-for="LocationName" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="LocationName" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Address</label>
-    <input asp-for="Address1" class="w-full rounded-lg px-3 py-1.5 text-sm mb-2" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" placeholder="Address Line 1" />
-    <input asp-for="Address2" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" placeholder="Address Line 2" />
+    <input asp-for="Address1" class="w-full rounded-lg px-3 py-1.5 text-sm mb-2" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" placeholder="Address Line 1" />
+    <input asp-for="Address2" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" placeholder="Address Line 2" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">City</label>
-    <input asp-for="City" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="City" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">State</label>
-    <input asp-for="State" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" maxlength="2" />
+    <input asp-for="State" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" maxlength="2" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Zip</label>
-    <input asp-for="Zip" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="Zip" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Event URL</label>
-    <input asp-for="Url" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="Url" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Facebook URL</label>
-    <input asp-for="FacebookUrl" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="FacebookUrl" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Map URL</label>
-    <input asp-for="MapUrl" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="MapUrl" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Registration Start</label>
-    <input asp-for="RegistrationStartTime" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="RegistrationStartTime" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Registration End</label>
-    <input asp-for="RegistrationEndTime" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="RegistrationEndTime" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Darts Start</label>
-    <input asp-for="DartStart" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="DartStart" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Description</label>
@@ -108,7 +108,7 @@
     <div id="tiptap-description" style="border-radius:0.5rem;overflow:hidden"></div>
 </div>
 <div class="mb-4">
-    <label class="flex items-center gap-2 text-sm cursor-pointer" style="color:#F5ECD7">
+    <label class="flex items-center gap-2 text-sm cursor-pointer" style="color:#111827">
         <input asp-for="IsTitleEvent" type="checkbox" class="rounded" />
         Title Event (show on home page)
     </label>

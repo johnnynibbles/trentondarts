@@ -1,13 +1,13 @@
-@model TrentonDarts.Web.Pages.Manage.Sponsors.SponsorInput
+﻿@model TrentonDarts.Web.Pages.Manage.Sponsors.SponsorInput
 
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Name *</label>
-    <input asp-for="Name" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="Name" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
     <span asp-validation-for="Name" class="text-xs mt-1 block" style="color:#C8101A"></span>
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Type *</label>
-    <select asp-for="Type" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)">
+    <select asp-for="Type" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB">
         @foreach (var kv in TrentonDarts.Web.Data.Entities.Sponsor.SponsorTypes)
         {
             if (kv.Key == Model?.Type) { <option value="@kv.Key" selected>@kv.Value</option> }
@@ -17,50 +17,50 @@
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Contact Name</label>
-    <input asp-for="ContactName" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="ContactName" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Address</label>
-    <input asp-for="Address1" class="w-full rounded-lg px-3 py-1.5 text-sm mb-2" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" placeholder="Address Line 1" />
-    <input asp-for="Address2" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" placeholder="Address Line 2" />
+    <input asp-for="Address1" class="w-full rounded-lg px-3 py-1.5 text-sm mb-2" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" placeholder="Address Line 1" />
+    <input asp-for="Address2" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" placeholder="Address Line 2" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">City</label>
-    <input asp-for="City" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="City" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">State</label>
-    <input asp-for="State" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" maxlength="2" />
+    <input asp-for="State" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" maxlength="2" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Zip</label>
-    <input asp-for="Zip" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="Zip" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Phone</label>
-    <input asp-for="Phone" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="Phone" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Website URL</label>
-    <input asp-for="Url" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="Url" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Facebook URL</label>
-    <input asp-for="FacebookUrl" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="FacebookUrl" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Map URL</label>
-    <input asp-for="MapUrl" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+    <input asp-for="MapUrl" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Email</label>
-    <input asp-for="Email" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" type="email" />
+    <input asp-for="Email" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" type="email" />
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Description</label>
-    <textarea asp-for="Description" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" rows="3"></textarea>
+    <textarea asp-for="Description" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" rows="3"></textarea>
 </div>
 <div class="mb-4">
     <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Comments</label>
-    <textarea asp-for="Comments" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" rows="2"></textarea>
+    <textarea asp-for="Comments" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" rows="2"></textarea>
 </div>

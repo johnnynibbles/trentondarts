@@ -1,25 +1,25 @@
-@page "/Manage/{leagueId:int}/navigation/group/{groupId:int}/item/{itemId:int}/edit"
+﻿@page "/Manage/{leagueId:int}/navigation/group/{groupId:int}/item/{itemId:int}/edit"
 @model TrentonDarts.Web.Pages.Manage.Navigation.EditItemModel
 @{
     ViewData["Title"] = "Edit Item";
     Layout = "_ManageLayout";
 }
 
-<h2 class="text-2xl font-bold mb-4" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">Edit Item</h2>
+<h2 class="text-2xl font-bold mb-4" style="color:#111827">Edit Item</h2>
 <div class="flex flex-wrap gap-2 mb-5">
-    <a href="/Manage/@Model.LeagueId/navigation" class="inline-block px-3 py-1.5 rounded text-sm font-medium" style="background:rgba(255,255,255,0.08);color:#F5ECD7;text-decoration:none">Back</a>
+    <a href="/Manage/@Model.LeagueId/navigation" class="inline-block px-3 py-1.5 rounded text-sm font-medium" style="background:#F3F4F6;color:#374151;border:1px solid #E5E7EB;text-decoration:none">Back</a>
 </div>
 
 <form method="post" class="max-w-xl">
     <div asp-validation-summary="All" class="mb-4 p-3 rounded-lg text-sm" style="background:rgba(200,16,26,0.15);color:#fca5a5;border:1px solid rgba(200,16,26,0.3)"></div>
     <div class="mb-4">
         <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Title *</label>
-        <input asp-for="Title" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+        <input asp-for="Title" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" />
         <span asp-validation-for="Title" class="text-xs mt-1 block" style="color:#C8101A"></span>
     </div>
     <div class="mb-4">
         <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Type *</label>
-        <select asp-for="ItemType" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" id="itemTypeSelect">
+        <select asp-for="ItemType" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" id="itemTypeSelect">
             <option value="0">Internal Link</option>
             <option value="1">External URL</option>
             <option value="2">Document</option>
@@ -27,30 +27,30 @@
     </div>
     <div class="mb-4" id="urlTemplateGroup">
         <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">URL</label>
-        <input asp-for="UrlTemplate" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" placeholder="/season/{currentSeasonId}/standings" />
-        <p class="text-xs mt-1" style="color:#9CA3AF">Use <code>{currentSeasonId}</code> to link to the current season (e.g. <code>/season/{currentSeasonId}/standings</code>). For external links use the full URL (e.g. <code>https://example.com</code>).</p>
+        <input asp-for="UrlTemplate" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" placeholder="/season/{currentSeasonId}/standings" />
+        <p class="text-xs mt-1" style="color:#6B7280">Use <code>{currentSeasonId}</code> to link to the current season (e.g. <code>/season/{currentSeasonId}/standings</code>). For external links use the full URL (e.g. <code>https://example.com</code>).</p>
         <span asp-validation-for="UrlTemplate" class="text-xs mt-1 block" style="color:#C8101A"></span>
     </div>
     <div class="mb-4" id="documentGroup" style="display:none">
         <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Document</label>
-        <select asp-for="BrowsableFileId" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" asp-items="Model.DocumentOptions">
+        <select asp-for="BrowsableFileId" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB" asp-items="Model.DocumentOptions">
             <option value="">— select a document —</option>
         </select>
         <span asp-validation-for="BrowsableFileId" class="text-xs mt-1 block" style="color:#C8101A"></span>
     </div>
     <div class="mb-4">
-        <label class="flex items-center gap-2 text-sm cursor-pointer mb-2" style="color:#F5ECD7">
+        <label class="flex items-center gap-2 text-sm cursor-pointer mb-2" style="color:#111827">
             <input asp-for="IsHeader" type="checkbox" class="rounded" />
             Is Section Header
         </label>
-        <label class="flex items-center gap-2 text-sm cursor-pointer" style="color:#F5ECD7">
+        <label class="flex items-center gap-2 text-sm cursor-pointer" style="color:#111827">
             <input asp-for="IsSeparator" type="checkbox" class="rounded" />
             Is Divider Line
         </label>
     </div>
     <div class="flex gap-3 mt-6">
-        <button type="submit" class="px-4 py-2 rounded-lg text-sm font-medium cursor-pointer" style="background:#C8962E;color:#0A0A0B;border:none">Save</button>
-        <a href="/Manage/@Model.LeagueId/navigation" class="inline-block px-4 py-2 rounded-lg text-sm font-medium" style="background:rgba(255,255,255,0.08);color:#F5ECD7;text-decoration:none">Cancel</a>
+        <button type="submit" class="px-4 py-2 rounded-lg text-sm font-medium cursor-pointer" style="background:#2563EB;color:#fff;border:none">Save</button>
+        <a href="/Manage/@Model.LeagueId/navigation" class="inline-block px-4 py-2 rounded-lg text-sm font-medium" style="background:#F3F4F6;color:#374151;border:1px solid #E5E7EB;text-decoration:none">Cancel</a>
     </div>
 </form>
 
