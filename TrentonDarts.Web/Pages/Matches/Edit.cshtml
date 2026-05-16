@@ -5,10 +5,10 @@
 }
 
 <div id="scoresheet">
-    <h2 class="text-2xl font-bold mb-1" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">
+    <h2 class="text-2xl font-bold mb-1" style="color:#111827">
         @Model.Season.Name — Edit Scorecard
     </h2>
-    <h3 class="text-xl font-bold mb-4" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">
+    <h3 class="text-xl font-bold mb-4" style="color:#111827">
         @Model.Match.AwayTeam.Name <span style="color:#6B7280">@@</span> @Model.Match.HomeTeam.Name
     </h3>
 
@@ -16,14 +16,14 @@
         <div class="scoresheet-row header">
             <div class="scoresheet-col-team">@Model.Match.HomeTeam.Name</div>
             <div class="scoresheet-col-score" style="display:flex;flex-direction:column;align-items:center;gap:8px">
-                <label style="color:#F5ECD7;font-size:0.85rem">
+                <label style="color:#374151;font-size:0.85rem">
                     <input type="checkbox" data-bind="checked: hasScorecard" style="margin-right:4px"/>
                     Has Score Card
                 </label>
                 <div style="display:flex;align-items:center;gap:6px">
-                    <input class="score-override-input" type="number" min="0" data-bind="value: homeScoreOverride" style="width:52px;text-align:center;background:#1a1c1e;color:#F5ECD7;border:1px solid rgba(255,255,255,0.2);border-radius:6px;padding:4px"/>
+                    <input class="score-override-input" type="number" min="0" data-bind="value: homeScoreOverride" style="width:52px;text-align:center;background:#F9FAFB;color:#111827;border:1px solid #D1D5DB;border-radius:6px;padding:4px"/>
                     <span style="color:#6B7280">–</span>
-                    <input class="score-override-input" type="number" min="0" data-bind="value: awayScoreOverride" style="width:52px;text-align:center;background:#1a1c1e;color:#F5ECD7;border:1px solid rgba(255,255,255,0.2);border-radius:6px;padding:4px"/>
+                    <input class="score-override-input" type="number" min="0" data-bind="value: awayScoreOverride" style="width:52px;text-align:center;background:#F9FAFB;color:#111827;border:1px solid #D1D5DB;border-radius:6px;padding:4px"/>
                 </div>
             </div>
             <div class="scoresheet-col-team" style="text-align:right">@Model.Match.AwayTeam.Name</div>
@@ -34,7 +34,7 @@
         <div class="scoresheet-row header">
             <div class="scoresheet-col-team">@Model.Match.HomeTeam.Name</div>
             <div class="scoresheet-col-score" style="display:flex;flex-direction:column;align-items:center;gap:6px">
-                <label style="color:#F5ECD7;font-size:0.85rem">
+                <label style="color:#374151;font-size:0.85rem">
                     <input type="checkbox" data-bind="checked: hasScorecard" style="margin-right:4px"/>
                     Has Score Card
                 </label>
@@ -60,8 +60,8 @@
     </div>
 
     <div class="flex gap-3 mt-5">
-        <button data-bind="click: cancelMatchEdit" class="px-4 py-2 rounded-lg text-sm font-medium cursor-pointer" style="background:rgba(255,255,255,0.08);color:#F5ECD7;border:none">Cancel</button>
-        <button data-bind="click: saveMatch" class="px-4 py-2 rounded-lg text-sm font-medium cursor-pointer" style="background:#C8962E;color:#0A0A0B;border:none">Save</button>
+        <button data-bind="click: cancelMatchEdit" class="px-4 py-2 rounded-lg text-sm font-medium cursor-pointer" style="background:#F3F4F6;color:#374151;border:1px solid #E5E7EB">Cancel</button>
+        <button data-bind="click: saveMatch" class="px-4 py-2 rounded-lg text-sm font-medium cursor-pointer" style="background:#2563EB;color:#fff;border:none">Save</button>
     </div>
 </div>
 
@@ -209,31 +209,31 @@
     </div>
 </script>
 
-<dialog id="awardModal" style="background:#1a1c1e;color:#F5ECD7;border:1px solid rgba(255,255,255,0.15);border-radius:12px;padding:24px;min-width:320px">
+<dialog id="awardModal" style="background:#FFFFFF;color:#111827;border:1px solid #E5E7EB;border-radius:12px;padding:24px;min-width:320px">
     <div id="awardForm">
-        <h4 style="font-family:'Rajdhani',sans-serif;font-size:1.25rem;font-weight:700;margin-bottom:16px">Add Award</h4>
+        <h4 style="font-size:1.25rem;font-weight:700;margin-bottom:16px">Add Award</h4>
         <div style="margin-bottom:12px">
-            <label style="display:block;font-size:0.85rem;color:#9CA3AF;margin-bottom:4px">Player</label>
-            <select style="width:100%;background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12);border-radius:6px;padding:6px 10px"
+            <label style="display:block;font-size:0.85rem;color:#6B7280;margin-bottom:4px">Player</label>
+            <select style="width:100%;background:#F9FAFB;color:#111827;border:1px solid #D1D5DB;border-radius:6px;padding:6px 10px"
                     data-bind="options: gamePlayers, optionsText: 'name', optionsCaption: 'Choose Player', value: player"></select>
         </div>
         <div style="margin-bottom:12px">
-            <label style="display:block;font-size:0.85rem;color:#9CA3AF;margin-bottom:4px">Award Type</label>
-            <select style="width:100%;background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12);border-radius:6px;padding:6px 10px"
+            <label style="display:block;font-size:0.85rem;color:#6B7280;margin-bottom:4px">Award Type</label>
+            <select style="width:100%;background:#F9FAFB;color:#111827;border:1px solid #D1D5DB;border-radius:6px;padding:6px 10px"
                     data-bind="options: awardTypes, value: awardType"></select>
         </div>
         <div style="margin-bottom:20px">
-            <label style="display:block;font-size:0.85rem;color:#9CA3AF;margin-bottom:4px">Value <span style="color:#6B7280">(optional)</span></label>
-            <input type="text" style="width:100%;background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12);border-radius:6px;padding:6px 10px;box-sizing:border-box"
+            <label style="display:block;font-size:0.85rem;color:#6B7280;margin-bottom:4px">Value <span style="color:#9CA3AF">(optional)</span></label>
+            <input type="text" style="width:100%;background:#F9FAFB;color:#111827;border:1px solid #D1D5DB;border-radius:6px;padding:6px 10px;box-sizing:border-box"
                    data-bind="value: awardValue"/>
         </div>
         <div style="display:flex;gap:10px;justify-content:flex-end">
             <button type="button" onclick="document.getElementById('awardModal').close()"
-                    style="background:rgba(255,255,255,0.08);color:#F5ECD7;border:none;border-radius:6px;padding:8px 16px;cursor:pointer">
+                    style="background:#F3F4F6;color:#374151;border:1px solid #E5E7EB;border-radius:6px;padding:8px 16px;cursor:pointer">
                 Cancel
             </button>
             <button type="button" data-bind="click: save"
-                    style="background:#C8962E;color:#0A0A0B;border:none;border-radius:6px;padding:8px 16px;cursor:pointer;font-weight:600">
+                    style="background:#2563EB;color:#fff;border:none;border-radius:6px;padding:8px 16px;cursor:pointer;font-weight:600">
                 Save Award
             </button>
         </div>
@@ -243,20 +243,20 @@
 @section Scripts {
     <style>
         .score-all-btn {
-            background: rgba(200,150,46,0.2);
-            color: #C8962E;
-            border: 1px solid rgba(200,150,46,0.4);
+            background: #EFF6FF;
+            color: #2563EB;
+            border: 1px solid #BFDBFE;
             border-radius: 4px;
             padding: 2px 8px;
             cursor: pointer;
             font-weight: 700;
             font-size: 0.85rem;
         }
-        .score-all-btn:hover { background: rgba(200,150,46,0.35); }
+        .score-all-btn:hover { background: #DBEAFE; }
         .game select {
-            background: #111214;
-            color: #F5ECD7;
-            border: 1px solid rgba(255,255,255,0.12);
+            background: #F9FAFB;
+            color: #111827;
+            border: 1px solid #D1D5DB;
             border-radius: 6px;
             padding: 4px 8px;
             font-size: 0.85rem;
@@ -264,25 +264,25 @@
             margin-bottom: 4px;
         }
         .game input[type="radio"] {
-            accent-color: #C8962E;
+            accent-color: #2563EB;
             width: 18px;
             height: 18px;
             cursor: pointer;
         }
         .award-btn {
-            background: rgba(255,255,255,0.06);
-            color: #9CA3AF;
-            border: 1px solid rgba(255,255,255,0.1);
+            background: #F3F4F6;
+            color: #6B7280;
+            border: 1px solid #E5E7EB;
             border-radius: 4px;
             padding: 2px 8px;
             cursor: pointer;
             font-size: 0.75rem;
             margin-top: 4px;
         }
-        .award-btn:hover { background: rgba(255,255,255,0.12); color: #F5ECD7; }
+        .award-btn:hover { background: #E5E7EB; color: #374151; }
         .delete-award-btn {
-            background: rgba(239,68,68,0.15);
-            color: #EF4444;
+            background: #FEE2E2;
+            color: #DC2626;
             border: none;
             border-radius: 4px;
             padding: 0 6px;
@@ -291,12 +291,12 @@
             line-height: 1.4;
             margin-left: 6px;
         }
-        .player-warning { color: #EF4444; font-size: 0.75rem; }
+        .player-warning { color: #DC2626; font-size: 0.75rem; }
         .leg-entries { display: flex; flex-direction: column; gap: 4px; margin-bottom: 6px; }
         .leg-entry { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; }
         .leg-label { color: #6B7280; min-width: 40px; }
-        .leg-radio { display: flex; align-items: center; gap: 3px; color: #F5ECD7; cursor: pointer; }
-        dialog::backdrop { background: rgba(0,0,0,0.6); }
+        .leg-radio { display: flex; align-items: center; gap: 3px; color: #374151; cursor: pointer; }
+        dialog::backdrop { background: rgba(0,0,0,0.4); }
     </style>
     <script src="~/js/lodash.min.js"></script>
     <script src="~/js/postal.min.js"></script>

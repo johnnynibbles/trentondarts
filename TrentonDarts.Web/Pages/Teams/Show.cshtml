@@ -5,8 +5,8 @@
 }
 
 <div class="flex items-center justify-between flex-wrap gap-3 mb-5">
-    <h2 class="text-3xl font-bold" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">@Model.SeasonTeam.Team.Name</h2>
-    <select id="selectedSeason" class="rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)">
+    <h2 class="text-2xl font-bold" style="color:#111827">@Model.SeasonTeam.Team.Name</h2>
+    <select id="selectedSeason" class="rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB">
         @foreach (var s in Model.AllSeasons)
         {
             if (s.Id == Model.Season.Id) { <option value="@s.Id" selected>@s.Name</option> }
@@ -23,9 +23,9 @@
         <div class="glass-card overflow-x-auto mb-5">
             <table class="w-full text-xs whitespace-nowrap">
                 <thead>
-                    <tr style="border-bottom:1px solid rgba(255,255,255,0.08)">
+                    <tr style="border-bottom:1px solid #E5E7EB">
                         <th colspan="4" rowspan="2" class="px-2 py-2 text-left align-bottom">
-                            <select id="statPart" class="rounded-lg px-2 py-1 text-xs" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)">
+                            <select id="statPart" class="rounded-lg px-2 py-1 text-xs" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB">
                                 @foreach (var opt in new[] { ("whole","Whole Season"), ("pre","Pre Season"), ("regular","Regular Season") })
                                 {
                                     if (opt.Item1 == Model.StatPart) { <option value="@opt.Item1" selected>@opt.Item2</option> }
@@ -33,30 +33,30 @@
                                 }
                             </select>
                         </th>
-                        <th class="px-2 py-1 text-center text-xs" style="color:#9CA3AF">Overall</th>
-                        <th colspan="4" class="px-2 py-1 text-center text-xs font-semibold uppercase" style="color:#C8962E;border-left:1px solid rgba(255,255,255,0.08)">Singles</th>
-                        <th colspan="4" class="px-2 py-1 text-center text-xs font-semibold uppercase" style="color:#C8962E;border-left:1px solid rgba(255,255,255,0.08)">Doubles</th>
-                        <th colspan="2" class="px-2 py-1 text-center text-xs font-semibold uppercase" style="color:#C8962E;border-left:1px solid rgba(255,255,255,0.08)">Triples</th>
+                        <th class="px-2 py-1 text-center text-xs" style="color:#6B7280">Overall</th>
+                        <th colspan="4" class="px-2 py-1 text-center text-xs font-semibold uppercase" style="color:#2563EB;border-left:1px solid #E5E7EB">Singles</th>
+                        <th colspan="4" class="px-2 py-1 text-center text-xs font-semibold uppercase" style="color:#2563EB;border-left:1px solid #E5E7EB">Doubles</th>
+                        <th colspan="2" class="px-2 py-1 text-center text-xs font-semibold uppercase" style="color:#2563EB;border-left:1px solid #E5E7EB">Triples</th>
                     </tr>
-                    <tr style="border-bottom:1px solid rgba(255,255,255,0.08)">
-                        <th class="px-2 py-1 text-center text-xs" style="color:#9CA3AF">Win%</th>
-                        <th colspan="2" class="px-2 py-1 text-center text-xs" style="color:#9CA3AF;border-left:1px solid rgba(255,255,255,0.06)">Cricket</th>
-                        <th colspan="2" class="px-2 py-1 text-center text-xs" style="color:#9CA3AF">'01</th>
-                        <th colspan="2" class="px-2 py-1 text-center text-xs" style="color:#9CA3AF;border-left:1px solid rgba(255,255,255,0.06)">Cricket</th>
-                        <th colspan="2" class="px-2 py-1 text-center text-xs" style="color:#9CA3AF">501</th>
-                        <th colspan="2" class="px-2 py-1 text-center text-xs" style="color:#9CA3AF;border-left:1px solid rgba(255,255,255,0.06)">'01</th>
+                    <tr style="border-bottom:1px solid #E5E7EB">
+                        <th class="px-2 py-1 text-center text-xs" style="color:#6B7280">Win%</th>
+                        <th colspan="2" class="px-2 py-1 text-center text-xs" style="color:#6B7280;border-left:1px solid #E5E7EB">Cricket</th>
+                        <th colspan="2" class="px-2 py-1 text-center text-xs" style="color:#6B7280">'01</th>
+                        <th colspan="2" class="px-2 py-1 text-center text-xs" style="color:#6B7280;border-left:1px solid #E5E7EB">Cricket</th>
+                        <th colspan="2" class="px-2 py-1 text-center text-xs" style="color:#6B7280">501</th>
+                        <th colspan="2" class="px-2 py-1 text-center text-xs" style="color:#6B7280;border-left:1px solid #E5E7EB">'01</th>
                     </tr>
-                    <tr style="border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04)">
-                        <th class="px-2 py-2 text-left text-xs font-semibold" style="color:#F5ECD7">Name</th>
+                    <tr style="border-bottom:1px solid #E5E7EB;background:#F9FAFB">
+                        <th class="px-2 py-2 text-left text-xs font-semibold" style="color:#374151">Name</th>
                         <th class="px-2 py-2 text-center text-xs" style="color:#6B7280" title="Weeks Played">WP</th>
                         <th class="px-2 py-2 text-center text-xs" style="color:#6B7280" title="Games Played">GP</th>
                         <th class="px-2 py-2 text-center text-xs" style="color:#6B7280">Record</th>
                         <th class="px-2 py-2 text-center text-xs" style="color:#6B7280">Win%</th>
-                        <th class="px-2 py-2 text-center text-xs" style="color:#1A7A3C">W</th><th class="px-2 py-2 text-center text-xs" style="color:#C8101A">L</th>
-                        <th class="px-2 py-2 text-center text-xs" style="color:#1A7A3C">W</th><th class="px-2 py-2 text-center text-xs" style="color:#C8101A">L</th>
-                        <th class="px-2 py-2 text-center text-xs" style="color:#1A7A3C">W</th><th class="px-2 py-2 text-center text-xs" style="color:#C8101A">L</th>
-                        <th class="px-2 py-2 text-center text-xs" style="color:#1A7A3C">W</th><th class="px-2 py-2 text-center text-xs" style="color:#C8101A">L</th>
-                        <th class="px-2 py-2 text-center text-xs" style="color:#1A7A3C">W</th><th class="px-2 py-2 text-center text-xs" style="color:#C8101A">L</th>
+                        <th class="px-2 py-2 text-center text-xs" style="color:#16A34A">W</th><th class="px-2 py-2 text-center text-xs" style="color:#DC2626">L</th>
+                        <th class="px-2 py-2 text-center text-xs" style="color:#16A34A">W</th><th class="px-2 py-2 text-center text-xs" style="color:#DC2626">L</th>
+                        <th class="px-2 py-2 text-center text-xs" style="color:#16A34A">W</th><th class="px-2 py-2 text-center text-xs" style="color:#DC2626">L</th>
+                        <th class="px-2 py-2 text-center text-xs" style="color:#16A34A">W</th><th class="px-2 py-2 text-center text-xs" style="color:#DC2626">L</th>
+                        <th class="px-2 py-2 text-center text-xs" style="color:#16A34A">W</th><th class="px-2 py-2 text-center text-xs" style="color:#DC2626">L</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -68,30 +68,30 @@
                 {
                     @foreach (var t in Model.TeamStats)
                     {
-                        <tr class="team-stat-row" style="border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(200,150,46,0.06)">
-                            <td colspan="3" class="px-2 py-2" style="color:#C8962E;font-family:'Rajdhani',sans-serif">@t.TeamName</td>
+                        <tr class="team-stat-row" style="border-bottom:1px solid #E5E7EB;background:#EFF6FF">
+                            <td colspan="3" class="px-2 py-2" style="color:#2563EB;font-weight:600">@t.TeamName</td>
                             <td class="px-2 py-2 text-center">@t.PointsWon - @t.PointsLost</td>
                             <td class="px-2 py-2 text-center">@(Math.Round(t.OverallWin * 100, 1))%</td>
-                            <td class="px-2 py-2 text-center" style="color:#1A7A3C">@t.GameCricket.Won</td><td class="px-2 py-2 text-center loss-column">@t.GameCricket.Lost</td>
-                            <td class="px-2 py-2 text-center" style="color:#1A7A3C">@t.Game301.Won</td><td class="px-2 py-2 text-center loss-column">@t.Game301.Lost</td>
-                            <td class="px-2 py-2 text-center" style="color:#1A7A3C">@t.GameDoubleCricket.Won</td><td class="px-2 py-2 text-center loss-column">@t.GameDoubleCricket.Lost</td>
-                            <td class="px-2 py-2 text-center" style="color:#1A7A3C">@t.Game501.Won</td><td class="px-2 py-2 text-center loss-column">@t.Game501.Lost</td>
-                            <td class="px-2 py-2 text-center" style="color:#1A7A3C">@t.Game801.Won</td><td class="px-2 py-2 text-center loss-column">@t.Game801.Lost</td>
+                            <td class="px-2 py-2 text-center" style="color:#16A34A">@t.GameCricket.Won</td><td class="px-2 py-2 text-center loss-column">@t.GameCricket.Lost</td>
+                            <td class="px-2 py-2 text-center" style="color:#16A34A">@t.Game301.Won</td><td class="px-2 py-2 text-center loss-column">@t.Game301.Lost</td>
+                            <td class="px-2 py-2 text-center" style="color:#16A34A">@t.GameDoubleCricket.Won</td><td class="px-2 py-2 text-center loss-column">@t.GameDoubleCricket.Lost</td>
+                            <td class="px-2 py-2 text-center" style="color:#16A34A">@t.Game501.Won</td><td class="px-2 py-2 text-center loss-column">@t.Game501.Lost</td>
+                            <td class="px-2 py-2 text-center" style="color:#16A34A">@t.Game801.Won</td><td class="px-2 py-2 text-center loss-column">@t.Game801.Lost</td>
                         </tr>
                         @foreach (var p in Model.PlayerStats.OrderByDescending(ps => ps.OverallWin).ThenByDescending(ps => ps.GamesPlayed))
                         {
-                            <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"
-                                onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background=''">
-                                <td class="px-2 py-1.5 pl-4"><a href="/player/@p.PlayerId?season=@Model.Season.Id" style="color:#F5ECD7;text-decoration:none">@p.PlayerName</a></td>
-                                <td class="px-2 py-1.5 text-center" style="color:#9CA3AF">@p.WeeksPlayed</td>
-                                <td class="px-2 py-1.5 text-center" style="color:#9CA3AF">@p.GamesPlayed</td>
+                            <tr style="border-bottom:1px solid #F3F4F6"
+                                onmouseover="this.style.background='#F9FAFB'" onmouseout="this.style.background=''">
+                                <td class="px-2 py-1.5 pl-4"><a href="/player/@p.PlayerId?season=@Model.Season.Id" style="color:#374151;text-decoration:none">@p.PlayerName</a></td>
+                                <td class="px-2 py-1.5 text-center" style="color:#6B7280">@p.WeeksPlayed</td>
+                                <td class="px-2 py-1.5 text-center" style="color:#6B7280">@p.GamesPlayed</td>
                                 <td class="px-2 py-1.5 text-center">@p.GamesWon - @p.GamesLost</td>
                                 <td class="px-2 py-1.5 text-center">@(p.OverallWin > 0 ? $"{Math.Round(p.OverallWin * 100, 1)}%" : "–")</td>
-                                <td class="px-2 py-1.5 text-center" style="color:#1A7A3C">@p.GameCricket.Won</td><td class="px-2 py-1.5 text-center loss-column">@p.GameCricket.Lost</td>
-                                <td class="px-2 py-1.5 text-center" style="color:#1A7A3C">@p.Game301.Won</td><td class="px-2 py-1.5 text-center loss-column">@p.Game301.Lost</td>
-                                <td class="px-2 py-1.5 text-center" style="color:#1A7A3C">@p.GameDoubleCricket.Won</td><td class="px-2 py-1.5 text-center loss-column">@p.GameDoubleCricket.Lost</td>
-                                <td class="px-2 py-1.5 text-center" style="color:#1A7A3C">@p.Game501.Won</td><td class="px-2 py-1.5 text-center loss-column">@p.Game501.Lost</td>
-                                <td class="px-2 py-1.5 text-center" style="color:#1A7A3C">@p.Game801.Won</td><td class="px-2 py-1.5 text-center loss-column">@p.Game801.Lost</td>
+                                <td class="px-2 py-1.5 text-center" style="color:#16A34A">@p.GameCricket.Won</td><td class="px-2 py-1.5 text-center loss-column">@p.GameCricket.Lost</td>
+                                <td class="px-2 py-1.5 text-center" style="color:#16A34A">@p.Game301.Won</td><td class="px-2 py-1.5 text-center loss-column">@p.Game301.Lost</td>
+                                <td class="px-2 py-1.5 text-center" style="color:#16A34A">@p.GameDoubleCricket.Won</td><td class="px-2 py-1.5 text-center loss-column">@p.GameDoubleCricket.Lost</td>
+                                <td class="px-2 py-1.5 text-center" style="color:#16A34A">@p.Game501.Won</td><td class="px-2 py-1.5 text-center loss-column">@p.Game501.Lost</td>
+                                <td class="px-2 py-1.5 text-center" style="color:#16A34A">@p.Game801.Won</td><td class="px-2 py-1.5 text-center loss-column">@p.Game801.Lost</td>
                             </tr>
                         }
                     }
@@ -102,27 +102,27 @@
 
         @* Schedule *@
         <div class="glass-card overflow-hidden">
-            <div class="px-4 py-2" style="border-bottom:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04)">
-                <span class="text-sm font-bold uppercase tracking-wide" style="font-family:'Rajdhani',sans-serif;color:#C8962E">Schedule</span>
+            <div class="px-4 py-2" style="border-bottom:1px solid #E5E7EB;background:#F9FAFB">
+                <span class="text-sm font-bold uppercase tracking-wide" style="color:#2563EB">Schedule</span>
             </div>
             @foreach (var s in Model.TeamSchedule)
             {
-                <div class="flex items-center gap-2 px-3 py-2 text-sm" style="border-bottom:1px solid rgba(255,255,255,0.04)">
+                <div class="flex items-center gap-2 px-3 py-2 text-sm" style="border-bottom:1px solid #F3F4F6">
                     <span class="text-xs w-12 shrink-0" style="color:#6B7280">@s.Date.ToString("MMM dd")</span>
                     @if (s.IsBye)
                     {
-                        <span class="font-bold text-xs px-2 py-0.5 rounded" style="background:rgba(255,255,255,0.08);color:#9CA3AF">BYE</span>
+                        <span class="font-bold text-xs px-2 py-0.5 rounded" style="background:#F3F4F6;color:#6B7280">BYE</span>
                     }
                     else if (s.AwayScore == 0 && s.HomeScore == 0)
                     {
                         <span>
                             @if (s.IsAwayGame)
                             {
-                                <strong style="color:#9CA3AF">@@</strong> <a href="/team/@s.HomeTeamId?season=@Model.Season.Id" style="color:#F5ECD7;text-decoration:none">@s.HomeTeamName</a>
+                                <strong style="color:#6B7280">@@</strong> <a href="/team/@s.HomeTeamId?season=@Model.Season.Id" style="color:#374151;text-decoration:none">@s.HomeTeamName</a>
                             }
                             else
                             {
-                                <span style="color:#9CA3AF">vs</span> <a href="/team/@s.AwayTeamId?season=@Model.Season.Id" style="color:#F5ECD7;text-decoration:none">@s.AwayTeamName</a>
+                                <span style="color:#6B7280">vs</span> <a href="/team/@s.AwayTeamId?season=@Model.Season.Id" style="color:#374151;text-decoration:none">@s.AwayTeamName</a>
                             }
                         </span>
                     }
@@ -137,10 +137,10 @@
                             @(s.IsAwayGame ? $"@ {s.HomeTeamName}" : $"vs {s.AwayTeamName}")
                             @if (!s.HasScorecard && (s.AwayScore != 0 || s.HomeScore != 0))
                             {
-                                <i title="Scorecard isn't entered" class="fa-solid fa-bolt text-xs ml-1" style="color:#C8101A"></i>
+                                <i title="Scorecard isn't entered" class="fa-solid fa-bolt text-xs ml-1" style="color:#DC2626"></i>
                             }
                         </span>
-                        <span class="font-mono text-xs mx-2" style="color:#9CA3AF">
+                        <span class="font-mono text-xs mx-2" style="color:#6B7280">
                             @(s.IsAwayGame ? $"{s.AwayScore}–{s.HomeScore}" : $"{s.HomeScore}–{s.AwayScore}")
                         </span>
                         <a href="@matchUrl2" style="text-decoration:none">
@@ -157,19 +157,19 @@
 
         @* Standings *@
         <div class="glass-card overflow-hidden">
-            <div class="px-4 py-2" style="border-bottom:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04)">
-                <span class="text-sm font-bold uppercase tracking-wide" style="font-family:'Rajdhani',sans-serif;color:#C8962E">Standings</span>
+            <div class="px-4 py-2" style="border-bottom:1px solid #E5E7EB;background:#F9FAFB">
+                <span class="text-sm font-bold uppercase tracking-wide" style="color:#2563EB">Standings</span>
             </div>
             <table class="w-full text-sm">
                 <tbody>
                 @foreach (var divStanding in Model.DivStandings)
                 {
-                    <tr style="background:rgba(200,150,46,0.08);border-bottom:1px solid rgba(255,255,255,0.08)">
-                        <td class="px-3 py-1.5 text-xs font-bold uppercase" style="color:#C8962E;font-family:'Rajdhani',sans-serif" colspan="@(Model.Season.IsUsingMatchPoints ? 5 : 4)">
+                    <tr style="background:#EFF6FF;border-bottom:1px solid #E5E7EB">
+                        <td class="px-3 py-1.5 text-xs font-bold uppercase" style="color:#2563EB" colspan="@(Model.Season.IsUsingMatchPoints ? 5 : 4)">
                             Division @divStanding.Name
                         </td>
                     </tr>
-                    <tr style="border-bottom:1px solid rgba(255,255,255,0.06)">
+                    <tr style="border-bottom:1px solid #E5E7EB">
                         <th class="px-3 py-1 text-left text-xs" style="color:#6B7280">Team</th>
                         @if (Model.Season.IsUsingMatchPoints) { <th class="px-2 py-1 text-center text-xs" style="color:#6B7280">P</th> }
                         <th class="px-2 py-1 text-center text-xs" style="color:#6B7280">W</th>
@@ -178,13 +178,13 @@
                     </tr>
                     @foreach (var st in divStanding.Standings)
                     {
-                        <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"
-                            onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background=''">
-                            <td class="px-3 py-1.5"><a href="/team/@st.TeamId?season=@Model.Season.Id" style="color:#F5ECD7;text-decoration:none">@st.Name</a></td>
+                        <tr style="border-bottom:1px solid #F3F4F6"
+                            onmouseover="this.style.background='#F9FAFB'" onmouseout="this.style.background=''">
+                            <td class="px-3 py-1.5"><a href="/team/@st.TeamId?season=@Model.Season.Id" style="color:#374151;text-decoration:none">@st.Name</a></td>
                             @if (Model.Season.IsUsingMatchPoints) { <td class="px-2 py-1.5 text-center">@st.MatchPoints</td> }
-                            <td class="px-2 py-1.5 text-center" style="color:#1A7A3C">@st.WonPoints</td>
-                            <td class="px-2 py-1.5 text-center" style="color:#C8101A">@st.LossPoints</td>
-                            <td class="px-2 py-1.5 text-center text-xs" style="color:#9CA3AF">@(Math.Round(st.Percentage * 100, 1))%</td>
+                            <td class="px-2 py-1.5 text-center" style="color:#16A34A">@st.WonPoints</td>
+                            <td class="px-2 py-1.5 text-center" style="color:#DC2626">@st.LossPoints</td>
+                            <td class="px-2 py-1.5 text-center text-xs" style="color:#6B7280">@(Math.Round(st.Percentage * 100, 1))%</td>
                         </tr>
                     }
                 }
@@ -196,21 +196,21 @@
         @if (Model.Awards.Any())
         {
             <div class="glass-card overflow-hidden">
-                <div class="px-4 py-2" style="border-bottom:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04)">
-                    <span class="text-sm font-bold uppercase tracking-wide" style="font-family:'Rajdhani',sans-serif;color:#C8962E">Awards</span>
+                <div class="px-4 py-2" style="border-bottom:1px solid #E5E7EB;background:#F9FAFB">
+                    <span class="text-sm font-bold uppercase tracking-wide" style="color:#2563EB">Awards</span>
                 </div>
                 @foreach (var a in Model.Awards)
                 {
-                    <div class="flex items-center gap-2 px-3 py-2 text-sm" style="border-bottom:1px solid rgba(255,255,255,0.04)">
+                    <div class="flex items-center gap-2 px-3 py-2 text-sm" style="border-bottom:1px solid #F3F4F6">
                         <span class="text-xs w-12 shrink-0 tabular-nums" style="color:#6B7280">@a.Date.ToString("MM/dd")</span>
                         <div class="award-img @a.AwardType.ToLower().Replace(" ","-") shrink-0"></div>
                         <div class="flex-1 min-w-0">
-                            <div class="truncate" style="color:#F5ECD7">@a.PlayerName</div>
+                            <div class="truncate" style="color:#111827">@a.PlayerName</div>
                             <div class="text-xs truncate" style="color:#6B7280">@a.AwardType</div>
                         </div>
                         @if (a.Value > 0)
                         {
-                            <span class="text-xs font-bold shrink-0 tabular-nums" style="color:#C8962E;font-family:'Rajdhani',sans-serif">@a.Value</span>
+                            <span class="text-xs font-bold shrink-0 tabular-nums" style="color:#2563EB">@a.Value</span>
                         }
                     </div>
                 }

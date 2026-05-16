@@ -6,49 +6,52 @@
     var isAdmin = isAuthenticated && User.IsInRole("Admin");
     var isBoardMember = isAuthenticated && await NavService.IsBoardMemberAsync(User);
 }
-<nav style="background:rgba(10,10,11,0.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08);position:sticky;top:0;z-index:50">
-    <div class="max-w-7xl mx-auto px-4">
-        <div class="flex items-center justify-between h-12">
+<nav style="background:rgba(249,250,251,0.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid #E5E7EB;position:sticky;top:0;z-index:50">
+    <div style="max-width:1200px;margin:0 auto;padding:0 24px">
+        <div class="flex items-center justify-between" style="height:56px">
 
-            
-            <a href="/" class="md:hidden text-sm font-semibold tracking-widest uppercase" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">GTDL</a>
+            {{-- Logo --}}
+            <a href="/" class="flex items-center gap-2.5" style="text-decoration:none;color:inherit;flex-shrink:0">
+                <span style="font-size:18px;font-weight:800;letter-spacing:-0.04em;color:#2563EB">GTDL</span>
+                <span class="hidden sm:block" style="font-size:13px;color:#6B7280;font-weight:500">Greater Trenton Dart League</span>
+            </a>
 
-            
-            <ul class="hidden md:flex items-center gap-1 list-none m-0 p-0">
+            {{-- Desktop nav links --}}
+            <ul class="hidden md:flex items-center gap-0.5 list-none m-0 p-0">
                 @foreach (var item in nav)
                 {
                     if (item.SubItems.Count > 0)
                     {
                         <li class="nav-dropdown-parent relative" style="list-style:none">
-                            <button class="nav-dropdown-toggle flex items-center gap-1 px-3 py-2 text-sm rounded-md transition-colors"
-                                    style="background:transparent;border:none;color:#F5ECD7;cursor:pointer;font-family:'Inter',sans-serif"
+                            <button class="nav-dropdown-toggle flex items-center gap-1 px-3 py-1.5 rounded text-sm font-medium transition-colors"
+                                    style="background:transparent;border:none;color:#374151;cursor:pointer;font-family:inherit"
                                     aria-expanded="false">
                                 @item.Title
-                                <i class="fa-solid fa-chevron-down text-xs" style="color:#6B7280"></i>
+                                <i class="fa-solid fa-chevron-down text-xs" style="color:#9CA3AF"></i>
                             </button>
-                            <ul class="nav-dropdown-menu hidden absolute left-0 top-full mt-1 min-w-[180px] rounded-xl py-1 list-none p-0"
-                                style="background:#111214;border:1px solid rgba(255,255,255,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.5)">
+                            <ul class="nav-dropdown-menu hidden absolute left-0 top-full mt-1 min-w-45 rounded-xl py-1 list-none p-0"
+                                style="background:#FFFFFF;border:1px solid #E5E7EB;box-shadow:0 8px 32px rgba(0,0,0,0.12)">
                                 @foreach (var sub in item.SubItems)
                                 {
                                     if (sub.IsHeader)
                                     {
-                                        <li class="px-3 pt-2 pb-1 text-xs font-semibold uppercase tracking-widest" style="color:#C8962E;list-style:none">@sub.Title</li>
+                                        <li class="px-3 pt-2 pb-1 text-xs font-semibold uppercase tracking-widest" style="color:#2563EB;list-style:none">@sub.Title</li>
                                     }
                                     else if (sub.IsSeparator)
                                     {
-                                        <li style="border-top:1px solid rgba(255,255,255,0.08);margin:4px 0;list-style:none"></li>
+                                        <li style="border-top:1px solid #E5E7EB;margin:4px 0;list-style:none"></li>
                                     }
                                     else
                                     {
                                         <li style="list-style:none">
                                             <a href="@sub.Url" class="block px-3 py-2 text-sm transition-colors"
-                                               style="color:#F5ECD7;text-decoration:none"
+                                               style="color:#374151;text-decoration:none"
                                                @(sub.OpenInNewTab ? "target=\"_blank\" rel=\"noopener noreferrer\"" : "")
-                                               onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background=''">
+                                               onmouseover="this.style.background='#F9FAFB'" onmouseout="this.style.background=''">
                                                 @sub.Title
                                                 @if (sub.OpenInNewTab && !sub.IsDocument)
                                                 {
-                                                    <i class="fa-solid fa-arrow-up-right-from-square text-xs ml-1" style="color:#6B7280"></i>
+                                                    <i class="fa-solid fa-arrow-up-right-from-square text-xs ml-1" style="color:#9CA3AF"></i>
                                                 }
                                             </a>
                                         </li>
@@ -60,9 +63,9 @@
                     else
                     {
                         <li style="list-style:none">
-                            <a href="@item.Url" class="px-3 py-2 text-sm rounded-md block transition-colors"
-                               style="color:#F5ECD7;text-decoration:none"
-                               onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background=''">
+                            <a href="@item.Url" class="px-3 py-1.5 text-sm font-medium rounded block transition-colors"
+                               style="color:#374151;text-decoration:none"
+                               onmouseover="this.style.background='#F3F4F6'" onmouseout="this.style.background=''">
                                 @item.Title
                             </a>
                         </li>
@@ -70,77 +73,83 @@
                 }
             </ul>
 
-            
+            {{-- Desktop right: auth --}}
             <div class="hidden md:flex items-center gap-2">
                 @if (isAuthenticated)
                 {
                     <div class="nav-dropdown-parent relative">
-                        <button class="nav-dropdown-toggle flex items-center gap-2 px-3 py-1.5 text-sm rounded-md transition-colors"
-                                style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#F5ECD7;cursor:pointer;font-family:'Inter',sans-serif"
+                        <button class="nav-dropdown-toggle flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded transition-colors"
+                                style="background:#F3F4F6;border:1px solid #E5E7EB;color:#374151;cursor:pointer;font-family:inherit"
                                 aria-expanded="false">
-                            <i class="fa-solid fa-circle-user" style="color:#C8962E"></i>
+                            <i class="fa-solid fa-circle-user" style="color:#2563EB"></i>
                             @User.Identity!.Name
-                            <i class="fa-solid fa-chevron-down text-xs" style="color:#6B7280"></i>
+                            <i class="fa-solid fa-chevron-down text-xs" style="color:#9CA3AF"></i>
                         </button>
-                        <ul class="nav-dropdown-menu hidden absolute right-0 top-full mt-1 min-w-[160px] rounded-xl py-1 list-none p-0"
-                            style="background:#111214;border:1px solid rgba(255,255,255,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.5)">
+                        <ul class="nav-dropdown-menu hidden absolute right-0 top-full mt-1 min-w-40 rounded-xl py-1 list-none p-0"
+                            style="background:#FFFFFF;border:1px solid #E5E7EB;box-shadow:0 8px 32px rgba(0,0,0,0.12)">
                             @if (isAdmin || isBoardMember)
                             {
-                                <li class="px-3 pt-2 pb-1 text-xs font-semibold uppercase tracking-widest" style="color:#C8962E;list-style:none">Manage</li>
+                                <li class="px-3 pt-2 pb-1 text-xs font-semibold uppercase tracking-widest" style="color:#2563EB;list-style:none">Manage</li>
                                 <li style="list-style:none">
-                                    <a href="/manage/1" class="block px-3 py-2 text-sm" style="color:#F5ECD7;text-decoration:none"
-                                       onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background=''">League</a>
+                                    <a href="/manage/1" class="block px-3 py-2 text-sm" style="color:#374151;text-decoration:none"
+                                       onmouseover="this.style.background='#F9FAFB'" onmouseout="this.style.background=''">League</a>
                                 </li>
-                                <li style="border-top:1px solid rgba(255,255,255,0.08);margin:4px 0;list-style:none"></li>
+                                <li style="border-top:1px solid #E5E7EB;margin:4px 0;list-style:none"></li>
                             }
                             <li style="list-style:none">
-                                <a href="/Auth/Logout" class="block px-3 py-2 text-sm" style="color:#F5ECD7;text-decoration:none"
-                                   onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background=''">Logout</a>
+                                <a href="/Auth/Logout" class="block px-3 py-2 text-sm" style="color:#374151;text-decoration:none"
+                                   onmouseover="this.style.background='#F9FAFB'" onmouseout="this.style.background=''">Logout</a>
                             </li>
                         </ul>
                     </div>
                 }
                 else
                 {
-                    <a href="/Auth/Login" class="px-3 py-1.5 text-sm rounded-md" style="background:rgba(200,16,26,0.15);border:1px solid rgba(200,16,26,0.4);color:#F5ECD7;text-decoration:none">Log in</a>
-                    <a href="/Auth/Register" class="px-3 py-1.5 text-sm rounded-md" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:#F5ECD7;text-decoration:none">Register</a>
+                    <a href="/Auth/Login" class="px-3 py-1.5 text-sm font-medium rounded"
+                       style="background:transparent;border:1px solid #E5E7EB;color:#374151;text-decoration:none"
+                       onmouseover="this.style.background='#F3F4F6'" onmouseout="this.style.background=''">Log in</a>
+                    <a href="/Auth/Register" class="px-3 py-1.5 text-sm font-semibold rounded"
+                       style="background:#2563EB;border:1px solid #2563EB;color:#fff;text-decoration:none"
+                       onmouseover="this.style.background='#1D4ED8'" onmouseout="this.style.background='#2563EB'">Register</a>
                 }
             </div>
 
-            
-            <button id="nav-hamburger" class="md:hidden flex flex-col gap-1.5 p-2 rounded-md" style="background:transparent;border:none;cursor:pointer" aria-label="Open menu">
-                <span class="block w-5 h-0.5 transition-all" style="background:#F5ECD7"></span>
-                <span class="block w-5 h-0.5 transition-all" style="background:#F5ECD7"></span>
-                <span class="block w-5 h-0.5 transition-all" style="background:#F5ECD7"></span>
+            {{-- Hamburger --}}
+            <button id="nav-hamburger" class="md:hidden flex flex-col gap-1.5 p-2 rounded"
+                    style="background:transparent;border:1px solid #E5E7EB;cursor:pointer" aria-label="Open menu">
+                <span class="block w-5 h-0.5" style="background:#374151"></span>
+                <span class="block w-5 h-0.5" style="background:#374151"></span>
+                <span class="block w-5 h-0.5" style="background:#374151"></span>
             </button>
         </div>
     </div>
 
-    
-    <div id="nav-mobile-menu" class="hidden md:hidden border-t px-4 py-3" style="border-color:rgba(255,255,255,0.08);background:#0D0D0E">
+    {{-- Mobile menu --}}
+    <div id="nav-mobile-menu" class="hidden md:hidden border-t px-4 py-3" style="border-color:#E5E7EB;background:#FFFFFF">
         @foreach (var item in nav)
         {
             if (item.SubItems.Count > 0)
             {
                 <div class="mobile-section mb-2">
                     <button class="mobile-section-toggle flex items-center justify-between w-full py-2 text-sm font-semibold"
-                            style="background:transparent;border:none;color:#C8962E;cursor:pointer;font-family:'Rajdhani',sans-serif;letter-spacing:0.05em;text-transform:uppercase">
+                            style="background:transparent;border:none;color:#2563EB;cursor:pointer;font-family:inherit;letter-spacing:0.04em;text-transform:uppercase">
                         @item.Title
-                        <i class="fa-solid fa-chevron-down text-xs transition-transform" style="color:#6B7280"></i>
+                        <i class="fa-solid fa-chevron-down text-xs transition-transform" style="color:#9CA3AF"></i>
                     </button>
                     <div class="mobile-section-items hidden pl-3">
                         @foreach (var sub in item.SubItems)
                         {
                             if (sub.IsHeader)
                             {
-                                <p class="py-1 text-xs font-semibold uppercase tracking-widest" style="color:#6B7280">@sub.Title</p>
+                                <p class="py-1 text-xs font-semibold uppercase tracking-widest" style="color:#9CA3AF">@sub.Title</p>
                             }
                             else if (!sub.IsSeparator)
                             {
-                                <a href="@sub.Url" class="block py-2 text-sm border-b" style="color:#F5ECD7;text-decoration:none;border-color:rgba(255,255,255,0.05)"
+                                <a href="@sub.Url" class="block py-2 text-sm border-b"
+                                   style="color:#374151;text-decoration:none;border-color:#F3F4F6"
                                    @(sub.OpenInNewTab ? "target=\"_blank\" rel=\"noopener noreferrer\"" : "")>
                                     @sub.Title
-                                    @if (sub.OpenInNewTab && !sub.IsDocument) { <i class="fa-solid fa-arrow-up-right-from-square text-xs ml-1" style="color:#6B7280"></i> }
+                                    @if (sub.OpenInNewTab && !sub.IsDocument) { <i class="fa-solid fa-arrow-up-right-from-square text-xs ml-1" style="color:#9CA3AF"></i> }
                                 </a>
                             }
                         }
@@ -149,58 +158,35 @@
             }
             else
             {
-                <a href="@item.Url" class="block py-2 text-sm border-b" style="color:#F5ECD7;text-decoration:none;border-color:rgba(255,255,255,0.05)">@item.Title</a>
+                <a href="@item.Url" class="block py-2 text-sm border-b" style="color:#374151;text-decoration:none;border-color:#F3F4F6">@item.Title</a>
             }
         }
-        <div class="mt-3 pt-3" style="border-top:1px solid rgba(255,255,255,0.1)">
+        <div class="mt-3 pt-3" style="border-top:1px solid #E5E7EB">
             @if (isAuthenticated)
             {
                 @if (isAdmin || isBoardMember)
                 {
-                    <a href="/manage/1" class="block py-2 text-sm" style="color:#C8962E;text-decoration:none">Manage League</a>
+                    <a href="/manage/1" class="block py-2 text-sm" style="color:#2563EB;text-decoration:none">Manage League</a>
                 }
-                <a href="/Auth/Logout" class="block py-2 text-sm" style="color:#F5ECD7;text-decoration:none">Logout</a>
+                <a href="/Auth/Logout" class="block py-2 text-sm" style="color:#374151;text-decoration:none">Logout</a>
             }
             else
             {
-                <a href="/Auth/Login" class="block py-2 text-sm" style="color:#F5ECD7;text-decoration:none">Log in</a>
-                <a href="/Auth/Register" class="block py-2 text-sm" style="color:#F5ECD7;text-decoration:none">Register</a>
+                <a href="/Auth/Login" class="block py-2 text-sm" style="color:#374151;text-decoration:none">Log in</a>
+                <a href="/Auth/Register" class="block py-2 text-sm font-semibold" style="color:#2563EB;text-decoration:none">Register</a>
             }
         </div>
     </div>
 </nav>
 
-
-<nav id="mobile-nav" class="md:hidden fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around h-14 no-print"
-     style="background:#0D0D0E;border-top:1px solid rgba(255,255,255,0.1)">
-    <a href="/" class="mobile-nav-tab flex flex-col items-center gap-0.5 py-2 px-3" style="color:#6B7280;text-decoration:none;font-size:10px">
-        <i class="fa-solid fa-house text-lg"></i>
-        <span>Home</span>
-    </a>
-    <a href="#" id="mobile-nav-results" class="mobile-nav-tab flex flex-col items-center gap-0.5 py-2 px-3" style="color:#6B7280;text-decoration:none;font-size:10px">
-        <i class="fa-solid fa-trophy text-lg"></i>
-        <span>Results</span>
-    </a>
-    <a href="#" id="mobile-nav-schedule" class="mobile-nav-tab flex flex-col items-center gap-0.5 py-2 px-3" style="color:#6B7280;text-decoration:none;font-size:10px">
-        <i class="fa-solid fa-calendar-days text-lg"></i>
-        <span>Schedule</span>
-    </a>
-    <a href="#" id="mobile-nav-stats" class="mobile-nav-tab flex flex-col items-center gap-0.5 py-2 px-3" style="color:#6B7280;text-decoration:none;font-size:10px">
-        <i class="fa-solid fa-chart-bar text-lg"></i>
-        <span>Stats</span>
-    </a>
-</nav>
-
 <script>
 (function () {
-    // Hamburger toggle
     var hamburger = document.getElementById('nav-hamburger');
     var mobileMenu = document.getElementById('nav-mobile-menu');
     hamburger.addEventListener('click', function () {
         mobileMenu.classList.toggle('hidden');
     });
 
-    // Desktop dropdown toggles
     document.querySelectorAll('.nav-dropdown-parent').forEach(function (parent) {
         var toggle = parent.querySelector('.nav-dropdown-toggle');
         var menu = parent.querySelector('.nav-dropdown-menu');
@@ -208,13 +194,11 @@
         toggle.addEventListener('click', function (e) {
             e.stopPropagation();
             var isOpen = !menu.classList.contains('hidden');
-            // Close all others
             document.querySelectorAll('.nav-dropdown-menu').forEach(function (m) { m.classList.add('hidden'); });
             if (!isOpen) menu.classList.remove('hidden');
         });
     });
 
-    // Mobile section toggles
     document.querySelectorAll('.mobile-section-toggle').forEach(function (btn) {
         btn.addEventListener('click', function () {
             var items = btn.nextElementSibling;
@@ -224,20 +208,8 @@
         });
     });
 
-    // Close dropdowns on outside click
     document.addEventListener('click', function () {
         document.querySelectorAll('.nav-dropdown-menu').forEach(function (m) { m.classList.add('hidden'); });
-    });
-
-    // Wire mobile bottom nav to current-season links once nav data is available
-    var resultLinks = document.querySelectorAll('#nav-mobile-menu a');
-    resultLinks.forEach(function (a) {
-        var href = a.href || '';
-        if (href.match(/\/season\/\d+$/) && !href.includes('schedule') && !href.includes('stats')) {
-            document.getElementById('mobile-nav-results').href = href;
-        }
-        if (href.includes('schedule')) document.getElementById('mobile-nav-schedule').href = href;
-        if (href.includes('stats'))    document.getElementById('mobile-nav-stats').href = href;
     });
 })();
 </script>

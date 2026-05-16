@@ -6,10 +6,10 @@
 
 <div id="scoresheet">
     <div class="flex items-center justify-between flex-wrap gap-3 mb-4">
-        <h2 class="text-2xl font-bold" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">
+        <h2 class="text-2xl font-bold" style="color:#111827">
             @Model.Season.Name
         </h2>
-        <select id="matchesThisWeek" class="rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)">
+        <select id="matchesThisWeek" class="rounded-lg px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB">
             @foreach (var kv in Model.MatchesThisWeek)
             {
                 @if (kv.Key == Model.SelectedMatchRoute) { <option value="@kv.Key" selected>@kv.Value</option> }
@@ -18,7 +18,7 @@
         </select>
     </div>
 
-    <h3 class="text-xl font-bold mb-4" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">
+    <h3 class="text-xl font-bold mb-4" style="color:#111827">
         @Model.Match.AwayTeam.Name <span style="color:#6B7280">@@</span> @Model.Match.HomeTeam.Name
     </h3>
 
@@ -53,10 +53,10 @@
     </div>
 
     <div class="flex gap-3 mt-5">
-        <a href="/season/@Model.Season.Id" class="px-4 py-2 rounded-lg text-sm font-medium" style="background:rgba(255,255,255,0.08);color:#F5ECD7;text-decoration:none">Back</a>
+        <a href="/season/@Model.Season.Id" class="px-4 py-2 rounded-lg text-sm font-medium" style="background:#F3F4F6;color:#374151;border:1px solid #E5E7EB;text-decoration:none">Back</a>
         @if (Model.IsBoardMember)
         {
-            <a href="/season/@Model.Season.Id/match/@Model.Match.Id/edit" class="px-4 py-2 rounded-lg text-sm font-medium" style="background:#C8962E;color:#0A0A0B;text-decoration:none">Edit</a>
+            <a href="/season/@Model.Season.Id/match/@Model.Match.Id/edit" class="px-4 py-2 rounded-lg text-sm font-medium" style="background:#2563EB;color:#fff;text-decoration:none">Edit</a>
         }
     </div>
 </div>

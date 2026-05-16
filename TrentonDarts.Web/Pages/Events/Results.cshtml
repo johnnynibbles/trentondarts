@@ -4,18 +4,18 @@
     ViewData["Title"] = "Event Results";
 }
 
-<h2 class="text-3xl font-bold mb-2 text-center" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">Greater Trenton Dart League</h2>
-<p class="text-center mb-5 text-sm" style="color:#9CA3AF">Player Activity in Events</p>
+<h2 class="text-2xl font-bold mb-2" style="color:#111827">Greater Trenton Dart League</h2>
+<p class="mb-5 text-sm" style="color:#6B7280">Player Activity in Events</p>
 
 <div class="glass-card overflow-x-auto">
     <table class="w-full text-sm">
         <thead>
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04)">
-                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Event</th>
-                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Date</th>
-                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Specific Event</th>
-                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Player</th>
-                <th class="px-3 py-2 text-center text-xs font-semibold" style="color:#9CA3AF">Finish</th>
+            <tr style="border-bottom:1px solid #E5E7EB;background:#F9FAFB">
+                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#6B7280">Event</th>
+                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#6B7280">Date</th>
+                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#6B7280">Specific Event</th>
+                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#6B7280">Player</th>
+                <th class="px-3 py-2 text-center text-xs font-semibold" style="color:#6B7280">Finish</th>
             </tr>
         </thead>
         <tbody>
@@ -27,13 +27,13 @@
         {
             @foreach (var r in Model.EventResults)
             {
-                <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"
-                    onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background=''">
+                <tr style="border-bottom:1px solid #F3F4F6"
+                    onmouseover="this.style.background='#F9FAFB'" onmouseout="this.style.background=''">
                     <td class="px-3 py-2">@r.EventName</td>
-                    <td class="px-3 py-2 text-xs" style="color:#9CA3AF">@r.EventDate?.ToString("MM-dd-yyyy")</td>
+                    <td class="px-3 py-2 text-xs" style="color:#6B7280">@r.EventDate?.ToString("MM-dd-yyyy")</td>
                     <td class="px-3 py-2">@r.SpecificEvent</td>
                     <td class="px-3 py-2">@r.PlayerName</td>
-                    <td class="px-3 py-2 text-center font-bold" style="color:#C8962E">@r.Place</td>
+                    <td class="px-3 py-2 text-center font-bold" style="color:#2563EB">@r.Place</td>
                 </tr>
             }
         }

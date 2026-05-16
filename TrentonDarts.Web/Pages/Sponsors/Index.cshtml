@@ -4,14 +4,14 @@
     ViewData["Title"] = "GTDL Sponsors";
 }
 
-<h2 class="text-3xl font-bold mb-5" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">GTDL Sponsors</h2>
+<h2 class="text-2xl font-bold mb-5" style="color:#111827">GTDL Sponsors</h2>
 
 <div class="flex flex-wrap gap-2 mb-5">
     @foreach (var kv in Model.SponsorTypes)
     {
         <a href="/sponsors?type=@kv.Key"
            class="px-3 py-1.5 rounded-full text-sm font-medium"
-           style="@(Model.SelectedType == kv.Key ? "background:#C8962E;color:#0A0A0B" : "background:rgba(255,255,255,0.08);color:#F5ECD7");text-decoration:none">
+           style="@(Model.SelectedType == kv.Key ? "background:#2563EB;color:#fff" : "background:#F3F4F6;color:#374151;border:1px solid #E5E7EB");text-decoration:none">
             @kv.Value
         </a>
     }
@@ -20,12 +20,12 @@
 <div class="glass-card overflow-x-auto">
     <table class="w-full text-sm">
         <thead>
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04)">
-                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Name</th>
-                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Address</th>
-                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Contact</th>
-                <th class="px-3 py-2 text-center text-xs" style="color:#9CA3AF"></th>
-                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF;width:30%">Description</th>
+            <tr style="border-bottom:1px solid #E5E7EB;background:#F9FAFB">
+                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#6B7280">Name</th>
+                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#6B7280">Address</th>
+                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#6B7280">Contact</th>
+                <th class="px-3 py-2 text-center text-xs" style="color:#6B7280"></th>
+                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#6B7280;width:30%">Description</th>
             </tr>
         </thead>
         <tbody>
@@ -37,24 +37,24 @@
         {
             @foreach (var s in Model.Sponsors)
             {
-                <tr style="border-bottom:1px solid rgba(255,255,255,0.06)"
-                    onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background=''">
+                <tr style="border-bottom:1px solid #F3F4F6"
+                    onmouseover="this.style.background='#F9FAFB'" onmouseout="this.style.background=''">
                     <td class="px-3 py-2 font-semibold">
                         @if (!string.IsNullOrEmpty(s.Url))
                         {
-                            <a href="@s.Url" target="_blank" style="color:#C8962E;text-decoration:none">@s.Name</a>
+                            <a href="@s.Url" target="_blank" style="color:#2563EB;text-decoration:none">@s.Name</a>
                         }
                         else
                         {
-                            <span style="color:#F5ECD7">@s.Name</span>
+                            <span style="color:#111827">@s.Name</span>
                         }
                     </td>
-                    <td class="px-3 py-2 text-xs" style="color:#9CA3AF">
+                    <td class="px-3 py-2 text-xs" style="color:#6B7280">
                         @if (!string.IsNullOrEmpty(s.Address1))
                         {
                             if (!string.IsNullOrEmpty(s.MapUrl))
                             {
-                                <a href="@s.MapUrl" target="_blank" style="color:#9CA3AF;text-decoration:none">
+                                <a href="@s.MapUrl" target="_blank" style="color:#6B7280;text-decoration:none">
                                     @s.Address1<br/>
                                     @if (!string.IsNullOrEmpty(s.Address2)) { @s.Address2 <br/> }
                                     @s.City, @s.State @s.Zip
@@ -68,17 +68,17 @@
                             }
                         }
                     </td>
-                    <td class="px-3 py-2 text-xs" style="color:#9CA3AF">
+                    <td class="px-3 py-2 text-xs" style="color:#6B7280">
                         <div>@s.Phone</div>
                         <div>@s.Email</div>
                     </td>
                     <td class="px-3 py-2 text-center">
                         @if (!string.IsNullOrEmpty(s.FacebookUrl))
                         {
-                            <a href="@s.FacebookUrl" target="_blank" style="color:#C8962E;font-size:1.25rem"><i class="fa-brands fa-facebook"></i></a>
+                            <a href="@s.FacebookUrl" target="_blank" style="color:#2563EB;font-size:1.25rem"><i class="fa-brands fa-facebook"></i></a>
                         }
                     </td>
-                    <td class="px-3 py-2 text-xs" style="color:#9CA3AF">
+                    <td class="px-3 py-2 text-xs" style="color:#6B7280">
                         @foreach (var t in s.Teams)
                         {
                             <div>@t.Name</div>

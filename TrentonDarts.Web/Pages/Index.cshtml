@@ -2,105 +2,189 @@
 @model TrentonDarts.Web.Pages.IndexModel
 @{
     ViewData["Title"] = "Greater Trenton Dart League";
+    Layout = "_Layout";
 }
 
-<div class="text-center mb-6">
-    <h1 class="text-3xl sm:text-4xl font-bold tracking-wide mb-2" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">
-        Greater Trenton Dart League
-    </h1>
-    <div class="w-16 h-0.5 mx-auto" style="background:#C8101A"></div>
-</div>
-
-<div class="flex flex-col lg:flex-row gap-6 items-start">
-
-    @* ── Left sidebar: widgets ──────────────────────────────────────────── *@
-    <aside class="w-full lg:w-72 shrink-0 flex flex-col gap-5">
-
-        @* Schedule widget *@
-        <div class="glass-card p-4">
-            <div class="flex items-center justify-between mb-3">
-                <h2 class="text-base font-bold uppercase tracking-widest" style="font-family:'Rajdhani',sans-serif;color:#C8962E">
-                    <i class="fa-solid fa-calendar-days mr-1.5"></i>Schedule
-                </h2>
+@* ── Hero ─────────────────────────────────────────────────────────────────── *@
+<section style="padding:56px 0 64px;border-bottom:1px solid #E5E7EB;margin:0 -24px">
+    <div style="max-width:1200px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1fr;gap:40px;align-items:center">
+        <div>
+            <div style="display:inline-flex;align-items:center;gap:7px;padding:4px 10px;border-radius:100px;background:#EFF6FF;border:1px solid #BFDBFE;font-size:12px;font-weight:600;color:#2563EB;letter-spacing:0.02em;text-transform:uppercase;margin-bottom:18px">
+                <span style="width:7px;height:7px;border-radius:50%;background:#16A34A;display:inline-block;flex-shrink:0"></span>
                 @if (Model.CurrentSeasonId.HasValue)
                 {
-                    <a href="/season/@Model.CurrentSeasonId/schedule" class="text-xs"
-                       style="color:#6B7280;text-decoration:none"
-                       onmouseover="this.style.color='#F5ECD7'" onmouseout="this.style.color='#6B7280'">Full schedule →</a>
-                }
-            </div>
-            @if (Model.UpcomingWeekDate.HasValue)
-            {
-                <p class="text-xs font-semibold mb-2" style="color:#6B7280">@Model.UpcomingWeekDate.Value.ToString("MMMM d, yyyy")</p>
-                @if (Model.UpcomingMatches.Any())
-                {
-                    var byDiv = Model.UpcomingMatches.GroupBy(m => m.Division ?? "").OrderBy(g => g.Key).ToList();
-                    foreach (var div in byDiv)
-                    {
-                        if (!string.IsNullOrEmpty(div.Key))
-                        {
-                            <p class="text-xs font-semibold uppercase tracking-wider mt-2 mb-1" style="color:#C8101A">Division @div.Key</p>
-                        }
-                        foreach (var match in div)
-                        {
-                            <div class="flex items-center gap-1 py-1 border-t text-xs" style="border-color:rgba(255,255,255,0.06)">
-                                <span class="flex-1 truncate text-right" style="color:#F5ECD7">@match.HomeTeamName</span>
-                                <span class="shrink-0 text-center" style="color:#4B5563">vs</span>
-                                <span class="flex-1 truncate" style="color:#F5ECD7">@match.AwayTeamName</span>
-                            </div>
-                        }
-                    }
+                    <text>Season in progress</text>
                 }
                 else
                 {
-                    <p class="text-xs" style="color:#6B7280">No matches scheduled.</p>
+                    <text>Greater Trenton Dart League</text>
                 }
-            }
-            else
-            {
-                <p class="text-xs" style="color:#6B7280">No upcoming schedule.</p>
-            }
+            </div>
+            <h1 style="font-size:clamp(30px,5vw,54px);font-weight:800;letter-spacing:-0.03em;line-height:1.1;margin-bottom:16px;color:#111827">
+                Greater Trenton<br>Dart League
+            </h1>
+            <p style="font-size:clamp(15px,1.6vw,17px);color:#6B7280;max-width:480px;margin-bottom:32px;line-height:1.65">
+                Competitive darts in Trenton, NJ. Weekly match nights, year-round community. Follow standings, results, and news.
+            </p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+                @if (Model.Standings.Any() && Model.CurrentSeasonId.HasValue)
+                {
+                    <a href="/season/@Model.CurrentSeasonId"
+                       style="display:inline-flex;align-items:center;padding:9px 18px;border-radius:6px;font-size:14px;font-weight:600;background:#2563EB;color:#fff;border:1px solid #2563EB;text-decoration:none">
+                        View Standings
+                    </a>
+                }
+                @if (!User.Identity!.IsAuthenticated)
+                {
+                    <a href="/Auth/Login"
+                       style="display:inline-flex;align-items:center;padding:9px 18px;border-radius:6px;font-size:14px;font-weight:600;background:transparent;color:#374151;border:1px solid #E5E7EB;text-decoration:none">
+                        Member Login
+                    </a>
+                }
+            </div>
         </div>
+
+        @* Dartboard watermark — desktop only *@
+        <div style="opacity:0.055;pointer-events:none;user-select:none;display:none" class="lg:block">
+            <svg width="260" height="260" viewBox="0 0 260 260" fill="none" aria-hidden="true">
+                <circle cx="130" cy="130" r="126" stroke="#111827" stroke-width="2.5"/>
+                <circle cx="130" cy="130" r="106" stroke="#111827" stroke-width="2"/>
+                <circle cx="130" cy="130" r="86"  stroke="#111827" stroke-width="2"/>
+                <circle cx="130" cy="130" r="66"  stroke="#111827" stroke-width="2"/>
+                <circle cx="130" cy="130" r="48"  stroke="#111827" stroke-width="2"/>
+                <circle cx="130" cy="130" r="32"  stroke="#111827" stroke-width="2"/>
+                <circle cx="130" cy="130" r="18"  stroke="#111827" stroke-width="2"/>
+                <circle cx="130" cy="130" r="7"   stroke="#111827" stroke-width="2"/>
+                <line x1="130" y1="4"   x2="130" y2="256" stroke="#111827" stroke-width="1.5"/>
+                <line x1="4"   y1="130" x2="256" y2="130" stroke="#111827" stroke-width="1.5"/>
+                <line x1="46"  y1="46"  x2="214" y2="214" stroke="#111827" stroke-width="1.2"/>
+                <line x1="214" y1="46"  x2="46"  y2="214" stroke="#111827" stroke-width="1.2"/>
+            </svg>
+        </div>
+    </div>
+</section>
+
+@* ── Main: content + sidebar ──────────────────────────────────────────────── *@
+<div class="main-wrap" style="margin:0 -24px">
+
+    @* ── Left: news / content ─────────────────────────────────────────────── *@
+    <div class="posts-col">
+
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:20px">
+            <h2 style="font-size:17px;font-weight:700;letter-spacing:-0.02em;color:#111827">League News</h2>
+        </div>
+
+        <div class="posts-stack">
+
+            @* Upcoming event *@
+            @if (Model.TitleEvent != null)
+            {
+                <article class="post-card">
+                    <div class="post-meta">
+                        <span class="tag tag-event">Event</span>
+                        @if (Model.TitleEvent.EventDate.HasValue)
+                        {
+                            <time class="post-date">@Model.TitleEvent.EventDate.Value.ToString("MMMM d, yyyy")</time>
+                        }
+                    </div>
+                    <h2>@Model.TitleEvent.Name</h2>
+                </article>
+            }
+
+            @* Welcome / main page content *@
+            @if (!string.IsNullOrWhiteSpace(Model.WelcomeMessage))
+            {
+                <article class="post-card">
+                    <div class="post-meta">
+                        <span class="tag tag-news">News</span>
+                    </div>
+                    <div style="font-size:15px;line-height:1.65;color:#374151">
+                        @Html.Raw(Model.WelcomeMessage)
+                    </div>
+                </article>
+            }
+
+            @* Player of the week *@
+            @if (!string.IsNullOrWhiteSpace(Model.PlayerOfTheWeek))
+            {
+                <article class="post-card">
+                    <div class="post-meta">
+                        <span class="tag tag-announce">Spotlight</span>
+                    </div>
+                    <div style="font-size:15px;line-height:1.65;color:#374151">
+                        @Html.Raw(Model.PlayerOfTheWeek)
+                    </div>
+                </article>
+            }
+
+            @* Featured link *@
+            <article class="post-card">
+                <div class="post-meta">
+                    <span class="tag" style="background:#F3F4F6;color:#374151">History</span>
+                </div>
+                <p style="font-size:14px;color:#6B7280;line-height:1.6">
+                    Check out this
+                    <a href="http://www.si.com/vault/1975/02/17/557875/eight-feet-away-from-glory" target="_blank" rel="noopener noreferrer"
+                       style="color:#2563EB;font-weight:600">Sports Illustrated article on darts from 1975</a>.
+                    Our own Conrad Daniels is a key part!
+                </p>
+            </article>
+
+        </div>
+    </div>
+
+    @* ── Right: standings + schedule ──────────────────────────────────────── *@
+    <aside class="sidebar" aria-label="Standings and schedule">
 
         @* Standings widget *@
         @if (Model.Standings.Any())
         {
-            <div class="glass-card p-4">
-                <div class="flex items-center justify-between mb-3">
-                    <h2 class="text-base font-bold uppercase tracking-widest" style="font-family:'Rajdhani',sans-serif;color:#C8962E">
-                        <i class="fa-solid fa-ranking-star mr-1.5"></i>Standings
-                    </h2>
+            <div class="widget">
+                <div class="widget-head">
+                    <span class="widget-title">
+                        <i class="fa-solid fa-ranking-star mr-1" style="color:#2563EB"></i>Standings
+                    </span>
                     @if (Model.CurrentSeasonId.HasValue)
                     {
-                        <a href="/season/@Model.CurrentSeasonId" class="text-xs"
-                           style="color:#6B7280;text-decoration:none"
-                           onmouseover="this.style.color='#F5ECD7'" onmouseout="this.style.color='#6B7280'">Full →</a>
+                        <a href="/season/@Model.CurrentSeasonId" style="font-size:13px;color:#2563EB;font-weight:500;text-decoration:none">Full →</a>
                     }
                 </div>
                 @{ var firstDiv = true; }
                 @foreach (var div in Model.Standings)
                 {
-                    if (!firstDiv) { <div class="mt-3"></div> }
+                    if (!firstDiv)
+                    {
+                        <div style="border-top:1px solid #E5E7EB"></div>
+                    }
                     firstDiv = false;
-                    <p class="text-xs font-semibold uppercase tracking-wider mb-1" style="color:#C8101A">Division @div.Name</p>
-                    <table class="w-full text-xs">
+
+                    if (!string.IsNullOrEmpty(div.Name))
+                    {
+                        <div style="padding:8px 12px 4px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#DC2626">Division @div.Name</div>
+                    }
+                    <table class="standings-tbl">
                         <thead>
-                            <tr style="color:#6B7280">
-                                <th class="text-left pb-1 font-medium">Team</th>
-                                <th class="text-center pb-1 font-medium w-6">W</th>
-                                <th class="text-center pb-1 font-medium w-6">L</th>
-                                <th class="text-right pb-1 font-medium w-10">Pct</th>
+                            <tr>
+                                <th>#</th>
+                                <th>Team</th>
+                                <th class="r">W</th>
+                                <th class="r">L</th>
+                                <th class="r">Pct</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @{ var rank = 1; }
                             @foreach (var team in div.Standings)
                             {
-                                <tr class="border-t" style="border-color:rgba(255,255,255,0.06)">
-                                    <td class="py-1 pr-2" style="color:#F5ECD7;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">@team.Name</td>
-                                    <td class="py-1 text-center" style="color:#F5ECD7">@team.WonPoints</td>
-                                    <td class="py-1 text-center" style="color:#F5ECD7">@team.LossPoints</td>
-                                    <td class="py-1 text-right" style="color:#9CA3AF">@team.Percentage.ToString("F3")</td>
+                                var posClass = rank == 1 ? "pos-1" : rank == 2 ? "pos-2" : rank == 3 ? "pos-3" : "pos-n";
+                                <tr>
+                                    <td><span class="pos @posClass">@rank</span></td>
+                                    <td><span class="team-nm">@team.Name</span></td>
+                                    <td class="r" style="color:#16A34A;font-weight:600">@team.WonPoints</td>
+                                    <td class="r" style="color:#DC2626;font-weight:600">@team.LossPoints</td>
+                                    <td class="r" style="color:#6B7280;font-size:12px">@team.Percentage.ToString("F3")</td>
                                 </tr>
+                                rank++;
                             }
                         </tbody>
                     </table>
@@ -108,43 +192,53 @@
             </div>
         }
 
-    </aside>
-
-    @* ── Right panel: content ───────────────────────────────────────────── *@
-    <main class="flex-1 min-w-0 flex flex-col gap-5">
-
-        @if (Model.TitleEvent != null)
-        {
-            <div class="glass-card p-5" style="border-left:2px solid #C8962E">
-                <p class="text-xs font-semibold uppercase tracking-widest mb-1" style="color:#C8962E">Upcoming Event</p>
-                <h3 class="text-xl font-bold mb-1" style="font-family:'Rajdhani',sans-serif">@Model.TitleEvent.Name</h3>
-                <p class="text-sm" style="color:#9CA3AF">@Model.TitleEvent.EventDate?.ToString("MMMM d, yyyy")</p>
+        @* Schedule widget *@
+        <div class="widget">
+            <div class="widget-head">
+                <span class="widget-title">
+                    <i class="fa-solid fa-calendar-days mr-1" style="color:#2563EB"></i>Schedule
+                </span>
+                @if (Model.CurrentSeasonId.HasValue)
+                {
+                    <a href="/season/@Model.CurrentSeasonId/schedule" style="font-size:13px;color:#2563EB;font-weight:500;text-decoration:none">Full →</a>
+                }
             </div>
-        }
-
-        @if (!string.IsNullOrWhiteSpace(Model.WelcomeMessage))
-        {
-            <div class="important-message">
-                @Html.Raw(Model.WelcomeMessage)
-            </div>
-        }
-
-        @if (!string.IsNullOrWhiteSpace(Model.PlayerOfTheWeek))
-        {
-            <div class="important-message">
-                @Html.Raw(Model.PlayerOfTheWeek)
-            </div>
-        }
-
-        <div class="glass-card p-4">
-            <p class="text-sm" style="color:#9CA3AF">
-                Check out this interesting
-                <a href="http://www.si.com/vault/1975/02/17/557875/eight-feet-away-from-glory" target="_blank" rel="noopener noreferrer"
-                   class="font-semibold" style="color:#C8962E">Sports Illustrated article on darts from 1975</a>.
-                Our own Conrad Daniels is a key part!
-            </p>
+            @if (Model.UpcomingWeekDate.HasValue)
+            {
+                <div style="padding:10px 18px;border-bottom:1px solid #E5E7EB;font-size:11px;font-weight:600;color:#6B7280;text-transform:uppercase;letter-spacing:0.05em">
+                    @Model.UpcomingWeekDate.Value.ToString("MMMM d, yyyy")
+                </div>
+                @if (Model.UpcomingMatches.Any())
+                {
+                    var byDiv = Model.UpcomingMatches.GroupBy(m => m.Division ?? "").OrderBy(g => g.Key).ToList();
+                    foreach (var divGroup in byDiv)
+                    {
+                        @foreach (var match in divGroup)
+                        {
+                            <div class="matchup">
+                                <div class="matchup-teams">
+                                    <span>@match.HomeTeamName</span>
+                                    <span class="vs">vs</span>
+                                    <span>@match.AwayTeamName</span>
+                                </div>
+                                @if (!string.IsNullOrEmpty(divGroup.Key))
+                                {
+                                    <div class="matchup-venue">Div @divGroup.Key</div>
+                                }
+                            </div>
+                        }
+                    }
+                }
+                else
+                {
+                    <div style="padding:16px 18px;font-size:13px;color:#6B7280">No matches scheduled.</div>
+                }
+            }
+            else
+            {
+                <div style="padding:16px 18px;font-size:13px;color:#6B7280">No upcoming schedule.</div>
+            }
         </div>
 
-    </main>
-
+    </aside>
 </div>

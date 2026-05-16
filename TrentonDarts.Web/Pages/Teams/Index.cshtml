@@ -4,19 +4,19 @@
     ViewData["Title"] = $"{Model.Season.Name} Teams";
 }
 
-<h2 class="text-3xl font-bold mb-5 text-center" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">@Model.Season.Name GTDL Teams</h2>
+<h2 class="text-2xl font-bold mb-5" style="color:#111827">@Model.Season.Name GTDL Teams</h2>
 
 <div class="glass-card overflow-x-auto">
     <table class="w-full text-sm">
         <thead>
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04)">
-                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Team</th>
-                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Sponsor</th>
-                <th class="px-3 py-2 text-center text-xs" style="color:#9CA3AF"></th>
-                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Address</th>
-                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#9CA3AF">Captains</th>
-                <th class="px-3 py-2 text-center text-xs font-semibold" style="color:#9CA3AF">Pre</th>
-                <th class="px-3 py-2 text-center text-xs font-semibold" style="color:#9CA3AF">Regular</th>
+            <tr style="border-bottom:1px solid #E5E7EB;background:#F9FAFB">
+                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#6B7280">Team</th>
+                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#6B7280">Sponsor</th>
+                <th class="px-3 py-2 text-center text-xs" style="color:#6B7280"></th>
+                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#6B7280">Address</th>
+                <th class="px-3 py-2 text-left text-xs font-semibold" style="color:#6B7280">Captains</th>
+                <th class="px-3 py-2 text-center text-xs font-semibold" style="color:#6B7280">Pre</th>
+                <th class="px-3 py-2 text-center text-xs font-semibold" style="color:#6B7280">Regular</th>
             </tr>
         </thead>
         <tbody>
@@ -29,21 +29,21 @@
             @foreach (var st in Model.SeasonTeams.OrderBy(t => t.Team.Name))
             {
                 var sponsor = st.Team.Sponsor;
-                <tr style="border-bottom:1px solid rgba(255,255,255,0.06)"
-                    onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background=''">
+                <tr style="border-bottom:1px solid #F3F4F6"
+                    onmouseover="this.style.background='#F9FAFB'" onmouseout="this.style.background=''">
                     <td class="px-3 py-2 font-semibold">
-                        <a href="/team/@st.Team.Id" style="color:#C8962E;text-decoration:none">@st.Team.Name</a>
+                        <a href="/team/@st.Team.Id" style="color:#2563EB;text-decoration:none">@st.Team.Name</a>
                     </td>
                     <td class="px-3 py-2">
                         @if (sponsor != null)
                         {
                             if (!string.IsNullOrEmpty(sponsor.Url))
                             {
-                                <a href="@sponsor.Url" target="_blank" style="color:#F5ECD7;text-decoration:none;font-weight:600">@sponsor.Name</a>
+                                <a href="@sponsor.Url" target="_blank" style="color:#111827;text-decoration:none;font-weight:600">@sponsor.Name</a>
                             }
                             else
                             {
-                                <strong style="color:#F5ECD7">@sponsor.Name</strong>
+                                <strong style="color:#111827">@sponsor.Name</strong>
                             }
                             if (!string.IsNullOrEmpty(sponsor.Phone))
                             {
@@ -54,27 +54,27 @@
                     <td class="px-3 py-2 text-center">
                         @if (sponsor != null && !string.IsNullOrEmpty(sponsor.FacebookUrl))
                         {
-                            <a href="@sponsor.FacebookUrl" target="_blank" style="color:#C8962E;font-size:1.1rem"><i class="fa-brands fa-facebook"></i></a>
+                            <a href="@sponsor.FacebookUrl" target="_blank" style="color:#2563EB;font-size:1.1rem"><i class="fa-brands fa-facebook"></i></a>
                         }
                     </td>
-                    <td class="px-3 py-2 text-xs" style="color:#9CA3AF">
+                    <td class="px-3 py-2 text-xs" style="color:#6B7280">
                         @if (sponsor != null && !string.IsNullOrEmpty(sponsor.Address1))
                         {
-                            <a href="@sponsor.MapUrl" target="_blank" style="color:#9CA3AF;text-decoration:none">
+                            <a href="@sponsor.MapUrl" target="_blank" style="color:#6B7280;text-decoration:none">
                                 @sponsor.Address1<br/>
                                 @if (!string.IsNullOrEmpty(sponsor.Address2)) { @sponsor.Address2 <br/> }
                                 @sponsor.City, @sponsor.State @sponsor.Zip
                             </a>
                         }
                     </td>
-                    <td class="px-3 py-2 text-xs" style="color:#F5ECD7">
+                    <td class="px-3 py-2 text-xs" style="color:#374151">
                         @foreach (var tp in st.TeamPlayers)
                         {
                             @tp.Player?.Name<br/>
                         }
                     </td>
-                    <td class="px-3 py-2 text-center text-xs font-semibold" style="color:#9CA3AF">@st.PreSeasonDiv</td>
-                    <td class="px-3 py-2 text-center text-xs font-semibold" style="color:#9CA3AF">@st.RegularSeasonDiv</td>
+                    <td class="px-3 py-2 text-center text-xs font-semibold" style="color:#6B7280">@st.PreSeasonDiv</td>
+                    <td class="px-3 py-2 text-center text-xs font-semibold" style="color:#6B7280">@st.RegularSeasonDiv</td>
                 </tr>
             }
         }

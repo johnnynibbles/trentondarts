@@ -6,18 +6,18 @@
 
 <div class="flex items-start justify-between flex-wrap gap-3 mb-5">
     <div>
-        <h2 class="text-3xl font-bold" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">
+        <h2 class="text-2xl font-bold" style="color:#111827">
             @Model.Player.Name
         </h2>
-        <p class="text-sm mt-0.5" style="color:#9CA3AF">
+        <p class="text-sm mt-0.5" style="color:#6B7280">
             @if (Model.PlayerTeam != null)
             {
-                <span>on </span><a href="/team/@Model.PlayerTeam.Id?season=@Model.Season.Id" style="color:#C8962E;text-decoration:none">@Model.PlayerTeam.Name</a>
+                <span>on </span><a href="/team/@Model.PlayerTeam.Id?season=@Model.Season.Id" style="color:#2563EB;text-decoration:none">@Model.PlayerTeam.Name</a>
             }
             else { <span>No Team</span> }
-            <span class="mx-2" style="color:#6B7280">&bull;</span>
+            <span class="mx-2" style="color:#9CA3AF">&bull;</span>
             @Model.Season.Name
-            <span class="mx-2" style="color:#6B7280">&bull;</span>
+            <span class="mx-2" style="color:#9CA3AF">&bull;</span>
             <a href="/player/@Model.Player.Id?season=@Model.Season.Id&groupby=gameType" style="color:#6B7280;text-decoration:none;font-size:0.75rem">Group by game type</a>
         </p>
     </div>
@@ -30,7 +30,7 @@
         <div class="glass-card overflow-x-auto">
             <table class="w-full text-sm">
                 <thead>
-                    <tr style="border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04)">
+                    <tr style="border-bottom:1px solid #E5E7EB;background:#F9FAFB">
                         <th class="px-3 py-2 text-center text-xs font-semibold uppercase tracking-wider" style="color:#6B7280">Game</th>
                         <th class="px-3 py-2 text-center text-xs font-semibold uppercase tracking-wider" style="color:#6B7280">#</th>
                         <th class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wider" style="color:#6B7280">Partner</th>
@@ -54,28 +54,28 @@
                             var matchUrl = Model.IsBoardMember
                                 ? $"/season/{Model.Season.Id}/match/{gh.MatchId}/edit"
                                 : $"/season/{Model.Season.Id}/match/{gh.MatchId}";
-                            <tr style="border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.03)">
+                            <tr style="border-bottom:1px solid #E5E7EB;background:#F9FAFB">
                                 <td colspan="5" class="px-3 py-2">
                                     <strong>
-                                        <a href="@matchUrl" class="mr-3" style="color:#C8962E;text-decoration:none">
+                                        <a href="@matchUrl" class="mr-3" style="color:#2563EB;text-decoration:none">
                                             <i class="fa-regular fa-note-sticky mr-1"></i>@gh.Date.ToString("MM-dd-yyyy")
                                             <span class="text-xs ml-1" style="color:#6B7280">@(gh.SeasonPart == "pre" ? "Pre" : "Reg")</span>
                                         </a>
-                                        <a href="/team/@gh.OpponentTeamId?season=@Model.Season.Id" style="color:#F5ECD7;text-decoration:none">
+                                        <a href="/team/@gh.OpponentTeamId?season=@Model.Season.Id" style="color:#111827;text-decoration:none">
                                             @(gh.IsHomeGame ? "vs" : "@@") @gh.OpponentTeamName
                                         </a>
                                     </strong>
                                 </td>
                             </tr>
                         }
-                        <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"
-                            onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background=''">
-                            <td class="px-3 py-2 text-center text-xs" style="color:#9CA3AF">@gh.GameType</td>
+                        <tr style="border-bottom:1px solid #F3F4F6"
+                            onmouseover="this.style.background='#F9FAFB'" onmouseout="this.style.background=''">
+                            <td class="px-3 py-2 text-center text-xs" style="color:#6B7280">@gh.GameType</td>
                             <td class="px-3 py-2 text-center text-xs" style="color:#6B7280">@gh.GameOrder</td>
                             <td class="px-3 py-2">
                                 @foreach (var mate in gh.TeamPlayers)
                                 {
-                                    <div><a href="/player/@mate.Id?season=@Model.Season.Id" style="color:#F5ECD7;text-decoration:none">@mate.Name</a></div>
+                                    <div><a href="/player/@mate.Id?season=@Model.Season.Id" style="color:#374151;text-decoration:none">@mate.Name</a></div>
                                 }
                             </td>
                             <td class="px-3 py-2 text-center">
@@ -91,7 +91,7 @@
                             <td class="px-3 py-2">
                                 @foreach (var opp in gh.Opponents)
                                 {
-                                    <div><a href="/player/@opp.Id?season=@Model.Season.Id" style="color:#F5ECD7;text-decoration:none">@opp.Name</a></div>
+                                    <div><a href="/player/@opp.Id?season=@Model.Season.Id" style="color:#374151;text-decoration:none">@opp.Name</a></div>
                                 }
                             </td>
                         </tr>
@@ -107,12 +107,12 @@
     {
         <div class="lg:w-64 shrink-0">
             <div class="glass-card overflow-hidden">
-                <div class="px-4 py-2" style="border-bottom:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04)">
-                    <span class="text-sm font-bold uppercase tracking-wide" style="font-family:'Rajdhani',sans-serif;color:#C8962E">@Model.PlayerTeam.Name</span>
+                <div class="px-4 py-2" style="border-bottom:1px solid #E5E7EB;background:#F9FAFB">
+                    <span class="text-sm font-bold uppercase tracking-wide" style="color:#2563EB">@Model.PlayerTeam.Name</span>
                 </div>
                 <table class="w-full text-sm">
                     <thead>
-                        <tr style="border-bottom:1px solid rgba(255,255,255,0.06)">
+                        <tr style="border-bottom:1px solid #E5E7EB">
                             <th class="px-3 py-1.5 text-left text-xs" style="color:#6B7280">Player</th>
                             <th class="px-3 py-1.5 text-center text-xs" style="color:#6B7280">W–L</th>
                         </tr>
@@ -121,11 +121,11 @@
                     @foreach (var ps in Model.TeamPlayerStats.OrderByDescending(p => p.OverallWin).ThenByDescending(p => p.GamesPlayed))
                     {
                         var isCurrentPlayer = ps.PlayerId == Model.Player.Id;
-                        <tr style="border-bottom:1px solid rgba(255,255,255,0.04);@(isCurrentPlayer ? "background:rgba(200,150,46,0.1)" : "")"
-                            onmouseover="this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.background='@(isCurrentPlayer ? "rgba(200,150,46,0.1)" : "")'">
+                        <tr style="border-bottom:1px solid #F3F4F6;@(isCurrentPlayer ? "background:#EFF6FF" : "")"
+                            onmouseover="this.style.background='#F9FAFB'" onmouseout="this.style.background='@(isCurrentPlayer ? "#EFF6FF" : "")'">
                             <td class="px-3 py-2">
                                 <a href="/player/@ps.PlayerId?season=@Model.Season.Id"
-                                   style="text-decoration:none;color:@(isCurrentPlayer ? "#C8962E" : "#F5ECD7");@(isCurrentPlayer ? "font-weight:600" : "")">
+                                   style="text-decoration:none;color:@(isCurrentPlayer ? "#2563EB" : "#374151");@(isCurrentPlayer ? "font-weight:600" : "")">
                                     @ps.PlayerName
                                 </a>
                             </td>

@@ -4,7 +4,7 @@
     ViewData["Title"] = $"Schedule — {Model.Season.Name}";
 }
 
-<h2 class="text-3xl font-bold mb-6" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">@Model.Season.Name — Schedule</h2>
+<h2 class="text-2xl font-bold mb-6" style="color:#111827">@Model.Season.Name — Schedule</h2>
 
 @{
     void RenderScheduleSection(IEnumerable<TrentonDarts.Web.Services.DivisionSchedule> schedules)
@@ -12,15 +12,15 @@
         foreach (var schedule in schedules)
         {
             <div class="mb-8">
-                <div class="text-center py-2 px-4 rounded-lg mb-3 text-sm font-bold uppercase tracking-widest"
-                     style="background:rgba(200,150,46,0.12);border:1px solid rgba(200,150,46,0.25);color:#C8962E;font-family:'Rajdhani',sans-serif">
+                <div class="text-center py-2 px-4 rounded mb-3 text-sm font-bold uppercase tracking-widest"
+                     style="background:#EFF6FF;border:1px solid #BFDBFE;color:#2563EB">
                     Division @schedule.Name
                 </div>
                 <div class="flex flex-wrap gap-3">
                     @foreach (var week in schedule.Weeks)
                     {
                         <div class="glass-card overflow-hidden flex-shrink-0" style="width:calc(50% - 0.375rem);min-width:220px">
-                            <div class="px-3 py-2 text-center text-xs font-semibold" style="border-bottom:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);color:#9CA3AF">
+                            <div style="padding:6px 12px;text-align:center;font-size:11px;font-weight:600;border-bottom:1px solid #E5E7EB;background:#F9FAFB;color:#6B7280">
                                 @week.Date.ToString("MM-dd-yyyy")
                             </div>
                             <div class="p-2">
@@ -37,22 +37,21 @@
                                     var awayWin = !noScore && m.AwayScore > m.HomeScore;
                                     var homeWin = !noScore && m.HomeScore > m.AwayScore;
                                     <a href="@matchUrl" style="text-decoration:none;display:block">
-                                        <div class="rounded-lg overflow-hidden mb-1.5 transition-colors"
-                                             style="border:1px solid rgba(255,255,255,0.06)"
-                                             onmouseover="this.style.borderColor='rgba(255,255,255,0.15)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.06)'">
-                                            <div class="flex items-center justify-between px-2.5 py-1.5 text-sm @(noScore ? "" : awayWin ? "font-semibold" : "")"
-                                                 style="@(noScore ? "" : awayWin ? "color:#F5ECD7" : "color:#9CA3AF")">
+                                        <div class="rounded overflow-hidden mb-1.5"
+                                             style="border:1px solid #E5E7EB;transition:border-color 0.13s"
+                                             onmouseover="this.style.borderColor='#2563EB'" onmouseout="this.style.borderColor='#E5E7EB'">
+                                            <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;font-size:13px;@(noScore ? "" : awayWin ? "font-weight:600;" : "color:#9CA3AF;")">
                                                 <span style="flex:1">@m.AwayTeamName</span>
-                                                <span class="font-mono font-bold text-base ml-2" style="@(noScore ? "color:#6B7280" : awayWin ? "color:#1A7A3C" : "color:#C8101A")">
+                                                <span style="font-variant-numeric:tabular-nums;font-weight:700;font-size:15px;margin-left:8px;@(noScore ? "color:#9CA3AF" : awayWin ? "color:#16A34A" : "color:#DC2626")">
                                                     @(noScore ? "–" : m.AwayScore.ToString())
                                                 </span>
                                             </div>
-                                            <div class="flex items-center justify-between px-2.5 py-1.5 text-sm" style="border-top:1px solid rgba(255,255,255,0.06);@(noScore ? "" : homeWin ? "color:#F5ECD7;font-weight:600" : "color:#9CA3AF")">
+                                            <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;font-size:13px;border-top:1px solid #F3F4F6;@(noScore ? "" : homeWin ? "font-weight:600;" : "color:#9CA3AF;")">
                                                 <span style="flex:1">
                                                     @m.HomeTeamName
-                                                    @if (!m.HasScorecard && !noScore) { <i title="Scorecard isn't entered" class="fa-solid fa-bolt text-xs ml-1" style="color:#C8101A"></i> }
+                                                    @if (!m.HasScorecard && !noScore) { <i title="Scorecard not entered" class="fa-solid fa-bolt text-xs ml-1" style="color:#DC2626"></i> }
                                                 </span>
-                                                <span class="font-mono font-bold text-base ml-2" style="@(noScore ? "color:#6B7280" : homeWin ? "color:#1A7A3C" : "color:#C8101A")">
+                                                <span style="font-variant-numeric:tabular-nums;font-weight:700;font-size:15px;margin-left:8px;@(noScore ? "color:#9CA3AF" : homeWin ? "color:#16A34A" : "color:#DC2626")">
                                                     @(noScore ? "–" : m.HomeScore.ToString())
                                                 </span>
                                             </div>
@@ -60,7 +59,7 @@
                                     </a>
                                 }
                             </div>
-                            <div class="px-3 py-1.5 text-xs" style="border-top:1px solid rgba(255,255,255,0.06);color:#6B7280">
+                            <div style="padding:6px 12px;font-size:11px;border-top:1px solid #E5E7EB;color:#6B7280">
                                 <strong style="color:#9CA3AF">Bye:</strong>
                                 @(week.ByeTeamNames.Any() ? string.Join(", ", week.ByeTeamNames) : "None")
                             </div>
@@ -75,12 +74,12 @@
 @{
     if (Model.PreSchedules.Any())
     {
-        <h3 class="text-xl font-bold mb-4" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">Pre Season</h3>
+        <h3 class="text-xl font-bold mb-4" style="color:#111827">Pre Season</h3>
         RenderScheduleSection(Model.PreSchedules);
     }
 }
 
-<h3 class="text-xl font-bold mt-6 mb-4" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">Regular Season</h3>
+<h3 class="text-xl font-bold mt-6 mb-4" style="color:#111827">Regular Season</h3>
 @{
     if (Model.RegularSchedules.Any())
     {

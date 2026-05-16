@@ -8,39 +8,41 @@
     <meta name="google" content="notranslate">
     <meta name="csrf-token" content="@Antiforgery.GetAndStoreTokens(Context).RequestToken" />
     <title>Greater Trenton Dart League</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="~/dist/main.css" rel="stylesheet" type="text/css" asp-append-version="true">
 </head>
-<body class="min-h-screen flex flex-col" style="background-color:#0A0A0B;color:#F5ECD7">
-
-<header id="site-header" style="border-bottom:1px solid rgba(255,255,255,0.08);background:linear-gradient(rgba(10,10,11,0.62) 0%,rgba(10,10,11,0.75) 60%,rgba(10,10,11,0.95) 100%),url('/images/trenton-makes.jpg') center 40%/cover no-repeat">
-    <div class="max-w-7xl mx-auto px-4 py-10 text-center">
-        <a href="/" class="block no-underline hover:no-underline">
-            <span class="block text-4xl sm:text-5xl font-bold tracking-widest uppercase" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7;text-shadow:0 2px 12px rgba(0,0,0,0.8)">Greater Trenton</span>
-            <span class="block text-lg sm:text-xl font-semibold tracking-[0.2em] uppercase" style="font-family:'Rajdhani',sans-serif;color:#C8962E;text-shadow:0 2px 8px rgba(0,0,0,0.8)">Dart League</span>
-        </a>
-    </div>
-</header>
+<body class="min-h-screen flex flex-col" style="background-color:#F9FAFB;color:#111827">
 
 <div id="site-nav">
     @await Html.PartialAsync("_DefaultNav")
 </div>
 
-<main class="flex-1 w-full max-w-7xl mx-auto px-4 py-6 pb-24 md:pb-6">
+<main class="flex-1 w-full max-w-7xl mx-auto px-6 py-6">
     @RenderBody()
 </main>
 
-<footer id="site-footer" class="mt-auto py-5 px-4 text-center no-print" style="border-top:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02)">
-    <div class="flex items-center justify-center gap-4">
-        <a href="http://www.facebook.com/GreaterTrentonDartLeague" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm" style="color:#9CA3AF">
-            <i class="fa-brands fa-facebook text-xl" style="color:#C8962E"></i>
-            <span>Greater Trenton Dart League on Facebook</span>
-        </a>
+<footer id="site-footer" class="no-print" style="border-top:1px solid #E5E7EB;padding:44px 0 28px;background:#FFFFFF">
+    <div style="max-width:1200px;margin:0 auto;padding:0 24px;display:grid;gap:24px;grid-template-columns:1fr">
+        <div class="sm:grid sm:gap-6" style="display:grid;gap:24px">
+            <div style="grid-column:span 2">
+                <span style="font-size:20px;font-weight:800;letter-spacing:-0.04em;color:#2563EB">GTDL</span>
+                <p style="font-size:13px;color:#6B7280;line-height:1.65;margin-top:10px;max-width:260px">
+                    Greater Trenton Dart League &mdash; serving the Trenton, NJ darts community since 2008.
+                </p>
+                <div style="margin-top:14px">
+                    <a href="http://www.facebook.com/GreaterTrentonDartLeague" target="_blank" rel="noopener noreferrer"
+                       style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#6B7280;text-decoration:none">
+                        <i class="fa-brands fa-facebook" style="color:#2563EB"></i>
+                        Facebook
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-    <p class="mt-2 text-xs" style="color:#6B7280">&copy; Greater Trenton Dart League</p>
+    <div style="max-width:1200px;margin:28px auto 0;padding:20px 24px 0;border-top:1px solid #E5E7EB;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <p style="font-size:12px;color:#9CA3AF">&copy; Greater Trenton Dart League. All rights reserved.</p>
+        <p style="font-size:12px;color:#9CA3AF">Trenton, NJ</p>
+    </div>
 </footer>
 
 @await RenderSectionAsync("Scripts", required: false)

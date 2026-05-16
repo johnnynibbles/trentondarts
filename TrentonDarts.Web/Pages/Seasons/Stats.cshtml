@@ -6,12 +6,12 @@
 
 <style media="print" type="text/css">@@page { size: landscape; }</style>
 
-<h2 class="text-3xl font-bold mb-4" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">@Model.Season.Name — Stats</h2>
+<h2 class="text-2xl font-bold mb-4" style="color:#111827">@Model.Season.Name — Stats</h2>
 
 <div class="flex flex-wrap gap-3 mb-5">
     <div>
         <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Season Part</label>
-        <select id="seasonPart" class="rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)">
+        <select id="seasonPart" class="rounded px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB">
             @foreach (var opt in new[] { ("whole","Whole Season"), ("pre","Pre Season"), ("regular","Regular Season") })
             {
                 if (opt.Item1 == Model.SeasonPart) { <option value="@opt.Item1" selected>@opt.Item2</option> }
@@ -21,7 +21,7 @@
     </div>
     <div>
         <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Division</label>
-        <select id="division" class="rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)">
+        <select id="division" class="rounded px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB">
             <option value="">All Divisions</option>
             @foreach (var kv in Model.Divisions)
             {
@@ -32,7 +32,7 @@
     </div>
     <div>
         <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Sort Teams By</label>
-        <select id="leaderboard" class="rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)">
+        <select id="leaderboard" class="rounded px-3 py-1.5 text-sm" style="background:#F9FAFB;color:#111827;border:1px solid #D1D5DB">
             <option value="">Select Sort</option>
             @foreach (var kv in TrentonDarts.Web.Pages.Seasons.StatsModel.Leaderboards)
             {
@@ -43,55 +43,55 @@
     </div>
 </div>
 
-<details class="mb-3 text-xs" style="color:#9CA3AF">
+<details class="mb-3 text-xs" style="color:#6B7280">
     <summary class="cursor-pointer select-none inline-flex items-center gap-1 px-2 py-1 rounded"
-             style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:#9CA3AF;list-style:none">
-        <i class="fa-solid fa-circle-info text-xs" style="color:#6B7280"></i> Column Legend
+             style="background:#F3F4F6;border:1px solid #E5E7EB;color:#6B7280;list-style:none">
+        <i class="fa-solid fa-circle-info text-xs" style="color:#9CA3AF"></i> Column Legend
     </summary>
-    <div class="mt-2 grid gap-x-6 gap-y-1 p-3 rounded-lg text-xs"
-         style="background:#111214;border:1px solid rgba(255,255,255,0.08);grid-template-columns:repeat(auto-fill,minmax(220px,1fr))">
-        <div><span class="font-semibold" style="color:#F5ECD7">WP</span> — Weeks Played</div>
-        <div><span class="font-semibold" style="color:#F5ECD7">GP</span> — Games Played</div>
-        <div><span class="font-semibold" style="color:#F5ECD7">Record</span> — Points Won – Lost</div>
-        <div><span class="font-semibold" style="color:#F5ECD7">Overall Win%</span> — All game types combined</div>
-        <div><span class="font-semibold" style="color:#F5ECD7">Singles Win%</span> — 1v1 games only</div>
-        <div><span class="font-semibold" style="color:#F5ECD7">Doubles Win%</span> — 2v2 games only</div>
-        <div><span class="font-semibold" style="color:#F5ECD7">T '01 Win%</span> — Triples 01 (801) games</div>
-        <div><span class="font-semibold" style="color:#F5ECD7">Cricket Win%</span> — Singles Cricket games</div>
-        <div><span class="font-semibold" style="color:#F5ECD7">'01 Win%</span> — Singles 01 games</div>
-        <div><span class="font-semibold" style="color:#F5ECD7">Singles Cricket W/L</span> — Raw win/loss count</div>
-        <div><span class="font-semibold" style="color:#F5ECD7">Singles '01 W/L</span> — Raw win/loss count (301)</div>
-        <div><span class="font-semibold" style="color:#F5ECD7">Doubles Cricket W/L</span> — Raw win/loss count</div>
-        <div><span class="font-semibold" style="color:#F5ECD7">Doubles 501 W/L</span> — Raw win/loss count</div>
-        <div><span class="font-semibold" style="color:#F5ECD7">Triples '01 W/L</span> — Raw win/loss count (801)</div>
+    <div class="mt-2 grid gap-x-6 gap-y-1 p-3 rounded text-xs"
+         style="background:#FFFFFF;border:1px solid #E5E7EB;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));color:#374151">
+        <div><span class="font-semibold" style="color:#111827">WP</span> — Weeks Played</div>
+        <div><span class="font-semibold" style="color:#111827">GP</span> — Games Played</div>
+        <div><span class="font-semibold" style="color:#111827">Record</span> — Points Won – Lost</div>
+        <div><span class="font-semibold" style="color:#111827">Overall Win%</span> — All game types combined</div>
+        <div><span class="font-semibold" style="color:#111827">Singles Win%</span> — 1v1 games only</div>
+        <div><span class="font-semibold" style="color:#111827">Doubles Win%</span> — 2v2 games only</div>
+        <div><span class="font-semibold" style="color:#111827">T '01 Win%</span> — Triples 01 (801) games</div>
+        <div><span class="font-semibold" style="color:#111827">Cricket Win%</span> — Singles Cricket games</div>
+        <div><span class="font-semibold" style="color:#111827">'01 Win%</span> — Singles 01 games</div>
+        <div><span class="font-semibold" style="color:#111827">Singles Cricket W/L</span> — Raw win/loss count</div>
+        <div><span class="font-semibold" style="color:#111827">Singles '01 W/L</span> — Raw win/loss count (301)</div>
+        <div><span class="font-semibold" style="color:#111827">Doubles Cricket W/L</span> — Raw win/loss count</div>
+        <div><span class="font-semibold" style="color:#111827">Doubles 501 W/L</span> — Raw win/loss count</div>
+        <div><span class="font-semibold" style="color:#111827">Triples '01 W/L</span> — Raw win/loss count (801)</div>
     </div>
 </details>
 
 <div class="glass-card overflow-x-auto season-stats">
-    <table class="w-full text-xs whitespace-nowrap">
+    <table class="w-full text-xs whitespace-nowrap" style="border-collapse:collapse">
         <thead>
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.08)">
+            <tr style="border-bottom:1px solid #E5E7EB">
                 <th colspan="10" class="px-2 py-1"></th>
-                <th colspan="4" class="px-2 py-1 text-center text-xs font-semibold uppercase tracking-wider" style="color:#C8962E;border-left:1px solid rgba(255,255,255,0.08)">Singles</th>
-                <th colspan="4" class="px-2 py-1 text-center text-xs font-semibold uppercase tracking-wider" style="color:#C8962E;border-left:1px solid rgba(255,255,255,0.08)">Doubles</th>
-                <th colspan="2" class="px-2 py-1 text-center text-xs font-semibold uppercase tracking-wider" style="color:#C8962E;border-left:1px solid rgba(255,255,255,0.08)">Triples</th>
+                <th colspan="4" class="px-2 py-1 text-center text-xs font-semibold uppercase tracking-wider" style="color:#2563EB;border-left:1px solid #E5E7EB">Singles</th>
+                <th colspan="4" class="px-2 py-1 text-center text-xs font-semibold uppercase tracking-wider" style="color:#2563EB;border-left:1px solid #E5E7EB">Doubles</th>
+                <th colspan="2" class="px-2 py-1 text-center text-xs font-semibold uppercase tracking-wider" style="color:#2563EB;border-left:1px solid #E5E7EB">Triples</th>
             </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.08)">
+            <tr style="border-bottom:1px solid #E5E7EB">
                 <th colspan="4" class="px-2 py-1"></th>
-                <th class="px-2 py-1 text-center" style="color:#9CA3AF">Overall</th>
-                <th class="px-2 py-1 text-center" style="color:#9CA3AF">Singles</th>
-                <th class="px-2 py-1 text-center" style="color:#9CA3AF">Doubles</th>
-                <th class="px-2 py-1 text-center" style="color:#9CA3AF">T '01</th>
-                <th class="px-2 py-1 text-center" style="color:#9CA3AF">Cricket</th>
-                <th class="px-2 py-1 text-center" style="color:#9CA3AF">01</th>
-                <th colspan="2" class="px-2 py-1 text-center" style="color:#9CA3AF;border-left:1px solid rgba(255,255,255,0.06)">Cricket</th>
-                <th colspan="2" class="px-2 py-1 text-center" style="color:#9CA3AF">'01</th>
-                <th colspan="2" class="px-2 py-1 text-center" style="color:#9CA3AF;border-left:1px solid rgba(255,255,255,0.06)">Cricket</th>
-                <th colspan="2" class="px-2 py-1 text-center" style="color:#9CA3AF">501</th>
-                <th colspan="2" class="px-2 py-1 text-center" style="color:#9CA3AF;border-left:1px solid rgba(255,255,255,0.06)">'01</th>
+                <th class="px-2 py-1 text-center" style="color:#6B7280">Overall</th>
+                <th class="px-2 py-1 text-center" style="color:#6B7280">Singles</th>
+                <th class="px-2 py-1 text-center" style="color:#6B7280">Doubles</th>
+                <th class="px-2 py-1 text-center" style="color:#6B7280">T '01</th>
+                <th class="px-2 py-1 text-center" style="color:#6B7280">Cricket</th>
+                <th class="px-2 py-1 text-center" style="color:#6B7280">01</th>
+                <th colspan="2" class="px-2 py-1 text-center" style="color:#6B7280;border-left:1px solid #F3F4F6">Cricket</th>
+                <th colspan="2" class="px-2 py-1 text-center" style="color:#6B7280">'01</th>
+                <th colspan="2" class="px-2 py-1 text-center" style="color:#6B7280;border-left:1px solid #F3F4F6">Cricket</th>
+                <th colspan="2" class="px-2 py-1 text-center" style="color:#6B7280">501</th>
+                <th colspan="2" class="px-2 py-1 text-center" style="color:#6B7280;border-left:1px solid #F3F4F6">'01</th>
             </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04)">
-                <th class="px-2 py-2 text-left text-xs font-semibold" style="color:#F5ECD7">Team / Player</th>
+            <tr style="border-bottom:1px solid #E5E7EB;background:#F9FAFB">
+                <th class="px-2 py-2 text-left text-xs font-semibold" style="color:#111827">Team / Player</th>
                 <th class="px-2 py-2 text-center text-xs" style="color:#6B7280" title="Weeks Played">WP</th>
                 <th class="px-2 py-2 text-center text-xs" style="color:#6B7280" title="Games Played">GP</th>
                 <th class="px-2 py-2 text-center text-xs" style="color:#6B7280">Record</th>
@@ -101,11 +101,11 @@
                 <th class="px-2 py-2 text-center text-xs" style="color:#6B7280">Win%</th>
                 <th class="px-2 py-2 text-center text-xs" style="color:#6B7280">Win%</th>
                 <th class="px-2 py-2 text-center text-xs" style="color:#6B7280">Win%</th>
-                <th class="px-2 py-2 text-center text-xs" style="color:#1A7A3C">W</th><th class="px-2 py-2 text-center text-xs" style="color:#C8101A">L</th>
-                <th class="px-2 py-2 text-center text-xs" style="color:#1A7A3C">W</th><th class="px-2 py-2 text-center text-xs" style="color:#C8101A">L</th>
-                <th class="px-2 py-2 text-center text-xs" style="color:#1A7A3C">W</th><th class="px-2 py-2 text-center text-xs" style="color:#C8101A">L</th>
-                <th class="px-2 py-2 text-center text-xs" style="color:#1A7A3C">W</th><th class="px-2 py-2 text-center text-xs" style="color:#C8101A">L</th>
-                <th class="px-2 py-2 text-center text-xs" style="color:#1A7A3C">W</th><th class="px-2 py-2 text-center text-xs" style="color:#C8101A">L</th>
+                <th class="px-2 py-2 text-center text-xs" style="color:#16A34A">W</th><th class="px-2 py-2 text-center text-xs" style="color:#DC2626">L</th>
+                <th class="px-2 py-2 text-center text-xs" style="color:#16A34A">W</th><th class="px-2 py-2 text-center text-xs" style="color:#DC2626">L</th>
+                <th class="px-2 py-2 text-center text-xs" style="color:#16A34A">W</th><th class="px-2 py-2 text-center text-xs" style="color:#DC2626">L</th>
+                <th class="px-2 py-2 text-center text-xs" style="color:#16A34A">W</th><th class="px-2 py-2 text-center text-xs" style="color:#DC2626">L</th>
+                <th class="px-2 py-2 text-center text-xs" style="color:#16A34A">W</th><th class="px-2 py-2 text-center text-xs" style="color:#DC2626">L</th>
             </tr>
         </thead>
         <tbody>
@@ -117,40 +117,40 @@
         {
             @foreach (var t in Model.TeamStats)
             {
-                <tr class="team-stat-row" style="border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(200,150,46,0.06)">
-                    <td colspan="3" class="px-2 py-2"><a href="/team/@t.TeamId?season=@Model.Season.Id" style="color:#C8962E;text-decoration:none;font-family:'Rajdhani',sans-serif;font-size:0.9rem">@t.TeamName</a></td>
-                    <td class="px-2 py-2 text-center">@t.PointsWon - @t.PointsLost</td>
+                <tr class="team-stat-row" style="border-bottom:1px solid #E5E7EB;background:#EFF6FF">
+                    <td colspan="3" class="px-2 py-2"><a href="/team/@t.TeamId?season=@Model.Season.Id" style="color:#2563EB;text-decoration:none;font-weight:600">@t.TeamName</a></td>
+                    <td class="px-2 py-2 text-center;color:#111827">@t.PointsWon - @t.PointsLost</td>
                     <td class="px-2 py-2 text-center">@(Math.Round(t.OverallWin * 100, 1))%</td>
                     <td class="px-2 py-2 text-center">@(Math.Round(t.SinglesWin * 100, 1))%</td>
                     <td class="px-2 py-2 text-center">@(Math.Round(t.DoublesWin * 100, 1))%</td>
                     <td class="px-2 py-2 text-center">@(Math.Round(t.Eight01Win * 100, 1))%</td>
                     <td class="px-2 py-2 text-center">@(Math.Round(t.CricketWin * 100, 1))%</td>
                     <td class="px-2 py-2 text-center">@(Math.Round(t.Oh1Win * 100, 1))%</td>
-                    <td class="px-2 py-2 text-center" style="color:#1A7A3C">@t.GameCricket.Won</td><td class="px-2 py-2 text-center loss-column">@t.GameCricket.Lost</td>
-                    <td class="px-2 py-2 text-center" style="color:#1A7A3C">@t.Game301.Won</td><td class="px-2 py-2 text-center loss-column">@t.Game301.Lost</td>
-                    <td class="px-2 py-2 text-center" style="color:#1A7A3C">@t.GameDoubleCricket.Won</td><td class="px-2 py-2 text-center loss-column">@t.GameDoubleCricket.Lost</td>
-                    <td class="px-2 py-2 text-center" style="color:#1A7A3C">@t.Game501.Won</td><td class="px-2 py-2 text-center loss-column">@t.Game501.Lost</td>
-                    <td class="px-2 py-2 text-center" style="color:#1A7A3C">@t.Game801.Won</td><td class="px-2 py-2 text-center loss-column">@t.Game801.Lost</td>
+                    <td class="px-2 py-2 text-center" style="color:#16A34A">@t.GameCricket.Won</td><td class="px-2 py-2 text-center loss-column">@t.GameCricket.Lost</td>
+                    <td class="px-2 py-2 text-center" style="color:#16A34A">@t.Game301.Won</td><td class="px-2 py-2 text-center loss-column">@t.Game301.Lost</td>
+                    <td class="px-2 py-2 text-center" style="color:#16A34A">@t.GameDoubleCricket.Won</td><td class="px-2 py-2 text-center loss-column">@t.GameDoubleCricket.Lost</td>
+                    <td class="px-2 py-2 text-center" style="color:#16A34A">@t.Game501.Won</td><td class="px-2 py-2 text-center loss-column">@t.Game501.Lost</td>
+                    <td class="px-2 py-2 text-center" style="color:#16A34A">@t.Game801.Won</td><td class="px-2 py-2 text-center loss-column">@t.Game801.Lost</td>
                 </tr>
                 @foreach (var p in Model.PlayerStats.Where(ps => ps.TeamId == t.TeamId).OrderByDescending(ps => ps.OverallWin))
                 {
-                    <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"
-                        onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background=''">
-                        <td class="px-2 py-1.5 pl-4"><a href="/player/@p.PlayerId?season=@Model.Season.Id" style="color:#F5ECD7;text-decoration:none">@p.PlayerName</a></td>
-                        <td class="px-2 py-1.5 text-center" style="color:#9CA3AF">@p.WeeksPlayed</td>
-                        <td class="px-2 py-1.5 text-center" style="color:#9CA3AF">@p.GamesPlayed</td>
-                        <td class="px-2 py-1.5 text-center">@p.GamesWon - @p.GamesLost</td>
+                    <tr style="border-bottom:1px solid #F3F4F6"
+                        onmouseover="this.style.background='#F9FAFB'" onmouseout="this.style.background=''">
+                        <td class="px-2 py-1.5 pl-4"><a href="/player/@p.PlayerId?season=@Model.Season.Id" style="color:#374151;text-decoration:none">@p.PlayerName</a></td>
+                        <td class="px-2 py-1.5 text-center" style="color:#6B7280">@p.WeeksPlayed</td>
+                        <td class="px-2 py-1.5 text-center" style="color:#6B7280">@p.GamesPlayed</td>
+                        <td class="px-2 py-1.5 text-center;color:#111827">@p.GamesWon - @p.GamesLost</td>
                         <td class="px-2 py-1.5 text-center">@(p.OverallWin > 0 ? $"{Math.Round(p.OverallWin * 100, 1)}%" : "–")</td>
                         <td class="px-2 py-1.5 text-center">@(p.SinglesWin > 0 ? $"{Math.Round(p.SinglesWin * 100, 1)}%" : "–")</td>
                         <td class="px-2 py-1.5 text-center">@(p.DoublesWin > 0 ? $"{Math.Round(p.DoublesWin * 100, 1)}%" : "–")</td>
                         <td class="px-2 py-1.5 text-center">@(p.Eight01Win > 0 ? $"{Math.Round(p.Eight01Win * 100, 1)}%" : "–")</td>
                         <td class="px-2 py-1.5 text-center">@(p.CricketWin > 0 ? $"{Math.Round(p.CricketWin * 100, 1)}%" : "–")</td>
                         <td class="px-2 py-1.5 text-center">@(p.Oh1Win > 0 ? $"{Math.Round(p.Oh1Win * 100, 1)}%" : "–")</td>
-                        <td class="px-2 py-1.5 text-center" style="color:#1A7A3C">@p.GameCricket.Won</td><td class="px-2 py-1.5 text-center loss-column">@p.GameCricket.Lost</td>
-                        <td class="px-2 py-1.5 text-center" style="color:#1A7A3C">@p.Game301.Won</td><td class="px-2 py-1.5 text-center loss-column">@p.Game301.Lost</td>
-                        <td class="px-2 py-1.5 text-center" style="color:#1A7A3C">@p.GameDoubleCricket.Won</td><td class="px-2 py-1.5 text-center loss-column">@p.GameDoubleCricket.Lost</td>
-                        <td class="px-2 py-1.5 text-center" style="color:#1A7A3C">@p.Game501.Won</td><td class="px-2 py-1.5 text-center loss-column">@p.Game501.Lost</td>
-                        <td class="px-2 py-1.5 text-center" style="color:#1A7A3C">@p.Game801.Won</td><td class="px-2 py-1.5 text-center loss-column">@p.Game801.Lost</td>
+                        <td class="px-2 py-1.5 text-center" style="color:#16A34A">@p.GameCricket.Won</td><td class="px-2 py-1.5 text-center loss-column">@p.GameCricket.Lost</td>
+                        <td class="px-2 py-1.5 text-center" style="color:#16A34A">@p.Game301.Won</td><td class="px-2 py-1.5 text-center loss-column">@p.Game301.Lost</td>
+                        <td class="px-2 py-1.5 text-center" style="color:#16A34A">@p.GameDoubleCricket.Won</td><td class="px-2 py-1.5 text-center loss-column">@p.GameDoubleCricket.Lost</td>
+                        <td class="px-2 py-1.5 text-center" style="color:#16A34A">@p.Game501.Won</td><td class="px-2 py-1.5 text-center loss-column">@p.Game501.Lost</td>
+                        <td class="px-2 py-1.5 text-center" style="color:#16A34A">@p.Game801.Won</td><td class="px-2 py-1.5 text-center loss-column">@p.Game801.Lost</td>
                     </tr>
                 }
             }
