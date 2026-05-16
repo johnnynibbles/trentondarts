@@ -13,9 +13,7 @@
 </head>
 <body class="min-h-screen flex flex-col" style="background-color:#F9FAFB;color:#111827">
 
-<div id="site-nav">
-    @await Html.PartialAsync("_DefaultNav")
-</div>
+@await Html.PartialAsync("_DefaultNav")
 
 <main class="flex-1 w-full max-w-7xl mx-auto px-6 py-6">
     @RenderBody()

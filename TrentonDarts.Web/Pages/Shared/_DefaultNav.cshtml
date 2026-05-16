@@ -10,13 +10,13 @@
     <div style="max-width:1200px;margin:0 auto;padding:0 24px">
         <div class="flex items-center justify-between" style="height:56px">
 
-            {{-- Logo --}}
+            @* Logo *@
             <a href="/" class="flex items-center gap-2.5" style="text-decoration:none;color:inherit;flex-shrink:0">
                 <span style="font-size:18px;font-weight:800;letter-spacing:-0.04em;color:#2563EB">GTDL</span>
                 <span class="hidden sm:block" style="font-size:13px;color:#6B7280;font-weight:500">Greater Trenton Dart League</span>
             </a>
 
-            {{-- Desktop nav links --}}
+            @* Desktop nav links *@
             <ul class="hidden md:flex items-center gap-0.5 list-none m-0 p-0">
                 @foreach (var item in nav)
                 {
@@ -73,7 +73,7 @@
                 }
             </ul>
 
-            {{-- Desktop right: auth --}}
+            @* Desktop right: auth *@
             <div class="hidden md:flex items-center gap-2">
                 @if (isAuthenticated)
                 {
@@ -114,7 +114,7 @@
                 }
             </div>
 
-            {{-- Hamburger --}}
+            @* Hamburger *@
             <button id="nav-hamburger" class="md:hidden flex flex-col gap-1.5 p-2 rounded"
                     style="background:transparent;border:1px solid #E5E7EB;cursor:pointer" aria-label="Open menu">
                 <span class="block w-5 h-0.5" style="background:#374151"></span>
@@ -124,7 +124,7 @@
         </div>
     </div>
 
-    {{-- Mobile menu --}}
+    @* Mobile menu *@
     <div id="nav-mobile-menu" class="hidden md:hidden border-t px-4 py-3" style="border-color:#E5E7EB;background:#FFFFFF">
         @foreach (var item in nav)
         {
