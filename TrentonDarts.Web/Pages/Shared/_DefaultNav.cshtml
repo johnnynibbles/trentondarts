@@ -6,12 +6,16 @@
     var isAdmin = isAuthenticated && User.IsInRole("Admin");
     var isBoardMember = isAuthenticated && await NavService.IsBoardMemberAsync(User);
 }
-<nav style="background:rgba(10,10,11,0.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08);position:sticky;top:0;z-index:50">
-    <div class="max-w-7xl mx-auto px-4">
-        <div class="flex items-center justify-between h-12">
+<nav style="background:oklch(10% 0.014 240 / 0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--color-border);position:sticky;top:0;z-index:50">
+    <div class="mx-auto px-6" style="max-width:var(--max-w)">
+        <div class="flex items-center justify-between h-14 gap-4">
 
             
-            <a href="/" class="md:hidden text-sm font-semibold tracking-widest uppercase" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">GTDL</a>
+            <a href="/" class="flex items-center gap-2 shrink-0" style="color:var(--color-text);text-decoration:none">
+                <img src="/images/trentondarts-logo.png" alt="GTDL logo" style="width:32px;height:32px;object-fit:contain;background:#fff;border-radius:6px;padding:3px">
+                <span class="font-extrabold" style="font-size:16px;letter-spacing:-0.04em;color:var(--color-gold)">GTDL</span>
+                <span class="hidden sm:inline text-xs font-medium" style="color:var(--color-muted)">Greater Trenton Dart League</span>
+            </a>
 
             
             <ul class="hidden md:flex items-center gap-1 list-none m-0 p-0">
@@ -20,35 +24,35 @@
                     if (item.SubItems.Count > 0)
                     {
                         <li class="nav-dropdown-parent relative" style="list-style:none">
-                            <button class="nav-dropdown-toggle flex items-center gap-1 px-3 py-2 text-sm rounded-md transition-colors"
-                                    style="background:transparent;border:none;color:#F5ECD7;cursor:pointer;font-family:'Inter',sans-serif"
+                            <button class="nav-dropdown-toggle flex items-center gap-1 px-3 py-1.5 text-sm rounded-md transition-colors"
+                                    style="background:transparent;border:none;color:var(--color-text);cursor:pointer;font-family:inherit"
                                     aria-expanded="false">
                                 @item.Title
-                                <i class="fa-solid fa-chevron-down text-xs" style="color:#6B7280"></i>
+                                <i class="fa-solid fa-chevron-down text-xs" style="color:var(--color-muted)"></i>
                             </button>
-                            <ul class="nav-dropdown-menu hidden absolute left-0 top-full mt-1 min-w-[180px] rounded-xl py-1 list-none p-0"
-                                style="background:#111214;border:1px solid rgba(255,255,255,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.5)">
+                            <ul class="nav-dropdown-menu hidden absolute left-0 top-full mt-1 min-w-[180px] rounded-lg py-1 list-none p-0"
+                                style="background:var(--color-surface-2);border:1px solid var(--color-border);box-shadow:0 14px 34px oklch(0% 0 0 / 0.45)">
                                 @foreach (var sub in item.SubItems)
                                 {
                                     if (sub.IsHeader)
                                     {
-                                        <li class="px-3 pt-2 pb-1 text-xs font-semibold uppercase tracking-widest" style="color:#C8962E;list-style:none">@sub.Title</li>
+                                        <li class="px-3 pt-2 pb-1 text-xs font-semibold uppercase tracking-wider" style="color:var(--color-gold);list-style:none">@sub.Title</li>
                                     }
                                     else if (sub.IsSeparator)
                                     {
-                                        <li style="border-top:1px solid rgba(255,255,255,0.08);margin:4px 0;list-style:none"></li>
+                                        <li style="border-top:1px solid var(--color-border);margin:4px 0;list-style:none"></li>
                                     }
                                     else
                                     {
                                         <li style="list-style:none">
                                             <a href="@sub.Url" class="block px-3 py-2 text-sm transition-colors"
-                                               style="color:#F5ECD7;text-decoration:none"
+                                               style="color:var(--color-text);text-decoration:none"
                                                @(sub.OpenInNewTab ? "target=\"_blank\" rel=\"noopener noreferrer\"" : "")
-                                               onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background=''">
+                                               onmouseover="this.style.background='var(--color-surface-hi)'" onmouseout="this.style.background=''">
                                                 @sub.Title
                                                 @if (sub.OpenInNewTab && !sub.IsDocument)
                                                 {
-                                                    <i class="fa-solid fa-arrow-up-right-from-square text-xs ml-1" style="color:#6B7280"></i>
+                                                    <i class="fa-solid fa-arrow-up-right-from-square text-xs ml-1" style="color:var(--color-muted)"></i>
                                                 }
                                             </a>
                                         </li>
@@ -60,9 +64,9 @@
                     else
                     {
                         <li style="list-style:none">
-                            <a href="@item.Url" class="px-3 py-2 text-sm rounded-md block transition-colors"
-                               style="color:#F5ECD7;text-decoration:none"
-                               onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background=''">
+                            <a href="@item.Url" class="px-3 py-1.5 text-sm rounded-md block transition-colors"
+                               style="color:var(--color-text);text-decoration:none"
+                               onmouseover="this.style.background='var(--color-surface-hi)'" onmouseout="this.style.background=''">
                                 @item.Title
                             </a>
                         </li>
@@ -76,71 +80,71 @@
                 {
                     <div class="nav-dropdown-parent relative">
                         <button class="nav-dropdown-toggle flex items-center gap-2 px-3 py-1.5 text-sm rounded-md transition-colors"
-                                style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#F5ECD7;cursor:pointer;font-family:'Inter',sans-serif"
+                                style="background:var(--color-surface);border:1px solid var(--color-border);color:var(--color-text);cursor:pointer;font-family:inherit"
                                 aria-expanded="false">
-                            <i class="fa-solid fa-circle-user" style="color:#C8962E"></i>
+                            <i class="fa-solid fa-circle-user" style="color:var(--color-gold)"></i>
                             @User.Identity!.Name
-                            <i class="fa-solid fa-chevron-down text-xs" style="color:#6B7280"></i>
+                            <i class="fa-solid fa-chevron-down text-xs" style="color:var(--color-muted)"></i>
                         </button>
-                        <ul class="nav-dropdown-menu hidden absolute right-0 top-full mt-1 min-w-[160px] rounded-xl py-1 list-none p-0"
-                            style="background:#111214;border:1px solid rgba(255,255,255,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.5)">
+                        <ul class="nav-dropdown-menu hidden absolute right-0 top-full mt-1 min-w-[160px] rounded-lg py-1 list-none p-0"
+                            style="background:var(--color-surface-2);border:1px solid var(--color-border);box-shadow:0 14px 34px oklch(0% 0 0 / 0.45)">
                             @if (isAdmin || isBoardMember)
                             {
-                                <li class="px-3 pt-2 pb-1 text-xs font-semibold uppercase tracking-widest" style="color:#C8962E;list-style:none">Manage</li>
+                                <li class="px-3 pt-2 pb-1 text-xs font-semibold uppercase tracking-wider" style="color:var(--color-gold);list-style:none">Manage</li>
                                 <li style="list-style:none">
-                                    <a href="/manage/1" class="block px-3 py-2 text-sm" style="color:#F5ECD7;text-decoration:none"
-                                       onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background=''">League</a>
+                                    <a href="/manage/1" class="block px-3 py-2 text-sm" style="color:var(--color-text);text-decoration:none"
+                                       onmouseover="this.style.background='var(--color-surface-hi)'" onmouseout="this.style.background=''">League</a>
                                 </li>
-                                <li style="border-top:1px solid rgba(255,255,255,0.08);margin:4px 0;list-style:none"></li>
+                                <li style="border-top:1px solid var(--color-border);margin:4px 0;list-style:none"></li>
                             }
                             <li style="list-style:none">
-                                <a href="/Auth/Logout" class="block px-3 py-2 text-sm" style="color:#F5ECD7;text-decoration:none"
-                                   onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background=''">Logout</a>
+                                <a href="/Auth/Logout" class="block px-3 py-2 text-sm" style="color:var(--color-text);text-decoration:none"
+                                   onmouseover="this.style.background='var(--color-surface-hi)'" onmouseout="this.style.background=''">Logout</a>
                             </li>
                         </ul>
                     </div>
                 }
                 else
                 {
-                    <a href="/Auth/Login" class="px-3 py-1.5 text-sm rounded-md" style="background:rgba(200,16,26,0.15);border:1px solid rgba(200,16,26,0.4);color:#F5ECD7;text-decoration:none">Log in</a>
-                    <a href="/Auth/Register" class="px-3 py-1.5 text-sm rounded-md" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:#F5ECD7;text-decoration:none">Register</a>
+                    <a href="/Auth/Login" class="btn-primary" style="padding:6px 14px">Log in</a>
+                    <a href="/Auth/Register" class="btn-ghost" style="padding:6px 14px">Register</a>
                 }
             </div>
 
             
             <button id="nav-hamburger" class="md:hidden flex flex-col gap-1.5 p-2 rounded-md" style="background:transparent;border:none;cursor:pointer" aria-label="Open menu">
-                <span class="block w-5 h-0.5 transition-all" style="background:#F5ECD7"></span>
-                <span class="block w-5 h-0.5 transition-all" style="background:#F5ECD7"></span>
-                <span class="block w-5 h-0.5 transition-all" style="background:#F5ECD7"></span>
+                <span class="block w-5 h-0.5 transition-all" style="background:var(--color-text)"></span>
+                <span class="block w-5 h-0.5 transition-all" style="background:var(--color-text)"></span>
+                <span class="block w-5 h-0.5 transition-all" style="background:var(--color-text)"></span>
             </button>
         </div>
     </div>
 
     
-    <div id="nav-mobile-menu" class="hidden md:hidden border-t px-4 py-3" style="border-color:rgba(255,255,255,0.08);background:#0D0D0E">
+    <div id="nav-mobile-menu" class="hidden md:hidden border-t px-4 py-3" style="border-color:var(--color-border);background:var(--color-surface)">
         @foreach (var item in nav)
         {
             if (item.SubItems.Count > 0)
             {
                 <div class="mobile-section mb-2">
                     <button class="mobile-section-toggle flex items-center justify-between w-full py-2 text-sm font-semibold"
-                            style="background:transparent;border:none;color:#C8962E;cursor:pointer;font-family:'Rajdhani',sans-serif;letter-spacing:0.05em;text-transform:uppercase">
+                            style="background:transparent;border:none;color:var(--color-gold);cursor:pointer;font-family:inherit;letter-spacing:0.05em;text-transform:uppercase">
                         @item.Title
-                        <i class="fa-solid fa-chevron-down text-xs transition-transform" style="color:#6B7280"></i>
+                        <i class="fa-solid fa-chevron-down text-xs transition-transform" style="color:var(--color-muted)"></i>
                     </button>
                     <div class="mobile-section-items hidden pl-3">
                         @foreach (var sub in item.SubItems)
                         {
                             if (sub.IsHeader)
                             {
-                                <p class="py-1 text-xs font-semibold uppercase tracking-widest" style="color:#6B7280">@sub.Title</p>
+                                <p class="py-1 text-xs font-semibold uppercase tracking-widest" style="color:var(--color-muted)">@sub.Title</p>
                             }
                             else if (!sub.IsSeparator)
                             {
-                                <a href="@sub.Url" class="block py-2 text-sm border-b" style="color:#F5ECD7;text-decoration:none;border-color:rgba(255,255,255,0.05)"
+                                <a href="@sub.Url" class="block py-2 text-sm border-b" style="color:var(--color-text);text-decoration:none;border-color:var(--color-border)"
                                    @(sub.OpenInNewTab ? "target=\"_blank\" rel=\"noopener noreferrer\"" : "")>
                                     @sub.Title
-                                    @if (sub.OpenInNewTab && !sub.IsDocument) { <i class="fa-solid fa-arrow-up-right-from-square text-xs ml-1" style="color:#6B7280"></i> }
+                                    @if (sub.OpenInNewTab && !sub.IsDocument) { <i class="fa-solid fa-arrow-up-right-from-square text-xs ml-1" style="color:var(--color-muted)"></i> }
                                 </a>
                             }
                         }
@@ -149,22 +153,22 @@
             }
             else
             {
-                <a href="@item.Url" class="block py-2 text-sm border-b" style="color:#F5ECD7;text-decoration:none;border-color:rgba(255,255,255,0.05)">@item.Title</a>
+                <a href="@item.Url" class="block py-2 text-sm border-b" style="color:var(--color-text);text-decoration:none;border-color:var(--color-border)">@item.Title</a>
             }
         }
-        <div class="mt-3 pt-3" style="border-top:1px solid rgba(255,255,255,0.1)">
+        <div class="mt-3 pt-3" style="border-top:1px solid var(--color-border)">
             @if (isAuthenticated)
             {
                 @if (isAdmin || isBoardMember)
                 {
-                    <a href="/manage/1" class="block py-2 text-sm" style="color:#C8962E;text-decoration:none">Manage League</a>
+                    <a href="/manage/1" class="block py-2 text-sm" style="color:var(--color-gold);text-decoration:none">Manage League</a>
                 }
-                <a href="/Auth/Logout" class="block py-2 text-sm" style="color:#F5ECD7;text-decoration:none">Logout</a>
+                <a href="/Auth/Logout" class="block py-2 text-sm" style="color:var(--color-text);text-decoration:none">Logout</a>
             }
             else
             {
-                <a href="/Auth/Login" class="block py-2 text-sm" style="color:#F5ECD7;text-decoration:none">Log in</a>
-                <a href="/Auth/Register" class="block py-2 text-sm" style="color:#F5ECD7;text-decoration:none">Register</a>
+                <a href="/Auth/Login" class="block py-2 text-sm" style="color:var(--color-text);text-decoration:none">Log in</a>
+                <a href="/Auth/Register" class="block py-2 text-sm" style="color:var(--color-text);text-decoration:none">Register</a>
             }
         </div>
     </div>
@@ -172,20 +176,20 @@
 
 
 <nav id="mobile-nav" class="md:hidden fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around h-14 no-print"
-     style="background:#0D0D0E;border-top:1px solid rgba(255,255,255,0.1)">
-    <a href="/" class="mobile-nav-tab flex flex-col items-center gap-0.5 py-2 px-3" style="color:#6B7280;text-decoration:none;font-size:10px">
+     style="background:var(--color-surface);border-top:1px solid var(--color-border)">
+    <a href="/" class="mobile-nav-tab flex flex-col items-center gap-0.5 py-2 px-3" style="color:var(--color-muted);text-decoration:none;font-size:10px">
         <i class="fa-solid fa-house text-lg"></i>
         <span>Home</span>
     </a>
-    <a href="#" id="mobile-nav-results" class="mobile-nav-tab flex flex-col items-center gap-0.5 py-2 px-3" style="color:#6B7280;text-decoration:none;font-size:10px">
+    <a href="#" id="mobile-nav-results" class="mobile-nav-tab flex flex-col items-center gap-0.5 py-2 px-3" style="color:var(--color-muted);text-decoration:none;font-size:10px">
         <i class="fa-solid fa-trophy text-lg"></i>
         <span>Results</span>
     </a>
-    <a href="#" id="mobile-nav-schedule" class="mobile-nav-tab flex flex-col items-center gap-0.5 py-2 px-3" style="color:#6B7280;text-decoration:none;font-size:10px">
+    <a href="#" id="mobile-nav-schedule" class="mobile-nav-tab flex flex-col items-center gap-0.5 py-2 px-3" style="color:var(--color-muted);text-decoration:none;font-size:10px">
         <i class="fa-solid fa-calendar-days text-lg"></i>
         <span>Schedule</span>
     </a>
-    <a href="#" id="mobile-nav-stats" class="mobile-nav-tab flex flex-col items-center gap-0.5 py-2 px-3" style="color:#6B7280;text-decoration:none;font-size:10px">
+    <a href="#" id="mobile-nav-stats" class="mobile-nav-tab flex flex-col items-center gap-0.5 py-2 px-3" style="color:var(--color-muted);text-decoration:none;font-size:10px">
         <i class="fa-solid fa-chart-bar text-lg"></i>
         <span>Stats</span>
     </a>

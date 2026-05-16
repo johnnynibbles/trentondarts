@@ -8,39 +8,43 @@
     <meta name="google" content="notranslate">
     <meta name="csrf-token" content="@Antiforgery.GetAndStoreTokens(Context).RequestToken" />
     <title>Greater Trenton Dart League</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="~/dist/main.css" rel="stylesheet" type="text/css" asp-append-version="true">
 </head>
-<body class="min-h-screen flex flex-col" style="background-color:#0A0A0B;color:#F5ECD7">
-
-<header id="site-header" style="border-bottom:1px solid rgba(255,255,255,0.08);background:linear-gradient(rgba(10,10,11,0.62) 0%,rgba(10,10,11,0.75) 60%,rgba(10,10,11,0.95) 100%),url('/images/trenton-makes.jpg') center 40%/cover no-repeat">
-    <div class="max-w-7xl mx-auto px-4 py-10 text-center">
-        <a href="/" class="block no-underline hover:no-underline">
-            <span class="block text-4xl sm:text-5xl font-bold tracking-widest uppercase" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7;text-shadow:0 2px 12px rgba(0,0,0,0.8)">Greater Trenton</span>
-            <span class="block text-lg sm:text-xl font-semibold tracking-[0.2em] uppercase" style="font-family:'Rajdhani',sans-serif;color:#C8962E;text-shadow:0 2px 8px rgba(0,0,0,0.8)">Dart League</span>
-        </a>
-    </div>
-</header>
+<body class="min-h-screen flex flex-col" style="background:var(--color-bg);color:var(--color-text)">
 
 <div id="site-nav">
     @await Html.PartialAsync("_DefaultNav")
 </div>
 
-<main class="flex-1 w-full max-w-7xl mx-auto px-4 py-6 pb-24 md:pb-6">
+<main class="flex-1 site-shell">
     @RenderBody()
 </main>
 
-<footer id="site-footer" class="mt-auto py-5 px-4 text-center no-print" style="border-top:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02)">
-    <div class="flex items-center justify-center gap-4">
-        <a href="http://www.facebook.com/GreaterTrentonDartLeague" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm" style="color:#9CA3AF">
-            <i class="fa-brands fa-facebook text-xl" style="color:#C8962E"></i>
-            <span>Greater Trenton Dart League on Facebook</span>
+<div class="bridge-strip no-print">
+    <img src="/images/trenton-makes-thin.jpg" alt="">
+</div>
+
+<footer id="site-footer" class="mt-auto no-print" style="border-top:1px solid var(--color-border)">
+    <div class="mx-auto grid gap-6 px-6 py-8 sm:grid-cols-[2fr_1fr] items-start" style="max-width:var(--max-w)">
+        <div>
+            <div class="inline-flex items-center gap-3">
+                <span style="background:#fff;border-radius:8px;padding:6px;display:inline-flex">
+                    <img src="/images/trentondarts-logo.png" alt="GTDL" style="width:42px;height:42px;object-fit:contain">
+                </span>
+                <div>
+                    <p class="text-sm font-bold" style="color:var(--color-gold)">GTDL</p>
+                    <p class="text-xs" style="color:var(--color-muted)">Greater Trenton Dart League</p>
+                </div>
+            </div>
+            <p class="mt-3 text-sm" style="color:var(--color-muted);max-width:320px">League results, schedules, standings, events, and member tools for Trenton-area darts.</p>
+        </div>
+        <a href="http://www.facebook.com/GreaterTrentonDartLeague" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm sm:justify-end" style="color:var(--color-text)">
+            <i class="fa-brands fa-facebook text-lg" style="color:var(--color-gold)"></i>
+            <span>Facebook</span>
         </a>
     </div>
-    <p class="mt-2 text-xs" style="color:#6B7280">&copy; Greater Trenton Dart League</p>
+    <div class="mx-auto px-6 pb-6 text-xs" style="max-width:var(--max-w);color:var(--color-muted)">&copy; Greater Trenton Dart League</div>
 </footer>
 
 @await RenderSectionAsync("Scripts", required: false)
