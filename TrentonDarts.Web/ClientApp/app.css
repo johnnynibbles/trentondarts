@@ -102,7 +102,7 @@ a:hover { color: var(--color-gold-hover); text-decoration: underline; }
 }
 
 @media (min-width: 768px) {
-  .site-hero-inner { grid-template-columns: 1fr 220px; }
+  .site-hero-inner { grid-template-columns: 1fr 260px; }
 }
 
 @media (max-width: 639px) {
@@ -129,9 +129,15 @@ a:hover { color: var(--color-gold-hover); text-decoration: underline; }
 .site-hero-logo {
   display: none;
   background: #fff;
-  border-radius: 12px;
-  padding: 20px;
+  border-radius: 10px;
+  padding: 8px;
   box-shadow: 0 12px 48px oklch(0% 0 0 / 0.55);
+}
+
+.site-hero-logo img {
+  width: 244px;
+  max-width: 100%;
+  display: block;
 }
 
 @media (min-width: 768px) {

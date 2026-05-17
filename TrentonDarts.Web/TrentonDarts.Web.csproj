@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>bf287caf-e77c-4a61-9825-89c8afc84886</UserSecretsId>
+    <ClientAppBuildCommand>node ./node_modules/vite/bin/vite.js build</ClientAppBuildCommand>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,5 +19,10 @@
     </PackageReference>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
   </ItemGroup>
+
+  <Target Name="BuildClientApp" BeforeTargets="Build" Condition="'$(DesignTimeBuild)' != 'true' and '$(SkipClientBuild)' != 'true'">
+    <Message Importance="high" Text="Building ClientApp assets..." />
+    <Exec WorkingDirectory="$(MSBuildProjectDirectory)\ClientApp" Command="$(ClientAppBuildCommand)" />
+  </Target>
 
 </Project>
