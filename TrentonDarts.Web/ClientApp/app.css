@@ -386,14 +386,14 @@ a:hover { text-decoration: underline; }
 .main-wrap {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 48px 24px;
+  padding: 6px 24px 48px;
 }
 @media (min-width: 1024px) {
   .main-wrap {
     display: grid;
     grid-template-columns: 1fr 340px;
     gap: 48px;
-    padding: 56px 24px;
+    padding: 7px 24px 23px;
   }
 }
 @media (min-width: 1200px) {

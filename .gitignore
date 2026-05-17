@@ -23,3 +23,7 @@ TrentonDarts.Web/wwwroot/dist/
 # OS
 .DS_Store
 Thumbs.db
+
+# Private Use
+PrivateNotes.md
+LocalFiles/

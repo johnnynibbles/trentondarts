@@ -1,6 +1,7 @@
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,38 +12,43 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="~/dist/main.css" rel="stylesheet" type="text/css" asp-append-version="true">
 </head>
+
 <body class="min-h-screen flex flex-col" style="background-color:#F9FAFB;color:#111827">
 
-@await Html.PartialAsync("_DefaultNav")
+    @await Html.PartialAsync("_DefaultNav")
 
-<main class="flex-1 w-full max-w-7xl mx-auto px-6 py-6">
-    @RenderBody()
-</main>
+    <main class="flex-1 w-full max-w-7xl mx-auto px-6 py-6">
+        @RenderBody()
+    </main>
 
-<footer id="site-footer" class="no-print" style="border-top:1px solid #E5E7EB;padding:44px 0 28px;background:#FFFFFF">
-    <div style="max-width:1200px;margin:0 auto;padding:0 24px;display:grid;gap:24px;grid-template-columns:1fr">
-        <div class="sm:grid sm:gap-6" style="display:grid;gap:24px">
-            <div style="grid-column:span 2">
-                <span style="font-size:20px;font-weight:800;letter-spacing:-0.04em;color:#2563EB">GTDL</span>
-                <p style="font-size:13px;color:#6B7280;line-height:1.65;margin-top:10px;max-width:260px">
-                    Greater Trenton Dart League &mdash; serving the Trenton, NJ darts community since 2008.
-                </p>
-                <div style="margin-top:14px">
-                    <a href="http://www.facebook.com/GreaterTrentonDartLeague" target="_blank" rel="noopener noreferrer"
-                       style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#6B7280;text-decoration:none">
-                        <i class="fa-brands fa-facebook" style="color:#2563EB"></i>
-                        Facebook
-                    </a>
+    <footer id="site-footer" class="no-print"
+            style="border-top:1px solid #E5E7EB;padding:44px 0 28px;background:#FFFFFF">
+        <div style="max-width:1200px;margin:0 auto;padding:0 24px;display:grid;gap:24px;grid-template-columns:1fr">
+            <div class="sm:grid sm:gap-6" style="display:grid;gap:24px">
+                <div style="grid-column:span 2">
+                    <span style="font-size:20px;font-weight:800;letter-spacing:-0.04em;color:#2563EB">GTDL</span>
+                    <p style="font-size:13px;color:#6B7280;line-height:1.65;margin-top:10px;max-width:260px">
+                        Greater Trenton Dart League &mdash; serving the Trenton, NJ darts community since 2008.
+                    </p>
+                    <div style="margin-top:14px">
+                        <a href="http://www.facebook.com/GreaterTrentonDartLeague" target="_blank"
+                           rel="noopener noreferrer"
+                           style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#6B7280;text-decoration:none">
+                            <i class="fa-brands fa-facebook" style="color:#2563EB"></i>
+                            Facebook
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div style="max-width:1200px;margin:28px auto 0;padding:20px 24px 0;border-top:1px solid #E5E7EB;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px">
-        <p style="font-size:12px;color:#9CA3AF">&copy; Greater Trenton Dart League. All rights reserved.</p>
-        <p style="font-size:12px;color:#9CA3AF">Trenton, NJ</p>
-    </div>
-</footer>
+        <div
+            style="max-width:1200px;margin:28px auto 0;padding:20px 24px 0;border-top:1px solid #E5E7EB;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px">
+            <p style="font-size:12px;color:#9CA3AF">&copy; Greater Trenton Dart League. All rights reserved.</p>
+            <p style="font-size:12px;color:#9CA3AF">Trenton, NJ</p>
+        </div>
+    </footer>
 
-@await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>
