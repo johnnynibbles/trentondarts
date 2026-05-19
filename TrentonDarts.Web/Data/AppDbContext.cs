@@ -487,6 +487,7 @@ public class AppDbContext : IdentityDbContext<User>, IDataProtectionKeyContext
         builder.Entity<NewsPost>(e =>
         {
             e.ToTable("news_posts");
+            e.Property(p => p.PostType).HasColumnName("post_type").HasConversion<string>().HasDefaultValue(NewsPostType.News);
             e.Property(p => p.CoverImageId).HasColumnName("cover_image_id");
             e.Property(p => p.PublishedAt).HasColumnName("published_at");
             e.Property(p => p.CreatedAt).HasColumnName("created_at");

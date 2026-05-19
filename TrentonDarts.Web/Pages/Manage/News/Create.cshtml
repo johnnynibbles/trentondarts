@@ -50,6 +50,15 @@
         <div id="tiptap-body" style="border-radius:0.5rem;overflow:hidden"></div>
     </div>
     <div class="mb-4">
+        <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Post Type</label>
+        <select asp-for="Input.PostType" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)">
+            <option value="News">News</option>
+            <option value="Recap">Recap</option>
+            <option value="Event">Event</option>
+            <option value="Announcement">Announcement</option>
+        </select>
+    </div>
+    <div class="mb-4">
         <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Cover Image</label>
         <input asp-for="CoverImage" type="file" accept="image/*" class="w-full text-sm" style="color:#F5ECD7" />
         <span asp-validation-for="CoverImage" class="text-xs mt-1 block" style="color:#C8101A"></span>

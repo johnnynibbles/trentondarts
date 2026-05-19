@@ -1,7 +1,16 @@
 @page
 @model TrentonDarts.Web.Pages.IndexModel
+@using TrentonDarts.Web.Data.Entities
 @{
     ViewData["Title"] = "Greater Trenton Dart League";
+
+    static (string bg, string color) PostTypeBadgeStyle(NewsPostType type) => type switch
+    {
+        NewsPostType.Recap        => ("oklch(18% 0.06 145)", "oklch(70% 0.15 145)"),
+        NewsPostType.Event        => ("var(--color-gold-bg)", "var(--color-gold)"),
+        NewsPostType.Announcement => ("oklch(18% 0.06 30)", "oklch(70% 0.15 30)"),
+        _                         => ("oklch(18% 0.06 255)", "oklch(70% 0.15 255)"),
+    };
 }
 
 <section class="site-hero -mx-6 -mt-9 mb-10 sm:-mx-4">
@@ -23,6 +32,10 @@
                         <i class="fa-solid fa-calendar-days"></i>
                         Schedule
                     </a>
+                    <a class="btn-ghost" href="/season/@Model.CurrentSeasonId/stats">
+                        <i class="fa-solid fa-chart-bar"></i>
+                        Stats
+                    </a>
                 }
                 <a class="btn-ghost" href="/event/results">
                     <i class="fa-solid fa-trophy"></i>
@@ -39,11 +52,8 @@
 <div class="grid gap-8 lg:grid-cols-[1fr_340px]">
     <main class="min-w-0">
         <div class="flex items-baseline justify-between gap-4 mb-5">
-            <h2 class="text-lg font-bold" style="letter-spacing:-0.02em;color:var(--color-text)">League Bulletin</h2>
-            @if (Model.CurrentSeasonId.HasValue)
-            {
-                <a href="/season/@Model.CurrentSeasonId/stats" class="text-sm font-medium">View stats</a>
-            }
+            <h2 class="text-lg font-bold" style="letter-spacing:-0.02em;color:var(--color-text)">Latest News</h2>
+            <a href="/news" class="text-sm font-medium">All posts &rarr;</a>
         </div>
 
         <div class="glass-card">
@@ -66,10 +76,11 @@
                 {
                     @foreach (var post in Model.RecentPosts)
                     {
+                        var (badgeBg, badgeColor) = PostTypeBadgeStyle(post.PostType);
                         <article class="p-6" style="border-bottom:1px solid var(--color-border)">
                             <div class="flex items-center gap-2 mb-2">
                                 <span class="inline-block rounded px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide"
-                                      style="background:oklch(18% 0.06 255);color:oklch(70% 0.15 255)">News</span>
+                                      style="background:@badgeBg;color:@badgeColor">@post.PostType</span>
                                 <span class="text-xs" style="color:var(--color-muted)">@post.PublishedAt?.ToString("MMMM d, yyyy")</span>
                             </div>
                             @if (post.CoverImage != null)
@@ -84,7 +95,7 @@
                             </h3>
                             @if (!string.IsNullOrEmpty(post.Excerpt))
                             {
-                                <p class="text-sm" style="color:var(--color-muted)">@post.Excerpt</p>
+                                <div class="prose-content text-sm" style="color:var(--color-muted)">@Html.Raw(post.Excerpt)</div>
                             }
                             <a href="/news/@post.Slug" class="inline-block mt-2 text-xs font-medium"
                                style="color:var(--color-gold)">Read more &rarr;</a>

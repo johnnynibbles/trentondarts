@@ -5,7 +5,7 @@
     string ActiveLinkStyle(string segment) => IsActive(segment)
         ? "color:#C8962E;text-decoration:none;background:rgba(200,150,46,0.1)"
         : "color:#F5ECD7;text-decoration:none";
-    bool SiteGroupActive() => IsActive("dartevents") || IsActive("pageparts") || IsActive("navigation") || IsActive("documents");
+    bool SiteGroupActive() => IsActive("dartevents") || IsActive("pageparts") || IsActive("navigation") || IsActive("documents") || IsActive("news");
     bool LeagueGroupActive() => IsActive("players") || IsActive("teams") || IsActive("sponsors") || IsActive("boardmembers") || IsActive("matchtypes");
     bool CanManageUsers() => User.IsInRole("Owner") || User.IsInRole("Admin");
 }
@@ -25,6 +25,7 @@
                     </button>
                     <ul class="nav-dropdown-menu hidden absolute left-0 top-full mt-1 min-w-[180px] rounded-xl py-1 list-none p-0"
                         style="background:#111214;border:1px solid rgba(255,255,255,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.5)">
+                        <li style="list-style:none"><a href="/Manage/@leagueId/news" class="block px-3 py-2 text-sm" style="@ActiveLinkStyle("news")" onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background=''">News Posts</a></li>
                         <li style="list-style:none"><a href="/Manage/@leagueId/dartevents" class="block px-3 py-2 text-sm" style="@ActiveLinkStyle("dartevents")" onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background=''">Dart Events</a></li>
                         <li style="list-style:none"><a href="/Manage/@leagueId/pageparts" class="block px-3 py-2 text-sm" style="@ActiveLinkStyle("pageparts")" onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background=''">Page Content</a></li>
                         <li style="list-style:none"><a href="/Manage/@leagueId/navigation" class="block px-3 py-2 text-sm" style="@ActiveLinkStyle("navigation")" onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background=''">Navigation</a></li>
@@ -65,6 +66,7 @@
 
     <div id="manage-mobile-menu" class="hidden md:hidden px-4 py-3" style="border-top:1px solid rgba(255,255,255,0.08);background:#0D0D0E">
         <p class="text-xs font-semibold uppercase tracking-widest mb-2" style="color:#C8962E">Site</p>
+        <a href="/Manage/@leagueId/news" class="block py-2 text-sm border-b" style="color:#F5ECD7;text-decoration:none;border-color:rgba(255,255,255,0.05)">News Posts</a>
         <a href="/Manage/@leagueId/dartevents" class="block py-2 text-sm border-b" style="color:#F5ECD7;text-decoration:none;border-color:rgba(255,255,255,0.05)">Dart Events</a>
         <a href="/Manage/@leagueId/pageparts" class="block py-2 text-sm border-b" style="color:#F5ECD7;text-decoration:none;border-color:rgba(255,255,255,0.05)">Page Content</a>
         <a href="/Manage/@leagueId/navigation" class="block py-2 text-sm border-b" style="color:#F5ECD7;text-decoration:none;border-color:rgba(255,255,255,0.05)">Navigation</a>

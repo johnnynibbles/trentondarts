@@ -50,6 +50,7 @@ public class EditModel : PageModel
             Slug = post.Slug,
             Excerpt = post.Excerpt,
             Html = post.Html,
+            PostType = post.PostType,
             Publish = !post.IsDraft
         };
         return Page();
@@ -77,6 +78,7 @@ public class EditModel : PageModel
         post.Slug = slug;
         post.Excerpt = Input.Excerpt;
         post.Html = Input.Html;
+        post.PostType = Input.PostType;
         post.UpdatedAt = DateTime.UtcNow;
 
         if (RemoveCoverImage)

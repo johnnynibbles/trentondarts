@@ -7,6 +7,7 @@ public class NewsPost
     public string Slug { get; set; } = string.Empty;
     public string? Excerpt { get; set; }
     public string? Html { get; set; }
+    public NewsPostType PostType { get; set; } = NewsPostType.News;
     public int? CoverImageId { get; set; }
     public DateTime? PublishedAt { get; set; }
     public DateTime CreatedAt { get; set; }

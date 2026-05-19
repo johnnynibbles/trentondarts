@@ -15,6 +15,7 @@ public class NewsPostInput
     [Required] public string Slug { get; set; } = "";
     public string? Excerpt { get; set; }
     public string? Html { get; set; }
+    public NewsPostType PostType { get; set; } = NewsPostType.News;
     public bool Publish { get; set; }
 }
 
@@ -68,6 +69,7 @@ public class CreateModel : PageModel
             Slug = slug,
             Excerpt = Input.Excerpt,
             Html = Input.Html,
+            PostType = Input.PostType,
             CoverImageId = coverImageId,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow

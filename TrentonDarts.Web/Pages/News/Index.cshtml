@@ -1,7 +1,16 @@
 @page "/news"
 @model TrentonDarts.Web.Pages.News.IndexModel
+@using TrentonDarts.Web.Data.Entities
 @{
     ViewData["Title"] = "News";
+
+    static (string bg, string color) PostTypeBadgeStyle(NewsPostType type) => type switch
+    {
+        NewsPostType.Recap        => ("oklch(18% 0.06 145)", "oklch(70% 0.15 145)"),
+        NewsPostType.Event        => ("var(--color-gold-bg)", "var(--color-gold)"),
+        NewsPostType.Announcement => ("oklch(18% 0.06 30)", "oklch(70% 0.15 30)"),
+        _                         => ("oklch(18% 0.06 255)", "oklch(70% 0.15 255)"),
+    };
 }
 
 <h2 class="text-3xl font-bold mb-2" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">News</h2>
@@ -32,6 +41,7 @@ else
     <div class="grid gap-6">
         @foreach (var post in Model.Posts)
         {
+            var (badgeBg, badgeColor) = PostTypeBadgeStyle(post.PostType);
             <article class="glass-card flex gap-4 overflow-hidden" style="border-radius:0.75rem">
                 @if (post.CoverImage != null)
                 {
@@ -40,9 +50,13 @@ else
                     </a>
                 }
                 <div class="p-4 flex flex-col justify-center">
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="inline-block rounded px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide"
+                              style="background:@badgeBg;color:@badgeColor">@post.PostType</span>
+                        <span class="text-xs" style="color:#6B7280">@post.PublishedAt?.ToString("MMMM d, yyyy")</span>
+                    </div>
                     <a href="/news/@post.Slug" class="text-lg font-bold mb-1 block"
                        style="font-family:'Rajdhani',sans-serif;color:#F5ECD7;text-decoration:none">@post.Title</a>
-                    <p class="text-xs mb-2" style="color:#6B7280">@post.PublishedAt?.ToString("MMMM d, yyyy")</p>
                     @if (!string.IsNullOrEmpty(post.Excerpt))
                     {
                         <div class="prose-content text-sm" style="color:#9CA3AF">@Html.Raw(post.Excerpt)</div>
