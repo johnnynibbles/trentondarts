@@ -21,7 +21,7 @@ FROM restore AS build
 COPY . .
 COPY --from=frontend /wwwroot/dist ./TrentonDarts.Web/wwwroot/dist
 RUN dotnet publish TrentonDarts.Web/TrentonDarts.Web.csproj \
-    -c Release -o /app/publish --no-restore
+    -c Release -o /app/publish --no-restore /p:SkipClientBuild=true
 
 # Stage 4: Runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
