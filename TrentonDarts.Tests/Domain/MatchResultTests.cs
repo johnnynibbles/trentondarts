@@ -24,12 +24,11 @@ public class MatchResultTests
         new() { NumberOfLegs = 1, NumberOfPlayers = 2, GameType = "cricket", GamePointValue = 2 };
 
     [Fact]
-    public void LoadingRulesWillHaveTheSameNumberOfGames()
+    public void FromWithRules_HasSameNumberOfGamesAsRules()
     {
-        var matchResult = new MatchResult();
         var matchRules = new MatchRules();
         matchRules.GameRules.Add(new GameRules());
-        matchResult.LoadRules(matchRules);
+        var matchResult = MatchResult.From(new MatchResultSnapshot(), matchRules);
 
         matchResult.GetGames().Count.Should().Be(matchRules.GameRules.Count);
     }
@@ -50,7 +49,6 @@ public class MatchResultTests
 
     private static MatchResult CreateStandardMatch()
     {
-        var matchResult = new MatchResult();
         var matchRules = new MatchRules();
 
         for (int i = 0; i < 3; i++) matchRules.GameRules.Add(Make301());
@@ -61,8 +59,7 @@ public class MatchResultTests
         for (int i = 0; i < 3; i++) matchRules.GameRules.Add(MakeCricket());
         for (int i = 0; i < 3; i++) matchRules.GameRules.Add(Make301());
 
-        matchResult.LoadRules(matchRules);
-        return matchResult;
+        return MatchResult.From(new MatchResultSnapshot(), matchRules);
     }
 
     private static MatchResult CreateStandardMatchWithSweep(string teamType)

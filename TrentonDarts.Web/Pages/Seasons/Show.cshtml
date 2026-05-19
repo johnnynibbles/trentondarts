@@ -1,5 +1,6 @@
 @page "/season/{id:int}"
 @model TrentonDarts.Web.Pages.Seasons.ShowModel
+@using TrentonDarts.Web.Domain
 @{
     ViewData["Title"] = Model.Season.Name;
 }
@@ -106,7 +107,7 @@
 
 @* Division standings *@
 <h3 class="text-xl font-bold mt-6 mb-4" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">
-    Standings — @(Model.SeasonPart == "regular" ? "Regular Season" : "Pre-Season")
+    Standings — @(Model.SeasonPart == SeasonPart.Regular ? "Regular Season" : "Pre-Season")
 </h3>
 <div class="grid gap-4 sm:grid-cols-2">
 @foreach (var div in Model.DivStandings)

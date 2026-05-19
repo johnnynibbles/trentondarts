@@ -1,7 +1,9 @@
 @page "/season/{seasonId:int}/awards"
 @model TrentonDarts.Web.Pages.Seasons.AwardsModel
+@using TrentonDarts.Web.Domain
 @{
     ViewData["Title"] = $"Awards — {Model.Season.Name}";
+    var selectedPart = Model.SeasonPart?.ToString().ToLower() ?? "whole";
 }
 
 <style media="print" type="text/css">@@page { size: landscape; }</style>
@@ -14,7 +16,7 @@
         <select id="seasonPart" class="rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)">
             @foreach (var opt in new[] { ("whole","Whole Season"), ("pre","Pre Season"), ("regular","Regular Season") })
             {
-                if (opt.Item1 == Model.SeasonPart) { <option value="@opt.Item1" selected>@opt.Item2</option> }
+                if (opt.Item1 == selectedPart) { <option value="@opt.Item1" selected>@opt.Item2</option> }
                 else { <option value="@opt.Item1">@opt.Item2</option> }
             }
         </select>
@@ -58,7 +60,7 @@
                     onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background=''">
                     <td class="px-3 py-2"><a href="/player/@a.PlayerId?season=@Model.Season.Id" style="color:#F5ECD7;text-decoration:none">@a.PlayerName</a></td>
                     <td class="px-3 py-2"><a href="/team/@a.TeamId?season=@Model.Season.Id" style="color:#C8962E;text-decoration:none">@a.TeamName</a></td>
-                    <td class="px-3 py-2 text-center text-xs" style="color:#9CA3AF">@(a.SeasonPart == "pre" ? "Pre" : "Regular")</td>
+                    <td class="px-3 py-2 text-center text-xs" style="color:#9CA3AF">@(a.SeasonPart == SeasonPart.Pre ? "Pre" : "Regular")</td>
                     <td class="px-3 py-2 text-center text-xs" style="color:#9CA3AF">@a.Division</td>
                     <td class="px-3 py-2 text-center text-xs" style="color:#9CA3AF">@a.Date.ToString("MM-dd-yyyy")</td>
                     <td class="px-3 py-2 text-center text-xs font-semibold" style="color:#C8962E">@a.AwardType</td>

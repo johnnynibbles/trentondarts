@@ -2,6 +2,7 @@
 @model TrentonDarts.Web.Pages.Teams.ShowModel
 @{
     ViewData["Title"] = $"{Model.SeasonTeam.Team.Name} Team";
+    var selectedPart = Model.StatPart?.ToString().ToLower() ?? "whole";
 }
 
 <div class="flex items-center justify-between flex-wrap gap-3 mb-5">
@@ -28,7 +29,7 @@
                             <select id="statPart" class="rounded-lg px-2 py-1 text-xs" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)">
                                 @foreach (var opt in new[] { ("whole","Whole Season"), ("pre","Pre Season"), ("regular","Regular Season") })
                                 {
-                                    if (opt.Item1 == Model.StatPart) { <option value="@opt.Item1" selected>@opt.Item2</option> }
+                                    if (opt.Item1 == selectedPart) { <option value="@opt.Item1" selected>@opt.Item2</option> }
                                     else { <option value="@opt.Item1">@opt.Item2</option> }
                                 }
                             </select>

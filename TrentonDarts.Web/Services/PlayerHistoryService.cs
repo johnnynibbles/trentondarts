@@ -53,7 +53,7 @@ public class PlayerHistoryService
                 Date = playerGame.Date,
                 GameType = GetHistoryGameType(playerGame.NumberOfPlayers, playerGame.GameType),
                 GameOrder = playerGame.GameNumber,
-                SeasonPart = playerGame.SeasonPart ?? "",
+                SeasonPart = playerGame.SeasonPart?.ToString() ?? "",
                 IsHomeGame = playerGame.IsHome,
                 IsWon = playerGame.IsWon
             };

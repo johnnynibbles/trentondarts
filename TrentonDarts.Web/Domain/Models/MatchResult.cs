@@ -2,9 +2,9 @@ namespace TrentonDarts.Web.Domain.Models;
 
 public class MatchResult
 {
-    // Public context fields (set via LoadSnapshot)
+    // Public context fields (set via From factory)
     public int SeasonId { get; set; }
-    public string? SeasonPart { get; set; }
+    public SeasonPart? SeasonPart { get; set; }
     public string? Division { get; set; }
     public DateTime Date { get; set; }
     public int AwayTeamId { get; set; }
@@ -18,6 +18,16 @@ public class MatchResult
     private int _homeScoreOverride;
     private readonly List<GameResult> _gameResults = new();
     private MatchRules? _matchRules;
+
+    private MatchResult() { }
+
+    public static MatchResult From(MatchResultSnapshot snapshot, MatchRules rules)
+    {
+        var result = new MatchResult();
+        result.LoadSnapshot(snapshot);
+        result.LoadRules(rules);
+        return result;
+    }
 
     public int GetMatchId() => _matchId;
     public bool GetHasScorecard() => _hasScorecard;
@@ -37,7 +47,7 @@ public class MatchResult
         _homeScoreOverride = score;
     }
 
-    public void LoadRules(MatchRules rules)
+    private void LoadRules(MatchRules rules)
     {
         _matchRules = rules;
         if (_gameResults.Count == 0)
@@ -47,7 +57,7 @@ public class MatchResult
         }
     }
 
-    public void LoadSnapshot(MatchResultSnapshot snapshot)
+    private void LoadSnapshot(MatchResultSnapshot snapshot)
     {
         _matchId = snapshot.MatchId;
         _hasScorecard = snapshot.HasScorecard;

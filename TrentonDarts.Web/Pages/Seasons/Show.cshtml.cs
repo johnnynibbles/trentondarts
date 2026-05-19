@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using TrentonDarts.Web.Data;
 using TrentonDarts.Web.Data.Entities;
+using TrentonDarts.Web.Domain;
 using TrentonDarts.Web.Services;
 
 namespace TrentonDarts.Web.Pages.Seasons;
@@ -22,7 +23,7 @@ public class ShowModel : PageModel
     }
 
     public WinterSeason Season { get; private set; } = null!;
-    public string SeasonPart { get; private set; } = "pre";
+    public SeasonPart SeasonPart { get; private set; }
     public DateTime? ResultWeekDate { get; private set; }
     public DateTime? PreviousWeekDate { get; private set; }
     public DateTime? NextWeekDate { get; private set; }

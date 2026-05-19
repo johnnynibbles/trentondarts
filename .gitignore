@@ -23,3 +23,6 @@ TrentonDarts.Web/wwwroot/dist/
 # OS
 .DS_Store
 Thumbs.db
+
+# local files
+LocalFiles/

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TrentonDarts.Web.Data;
 using TrentonDarts.Web.Data.Entities;
+using TrentonDarts.Web.Domain;
 
 namespace TrentonDarts.Web.Services;
 
@@ -67,30 +68,28 @@ public class SeasonService
         return upper?.Date;
     }
 
-    public async Task<string> GetCurrentSeasonPartAsync(WinterSeason season, DateTime? weekDate)
+    public async Task<SeasonPart> GetCurrentSeasonPartAsync(WinterSeason season, DateTime? weekDate)
     {
         if (weekDate == null)
         {
             var hasPreWeeks = await _db.WinterSeasonWeeks
-                .AnyAsync(w => w.SeasonId == season.Id && w.WeekType == "pre");
-            return hasPreWeeks ? "pre" : "regular";
+                .AnyAsync(w => w.SeasonId == season.Id && w.WeekType == SeasonPart.Pre);
+            return hasPreWeeks ? SeasonPart.Pre : SeasonPart.Regular;
         }
 
         var lower = await _db.WinterSeasonWeeks
-            .Where(w => w.SeasonId == season.Id && w.WeekType != "post" && w.Date <= weekDate)
+            .Where(w => w.SeasonId == season.Id && w.WeekType != SeasonPart.Post && w.Date <= weekDate)
             .OrderByDescending(w => w.Date)
             .FirstOrDefaultAsync();
 
-        return lower?.WeekType ?? "pre";
+        return lower?.WeekType ?? SeasonPart.Pre;
     }
 
     // ── Standings ─────────────────────────────────────────────────────────────
 
     public async Task<List<DivStandings>> GetDivisionStandingsAsync(
-        WinterSeason season, string seasonPart, DateTime? asOfDate)
+        WinterSeason season, SeasonPart seasonPart, DateTime? asOfDate)
     {
-        var divName = seasonPart == "regular" ? "regularSeasonDiv" : "preSeasonDiv";
-
         // Raw standings aggregation
         var standingsQuery = _db.WinterStatMatches
             .Where(s => s.SeasonId == season.Id);
@@ -120,9 +119,11 @@ public class SeasonService
             .Include(st => st.Team)
             .ToListAsync();
 
+        var isRegular = seasonPart == SeasonPart.Regular;
+
         // Get unique divisions
         var divisions = seasonTeams
-            .Select(st => seasonPart == "regular" ? st.RegularSeasonDiv : st.PreSeasonDiv)
+            .Select(st => isRegular ? st.RegularSeasonDiv : st.PreSeasonDiv)
             .Where(d => !string.IsNullOrEmpty(d))
             .Distinct()
             .OrderBy(d => d)
@@ -132,7 +133,7 @@ public class SeasonService
         foreach (var div in divisions)
         {
             var teamsInDiv = seasonTeams
-                .Where(st => (seasonPart == "regular" ? st.RegularSeasonDiv : st.PreSeasonDiv) == div)
+                .Where(st => (isRegular ? st.RegularSeasonDiv : st.PreSeasonDiv) == div)
                 .ToList();
 
             var standings = new List<DivStanding>();
@@ -192,8 +193,8 @@ public class SeasonService
             .Include(st => st.Team)
             .ToListAsync();
 
-        var preSchedules = await BuildDivSchedulesAsync(season, "pre", allSeasonTeams, matchResults);
-        var regularSchedules = await BuildDivSchedulesAsync(season, "regular", allSeasonTeams, matchResults);
+        var preSchedules = await BuildDivSchedulesAsync(season, SeasonPart.Pre, allSeasonTeams, matchResults);
+        var regularSchedules = await BuildDivSchedulesAsync(season, SeasonPart.Regular, allSeasonTeams, matchResults);
 
         return (preSchedules, regularSchedules.Count > 0 ? regularSchedules : new List<DivisionSchedule>());
     }
@@ -252,14 +253,14 @@ public class SeasonService
     // ── Helpers ───────────────────────────────────────────────────────────────
 
     private async Task<List<DivisionSchedule>> BuildDivSchedulesAsync(
-        WinterSeason season, string weekType,
+        WinterSeason season, SeasonPart weekType,
         List<WinterSeasonTeam> allSeasonTeams,
         Dictionary<int, MatchResultRow> matchResults)
     {
-        var divName = weekType == "regular" ? "regularSeasonDiv" : "preSeasonDiv";
+        var isRegular = weekType == SeasonPart.Regular;
 
         var divisions = allSeasonTeams
-            .Select(st => weekType == "regular" ? st.RegularSeasonDiv : st.PreSeasonDiv)
+            .Select(st => isRegular ? st.RegularSeasonDiv : st.PreSeasonDiv)
             .Where(d => !string.IsNullOrEmpty(d))
             .Select(d => d![0].ToString())
             .Distinct()
@@ -270,7 +271,7 @@ public class SeasonService
         foreach (var divShort in divisions)
         {
             var divTeams = allSeasonTeams
-                .Where(st => (weekType == "regular" ? st.RegularSeasonDiv : st.PreSeasonDiv)
+                .Where(st => (isRegular ? st.RegularSeasonDiv : st.PreSeasonDiv)
                              ?.StartsWith(divShort) == true)
                 .Select(st => st.Team.Name)
                 .ToList();

@@ -1,33 +1,22 @@
 using Microsoft.EntityFrameworkCore;
 using TrentonDarts.Web.Data;
 using TrentonDarts.Web.Data.Entities;
-using TrentonDarts.Web.Domain;
 using TrentonDarts.Web.Domain.Models;
 
 namespace TrentonDarts.Web.Services;
 
 /// <summary>
-/// Recomputes all four denormalized stat tables for a given match.
+/// Recomputes all four denormalized stat tables from an already-loaded MatchResult.
 /// Ports MatchStatsRepository, TeamGameRepository, PlayerGameRepository, AwardStatRepository.
 /// </summary>
 public class UpdateMatchStatsService
 {
     private readonly AppDbContext _db;
-    private readonly MatchRepository _matchRepo;
 
-    public UpdateMatchStatsService(AppDbContext db, MatchRepository matchRepo)
+    public UpdateMatchStatsService(AppDbContext db) => _db = db;
+
+    public async Task UpdateAsync(MatchResult result)
     {
-        _db = db;
-        _matchRepo = matchRepo;
-    }
-
-    public async Task UpdateAsync(int matchId)
-    {
-        var match = await _db.WinterSeasonMatches.FindAsync(matchId);
-        if (match == null) return;
-
-        var result = await _matchRepo.GetMatchResultsFromMatchAsync(match);
-
         await UpdateMatchStatsAsync(result);
         await UpdateTeamGameStatsAsync(result);
         await UpdatePlayerGameStatsAsync(result);
@@ -119,7 +108,6 @@ public class UpdateMatchStatsService
     {
         foreach (var game in result.GetGames())
         {
-            // Remove stats for players no longer in game
             var allPlayerIds = game.AwayPlayers.Concat(game.HomePlayers)
                 .Where(p => p != null).Select(p => p!.Id).ToHashSet();
 
@@ -183,17 +171,16 @@ public class UpdateMatchStatsService
 
     private async Task UpdateAwardStatsAsync(MatchResult result)
     {
-        // Pre-load season team membership for team lookup
-        var awayTeamPlayerIds = await _db.WinterSeasonTeamPlayers
-            .Where(tp => tp.SeasonId == result.SeasonId && tp.SeasonTeam.TeamId == result.AwayTeamId)
-            .Select(tp => tp.PlayerId)
-            .ToHashSetAsync();
+        var homePlayerIds = result.GetGames()
+            .SelectMany(g => g.HomePlayers)
+            .Where(p => p != null)
+            .Select(p => p!.Id)
+            .ToHashSet();
 
         foreach (var game in result.GetGames())
         {
             var currentAwards = await _db.WinterStatAwards.Where(a => a.GameId == game.Id).ToListAsync();
 
-            // Remove awards no longer present
             foreach (var cur in currentAwards.Where(cur => game.Awards.All(a => a.Id != cur.AwardId)))
                 _db.WinterStatAwards.Remove(cur);
 
@@ -208,10 +195,10 @@ public class UpdateMatchStatsService
                     _db.WinterStatAwards.Add(stat);
                 }
 
-                // Determine team for this award's player
-                var isAwayPlayer = awayTeamPlayerIds.Contains(award.Player.Id);
-                var teamId = isAwayPlayer ? result.AwayTeamId : result.HomeTeamId;
-                var teamName = isAwayPlayer ? result.AwayTeamName : result.HomeTeamName;
+                // Award player is always one of the game's players — derive team from HomePlayers
+                var isHomePlayer = homePlayerIds.Contains(award.Player.Id);
+                var teamId = isHomePlayer ? result.HomeTeamId : result.AwayTeamId;
+                var teamName = isHomePlayer ? result.HomeTeamName : result.AwayTeamName;
 
                 stat.SeasonId = result.SeasonId;
                 stat.SeasonPart = result.SeasonPart;

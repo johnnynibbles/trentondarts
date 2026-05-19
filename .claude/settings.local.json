@@ -59,7 +59,10 @@
       "PowerShell(Get-Process *)",
       "PowerShell(Get-NetTCPConnection *)",
       "Bash(Select-String -Pattern \"LocalRedirect\" -List)",
-      "Bash(xargs cat)"
+      "Bash(xargs cat)",
+      "PowerShell(Get-ChildItem -Path \"c:\\\\dev\\\\trentondarts-dotnet\\\\TrentonDarts.Web\\\\Services\" -File | Select-Object Name, @{Name=\"Lines\";Expression={\\(Get-Content $_.FullName | Measure-Object -Line\\).Lines}} | Format-Table -AutoSize)",
+      "PowerShell(Get-ChildItem -Path \"c:\\\\dev\\\\trentondarts-dotnet\\\\TrentonDarts.Web\\\\Domain\" -File | Select-Object Name, @{Name=\"Lines\";Expression={\\(Get-Content $_.FullName | Measure-Object -Line\\).Lines}} | Format-Table -AutoSize)",
+      "PowerShell(Get-ChildItem -Path \"c:\\\\dev\\\\trentondarts-dotnet\\\\TrentonDarts.Web\\\\Data\" -File | Select-Object Name, @{Name=\"Lines\";Expression={\\(Get-Content $_.FullName | Measure-Object -Line\\).Lines}} | Format-Table -AutoSize)"
     ]
   }
 }

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TrentonDarts.Web.Data;
+using TrentonDarts.Web.Domain;
 
 namespace TrentonDarts.Web.Services;
 
@@ -15,7 +16,7 @@ public class GameTypeStat
 public class PlayerStat
 {
     public int SeasonId { get; set; }
-    public string? SeasonPart { get; set; }
+    public SeasonPart? SeasonPart { get; set; }
     public int TeamId { get; set; }
     public string TeamName { get; set; } = "";
     public int PlayerId { get; set; }
@@ -47,7 +48,7 @@ public class PlayerStat
 public class TeamStat
 {
     public int SeasonId { get; set; }
-    public string? SeasonPart { get; set; }
+    public SeasonPart? SeasonPart { get; set; }
     public string? PreSeasonDiv { get; set; }
     public string? RegularSeasonDiv { get; set; }
     public int TeamId { get; set; }
@@ -84,10 +85,10 @@ public class StatsService
     public StatsService(AppDbContext db) => _db = db;
 
     public async Task<List<PlayerStat>> GetPlayerStatsForSeasonPartAsync(
-        int seasonId, string seasonPart, string? division)
+        int seasonId, SeasonPart? seasonPart, string? division)
     {
-        var partFilter = seasonPart == "whole" ? "" :
-            $"AND (winter_stats_player_games.\"seasonPart\" IS NULL OR winter_stats_player_games.\"seasonPart\" = '{seasonPart}')";
+        var partFilter = seasonPart == null ? "" :
+            $"AND (winter_stats_player_games.\"seasonPart\" IS NULL OR winter_stats_player_games.\"seasonPart\" = '{seasonPart.Value.ToString().ToLower()}')";
 
         var divFilter = string.IsNullOrEmpty(division) ? "" :
             $"AND (winter_season_teams.\"preSeasonDiv\" = '{division}' OR winter_season_teams.\"regularSeasonDiv\" = '{division}')";
@@ -182,10 +183,10 @@ public class StatsService
     }
 
     public async Task<List<TeamStat>> GetTeamStatsForSeasonPartAsync(
-        int seasonId, string seasonPart, string? division)
+        int seasonId, SeasonPart? seasonPart, string? division)
     {
-        var partFilter = seasonPart == "whole" ? "" :
-            $"AND (winter_stats_team_games.\"seasonPart\" IS NULL OR winter_stats_team_games.\"seasonPart\" = '{seasonPart}')";
+        var partFilter = seasonPart == null ? "" :
+            $"AND (winter_stats_team_games.\"seasonPart\" IS NULL OR winter_stats_team_games.\"seasonPart\" = '{seasonPart.Value.ToString().ToLower()}')";
 
         var divFilter = string.IsNullOrEmpty(division) ? "" :
             $"AND (winter_season_teams.\"preSeasonDiv\" = '{division}' OR winter_season_teams.\"regularSeasonDiv\" = '{division}')";
@@ -231,7 +232,7 @@ public class StatsService
 
         // Match-level points come from winter_stats_matches
         var matchStatsQuery = _db.WinterStatMatches.Where(s => s.SeasonId == seasonId);
-        if (seasonPart != "whole") matchStatsQuery = matchStatsQuery.Where(s => s.SeasonPart == seasonPart);
+        if (seasonPart != null) matchStatsQuery = matchStatsQuery.Where(s => s.SeasonPart == seasonPart);
         var matchPoints = await matchStatsQuery
             .GroupBy(s => s.TeamId)
             .Select(g => new { TeamId = g.Key, Won = g.Sum(s => s.PointsWon), Lost = g.Sum(s => s.PointsLost) })
@@ -279,10 +280,10 @@ public class StatsService
     }
 
     public async Task<List<Data.Entities.WinterStatAward>> GetAwardsForSeasonAsync(
-        int seasonId, string? seasonPart, string? division, DateTime? weekDate)
+        int seasonId, SeasonPart? seasonPart, string? division, DateTime? weekDate)
     {
         var q = _db.WinterStatAwards.Where(a => a.SeasonId == seasonId);
-        if (!string.IsNullOrEmpty(seasonPart) && seasonPart != "whole")
+        if (seasonPart != null)
             q = q.Where(a => a.SeasonPart == seasonPart);
         if (!string.IsNullOrEmpty(division))
             q = q.Where(a => a.Division == division);

@@ -3,51 +3,250 @@
 
 /* ── Option C: League App — Steel & Bull palette ─────────────────────────── */
 :root {
-  --color-bg:        #0A0A0B;
-  --color-surface:   rgba(255,255,255,0.04);
-  --color-border:    rgba(255,255,255,0.08);
-  --color-text:      #F5ECD7;
-  --color-muted:     #9CA3AF;
-  --color-red:       #C8101A;
-  --color-green:     #1A7A3C;
-  --color-gold:      #C8962E;
-  --color-steel:     #6B7280;
+  --color-bg:        oklch(10% 0.014 240);
+  --color-surface:   oklch(14% 0.012 240);
+  --color-surface-hi:oklch(19% 0.010 240);
+  --color-surface-2: oklch(17% 0.011 240);
+  --color-border:    oklch(23% 0.010 240);
+  --color-text:      oklch(91% 0.005 240);
+  --color-muted:     oklch(56% 0.008 240);
+  --color-red:       oklch(54% 0.19 28);
+  --color-green:     oklch(56% 0.14 145);
+  --color-gold:      oklch(75% 0.17 72);
+  --color-gold-hover:oklch(65% 0.15 72);
+  --color-gold-bg:   oklch(18% 0.07 72);
+  --color-steel:     oklch(56% 0.008 240);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --max-w: 1200px;
 }
 
 /* ── Base ─────────────────────────────────────────────────────────────────── */
 html, body {
   background-color: var(--color-bg);
   color: var(--color-text);
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 15px;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
-a { color: var(--color-text); }
-a:hover { color: #fff; }
+a { color: var(--color-gold); text-decoration: none; }
+a:hover { color: var(--color-gold-hover); text-decoration: underline; }
+
+::selection {
+  background: color-mix(in oklch, var(--color-gold) 28%, transparent);
+  color: var(--color-text);
+}
 
 /* ── Tailwind theme extension (v4 CSS-first config) ──────────────────────── */
 @theme {
-  --font-display: 'Rajdhani', system-ui, sans-serif;
-  --font-body:    'Inter', system-ui, sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  --font-body:    -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
 
-  --color-bull-red:   #C8101A;
-  --color-bull-green: #1A7A3C;
-  --color-bull-gold:  #C8962E;
-  --color-bull-steel: #6B7280;
-  --color-bull-cream: #F5ECD7;
-  --color-bull-bg:    #0A0A0B;
+  --color-bull-red:   oklch(54% 0.19 28);
+  --color-bull-green: oklch(56% 0.14 145);
+  --color-bull-gold:  oklch(75% 0.17 72);
+  --color-bull-steel: oklch(56% 0.008 240);
+  --color-bull-cream: oklch(91% 0.005 240);
+  --color-bull-bg:    oklch(10% 0.014 240);
 
-  --color-surface:    rgba(255,255,255,0.04);
-  --color-border-dim: rgba(255,255,255,0.08);
+  --color-surface:    oklch(14% 0.012 240);
+  --color-border-dim: oklch(23% 0.010 240);
 }
 
 /* ── Glass card component (used by Knockout templates + non-Tailwind pages) ─ */
 .glass-card {
-  background: rgba(255,255,255,0.04);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 0.75rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.glass-card:hover {
+  border-color: color-mix(in oklch, var(--color-border) 70%, var(--color-gold));
+}
+
+.site-shell {
+  width: 100%;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 36px 24px 56px;
+}
+
+@media (max-width: 639px) {
+  .site-shell { padding: 24px 16px 86px; }
+}
+
+.site-hero {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--color-border);
+  background-image:
+    linear-gradient(105deg, oklch(9% 0.016 240 / 0.92) 0%, oklch(9% 0.016 240 / 0.82) 42%, oklch(9% 0.016 240 / 0.54) 100%),
+    url('/images/trenton-makes.jpg');
+  background-position: center 60%;
+  background-size: cover;
+}
+
+.site-hero-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 64px 24px 72px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .site-hero-inner { grid-template-columns: 1fr 260px; }
+}
+
+@media (max-width: 639px) {
+  .site-hero-inner { padding: 44px 16px 52px; }
+}
+
+.site-hero-title {
+  max-width: 680px;
+  font-size: clamp(30px, 5vw, 54px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  color: var(--color-text);
+}
+
+.site-hero-copy {
+  max-width: 500px;
+  color: oklch(72% 0.006 240);
+  font-size: clamp(14px, 1.6vw, 16px);
+  line-height: 1.65;
+  margin-top: 16px;
+}
+
+.site-hero-logo {
+  display: none;
+  background: #fff;
+  border-radius: 10px;
+  padding: 8px;
+  box-shadow: 0 12px 48px oklch(0% 0 0 / 0.55);
+}
+
+.site-hero-logo img {
+  width: 244px;
+  max-width: 100%;
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .site-hero-logo { display: block; }
+}
+
+.site-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 18px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--color-gold-bg);
+  border: 1px solid color-mix(in oklch, var(--color-gold) 45%, var(--color-bg));
+  color: var(--color-gold);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.site-pill::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-green);
+}
+
+.bridge-strip {
+  width: 100%;
+  height: 64px;
+  overflow: hidden;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.bridge-strip img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 50%;
+  opacity: 0.28;
+}
+
+.btn,
+.btn-primary,
+.btn-ghost,
+.btn-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: var(--radius-sm);
+  padding: 9px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background 0.13s, border-color 0.13s, color 0.13s;
+}
+
+.btn-primary {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  color: var(--color-bg);
+}
+
+.btn-primary:hover {
+  background: var(--color-gold-hover);
+  border-color: var(--color-gold-hover);
+  color: var(--color-bg);
+  text-decoration: none;
+}
+
+.btn-ghost {
+  background: transparent;
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+
+.btn-ghost:hover {
+  background: var(--color-surface-hi);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.btn-danger {
+  background: var(--color-red);
+  border-color: var(--color-red);
+  color: #fff;
+}
+
+.panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.panel-title,
+.widget-title {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
 }
 
 /* ── Win / Loss badges (used in Knockout templates — cannot use Tailwind) ─── */
@@ -388,7 +587,7 @@ a:hover { color: #fff; }
 .clickable-row { cursor: pointer; }
 .playerWarning { background-color: var(--color-red); color: #fff; }
 .validation-error { color: var(--color-red); font-weight: 700; }
-.no-print { display: none !important; }
+.no-print { }
 
 /* team-stat-row used on stats/leaderboard tables */
 .team-stat-row { font-weight: 700; }

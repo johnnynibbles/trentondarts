@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TrentonDarts.Web.Data.Entities;
+using TrentonDarts.Web.Domain;
 using MatchType = TrentonDarts.Web.Data.Entities.MatchType;
 
 namespace TrentonDarts.Web.Data;
@@ -38,6 +39,13 @@ public class AppDbContext : IdentityDbContext<User>, IDataProtectionKeyContext
     public DbSet<PagePart> PageParts => Set<PagePart>();
     public DbSet<NavGroup> NavGroups => Set<NavGroup>();
     public DbSet<NavGroupItem> NavGroupItems => Set<NavGroupItem>();
+
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        base.ConfigureConventions(configurationBuilder);
+        configurationBuilder.Properties<SeasonPart>()
+            .HaveConversion<SeasonPartConverter>();
+    }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
