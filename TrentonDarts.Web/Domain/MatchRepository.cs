@@ -91,13 +91,10 @@ public class MatchRepository
             });
         }
 
-        var result = new MatchResult();
-        result.LoadSnapshot(snapshot);
-        result.LoadRules(matchRules);
-        return result;
+        return MatchResult.From(snapshot, matchRules);
     }
 
-    public async Task SaveMatchResultsDataAsync(int matchId, ScorecardSaveDto data)
+    public async Task<MatchResult> SaveMatchResultsDataAsync(int matchId, ScorecardSaveDto data)
     {
         var match = await _db.WinterSeasonMatches.FindAsync(matchId)
             ?? throw new InvalidOperationException($"Match {matchId} not found");
@@ -157,6 +154,7 @@ public class MatchRepository
         }
 
         await PersistMatchResultsAsync(matchResult);
+        return matchResult;
     }
 
     private async Task PersistMatchResultsAsync(MatchResult matchResult)

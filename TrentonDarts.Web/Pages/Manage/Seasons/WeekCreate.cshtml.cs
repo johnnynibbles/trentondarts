@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using TrentonDarts.Web.Data;
 using TrentonDarts.Web.Data.Entities;
+using TrentonDarts.Web.Domain;
 
 namespace TrentonDarts.Web.Pages.Manage.Seasons;
 
@@ -38,7 +39,7 @@ public class WeekCreateModel : PageModel
             LeagueId = LeagueId,
             SeasonId = Id,
             Date = Input.Date,
-            WeekType = Input.WeekType,
+            WeekType = Enum.Parse<SeasonPart>(Input.WeekType, ignoreCase: true),
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
         });

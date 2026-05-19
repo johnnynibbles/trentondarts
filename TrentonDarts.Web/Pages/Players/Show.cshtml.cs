@@ -55,7 +55,7 @@ public class ShowModel : PageModel
 
         if (PlayerTeamId > 0)
         {
-            var allStats = await _statsService.GetPlayerStatsForSeasonPartAsync(Season.Id, "whole", "");
+            var allStats = await _statsService.GetPlayerStatsForSeasonPartAsync(Season.Id, null, "");
             TeamPlayerStats = allStats.Where(p => p.TeamId == PlayerTeamId).ToList();
         }
 

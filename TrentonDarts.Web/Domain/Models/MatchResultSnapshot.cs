@@ -4,7 +4,7 @@ public class MatchResultSnapshot
 {
     public int MatchId { get; set; }
     public int SeasonId { get; set; }
-    public string? SeasonPart { get; set; }
+    public SeasonPart? SeasonPart { get; set; }
     public string? Division { get; set; }
     public DateTime Date { get; set; }
     public int AwayTeamId { get; set; }

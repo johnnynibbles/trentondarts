@@ -1,3 +1,5 @@
+using TrentonDarts.Web.Domain;
+
 namespace TrentonDarts.Web.Data.Entities;
 
 public class WinterSeasonWeek
@@ -5,7 +7,7 @@ public class WinterSeasonWeek
     public int Id { get; set; }
     public int LeagueId { get; set; }
     public int SeasonId { get; set; }
-    public string WeekType { get; set; } = string.Empty;
+    public SeasonPart WeekType { get; set; }
     public DateTime Date { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }

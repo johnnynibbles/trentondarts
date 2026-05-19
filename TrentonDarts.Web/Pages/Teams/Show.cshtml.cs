@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using TrentonDarts.Web.Data;
 using TrentonDarts.Web.Data.Entities;
+using TrentonDarts.Web.Domain;
 using TrentonDarts.Web.Services;
+using SP = TrentonDarts.Web.Domain.SeasonPart;
 
 namespace TrentonDarts.Web.Pages.Teams;
 
@@ -40,7 +42,7 @@ public class ShowModel : PageModel
     public WinterSeason Season { get; private set; } = null!;
     public WinterSeasonTeam SeasonTeam { get; private set; } = null!;
     public List<WinterSeason> AllSeasons { get; private set; } = new();
-    public string StatPart { get; private set; } = "whole";
+    public SeasonPart? StatPart { get; private set; }
     public List<DivStandings> DivStandings { get; private set; } = new();
     public List<WinterStatAward> Awards { get; private set; } = new();
     public List<TeamStat> TeamStats { get; private set; } = new();
@@ -49,7 +51,7 @@ public class ShowModel : PageModel
     public bool IsBoardMember { get; private set; }
 
     public async Task<IActionResult> OnGetAsync(int id,
-        [FromQuery] string? season, [FromQuery] string? statpart)
+        [FromQuery] string? season, [FromQuery] SeasonPart? statpart)
     {
         if (season != null && int.TryParse(season, out var seasonId))
             Season = await _db.WinterSeasons.FindAsync(seasonId) ?? await GetCurrentSeasonAsync();
@@ -68,11 +70,10 @@ public class ShowModel : PageModel
 
         var today = DateTime.Today;
         var currentPart = await _seasonService.GetCurrentSeasonPartAsync(Season, DateTime.Today);
-        StatPart = statpart ?? (Season.AccumulatePointsForAllParts ? "whole" : currentPart);
+        StatPart = statpart ?? (Season.AccumulatePointsForAllParts ? (SeasonPart?)null : currentPart);
 
         // Division standings for the team's division
-        var divName = currentPart == "regular" ? "regular" : "pre";
-        var teamDiv = divName == "regular" ? SeasonTeam.RegularSeasonDiv : SeasonTeam.PreSeasonDiv;
+        var teamDiv = currentPart == SP.Regular ? SeasonTeam.RegularSeasonDiv : SeasonTeam.PreSeasonDiv;
         DivStandings = await _seasonService.GetDivisionStandingsAsync(Season, currentPart, today);
         DivStandings = DivStandings.Where(d => d.Name == teamDiv).ToList();
 
@@ -117,7 +118,7 @@ public class ShowModel : PageModel
                 schedule.Add(new TeamScheduleRow
                 {
                     Date = week.Date,
-                    SeasonPart = week.WeekType == "pre" ? "Pre" : "Regular",
+                    SeasonPart = week.WeekType == SP.Pre ? "Pre" : "Regular",
                     IsBye = true
                 });
             }
@@ -127,7 +128,7 @@ public class ShowModel : PageModel
                 schedule.Add(new TeamScheduleRow
                 {
                     Date = week.Date,
-                    SeasonPart = week.WeekType == "pre" ? "Pre" : "Regular",
+                    SeasonPart = week.WeekType == SP.Pre ? "Pre" : "Regular",
                     MatchId = match.Id,
                     AwayTeamId = match.AwayTeamId,
                     AwayTeamName = match.AwayTeam.Name,

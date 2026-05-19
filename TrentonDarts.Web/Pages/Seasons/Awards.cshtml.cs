@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using TrentonDarts.Web.Data;
 using TrentonDarts.Web.Data.Entities;
+using TrentonDarts.Web.Domain;
 using TrentonDarts.Web.Services;
 
 namespace TrentonDarts.Web.Pages.Seasons;
@@ -19,13 +20,13 @@ public class AwardsModel : PageModel
     }
 
     public WinterSeason Season { get; private set; } = null!;
-    public string SeasonPart { get; private set; } = "whole";
+    public SeasonPart? SeasonPart { get; private set; }
     public string Division { get; private set; } = "";
     public Dictionary<string, string> Divisions { get; private set; } = new();
     public List<WinterStatAward> Awards { get; private set; } = new();
 
     public async Task OnGetAsync(int seasonId,
-        [FromQuery] string seasonPart = "whole",
+        [FromQuery] SeasonPart? seasonPart = null,
         [FromQuery] string division = "")
     {
         Season = await _db.WinterSeasons.FindAsync(seasonId)
@@ -38,7 +39,7 @@ public class AwardsModel : PageModel
         Divisions = await GetDivisionsAsync(seasonId);
         Awards = await _statsService.GetAwardsForSeasonAsync(
             seasonId,
-            seasonPart == "whole" ? null : seasonPart,
+            seasonPart,
             division == "" ? null : division,
             weekDate: null);
     }

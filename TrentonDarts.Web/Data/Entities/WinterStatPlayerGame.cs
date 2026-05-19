@@ -1,10 +1,12 @@
+using TrentonDarts.Web.Domain;
+
 namespace TrentonDarts.Web.Data.Entities;
 
 public class WinterStatPlayerGame
 {
     public int Id { get; set; }
     public int SeasonId { get; set; }
-    public string? SeasonPart { get; set; }
+    public SeasonPart? SeasonPart { get; set; }
     public int MatchId { get; set; }
     public string? Division { get; set; }
     public int GameId { get; set; }

@@ -78,6 +78,7 @@ builder.Services.AddScoped<StatsService>();
 builder.Services.AddScoped<PlayerHistoryService>();
 builder.Services.AddScoped<TrentonDarts.Web.Domain.MatchRepository>();
 builder.Services.AddScoped<UpdateMatchStatsService>();
+builder.Services.AddScoped<ScorecardService>();
 
 builder.Services.AddRazorPages(opts =>
     opts.Conventions.AuthorizeFolder("/Manage"));
@@ -123,8 +124,7 @@ app.UseAuthorization();
 app.MapPost("/season/{seasonId:int}/match/{matchId:int}",
     async (int seasonId, int matchId,
            [FromBody] ScorecardSaveDto data,
-           MatchRepository matchRepo,
-           UpdateMatchStatsService stats,
+           ScorecardService scorecardService,
            AppDbContext db,
            HttpContext ctx,
            IAntiforgery antiforgery) =>
@@ -140,8 +140,7 @@ app.MapPost("/season/{seasonId:int}/match/{matchId:int}",
                 return Results.StatusCode(StatusCodes.Status403Forbidden);
         }
 
-        await matchRepo.SaveMatchResultsDataAsync(matchId, data);
-        await stats.UpdateAsync(matchId);
+        await scorecardService.SubmitScorecardAsync(matchId, data);
         return Results.Ok(new { redirectUrl = $"/season/{seasonId}/schedule" });
     }).RequireAuthorization();
 
