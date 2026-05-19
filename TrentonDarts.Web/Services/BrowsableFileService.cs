@@ -39,6 +39,29 @@ public class BrowsableFileService
         return record;
     }
 
+    public async Task<BrowsableFile> UploadImageAsync(IFormFile file, string title)
+    {
+        var ext = Path.GetExtension(file.FileName);
+        var objectKey = $"images/{Guid.NewGuid()}{ext}";
+
+        using var stream = file.OpenReadStream();
+        await _storage.UploadAsync(stream, objectKey, file.ContentType);
+
+        var record = new BrowsableFile
+        {
+            Title = title,
+            Category = "image",
+            FileName = file.FileName,
+            RelativePath = objectKey,
+            MimeType = file.ContentType,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        };
+        _db.BrowsableFiles.Add(record);
+        await _db.SaveChangesAsync();
+        return record;
+    }
+
     public async Task DeleteAsync(int id)
     {
         var file = await _db.BrowsableFiles.FindAsync(id);

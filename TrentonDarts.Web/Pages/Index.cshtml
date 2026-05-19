@@ -51,140 +51,170 @@
             {
                 <article class="p-6" style="border-bottom:1px solid var(--color-border)">
                     <div class="flex items-center gap-2 mb-2">
-                        <span class="inline-block rounded px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide" style="background:var(--color-gold-bg);color:var(--color-gold)">Event</span>
+                        <span class="inline-block rounded px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide"
+                              style="background:var(--color-gold-bg);color:var(--color-gold)">Event</span>
                         <span class="text-xs" style="color:var(--color-muted)">@Model.TitleEvent.EventDate?.ToString("MMMM d, yyyy")</span>
                     </div>
-                    <h3 class="text-xl font-bold mb-2" style="letter-spacing:-0.02em;color:var(--color-text)">@Model.TitleEvent.Name</h3>
-                    <p class="text-sm" style="color:var(--color-muted)">Upcoming league event and tournament information.</p>
-                </article>
-            }
-
-            @if (!string.IsNullOrWhiteSpace(Model.WelcomeMessage))
-            {
-                <article class="p-6" style="border-bottom:1px solid var(--color-border)">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="inline-block rounded px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide" style="background:oklch(18% 0.06 255);color:oklch(70% 0.15 255)">News</span>
-                    </div>
-                    <div class="important-message text-sm leading-7" style="color:var(--color-muted)">
-                        @Html.Raw(Model.WelcomeMessage)
-                    </div>
-                </article>
-            }
-
-            @if (!string.IsNullOrWhiteSpace(Model.PlayerOfTheWeek))
-            {
-                <article class="p-6" style="border-bottom:1px solid var(--color-border)">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="inline-block rounded px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide" style="background:oklch(19% 0.07 145);color:oklch(66% 0.12 145)">Player</span>
-                    </div>
-                    <div class="important-message text-sm leading-7" style="color:var(--color-muted)">
-                        @Html.Raw(Model.PlayerOfTheWeek)
-                    </div>
-                </article>
-            }
-
-            <article class="p-6">
-                <div class="flex items-center gap-2 mb-2">
-                    <span class="inline-block rounded px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide" style="background:var(--color-surface-hi);color:var(--color-muted);border:1px solid var(--color-border)">Archive</span>
-                    <span class="text-xs" style="color:var(--color-muted)">Sports Illustrated, 1975</span>
-                </div>
-                <h3 class="text-base font-bold mb-2" style="color:var(--color-text)">Eight Feet Away From Glory</h3>
-                <p class="text-sm leading-6" style="color:var(--color-muted)">
-                    Read the classic
-                    <a href="http://www.si.com/vault/1975/02/17/557875/eight-feet-away-from-glory" target="_blank" rel="noopener noreferrer" class="font-semibold">Sports Illustrated article on darts</a>.
-                    Our own Conrad Daniels is a key part.
-                </p>
-            </article>
-        </div>
-    </main>
-
-    <aside class="flex flex-col gap-5">
-        <section class="glass-card">
-            <div class="panel-head">
-                <h2 class="panel-title">Schedule</h2>
-                @if (Model.CurrentSeasonId.HasValue)
-                {
-                    <a href="/season/@Model.CurrentSeasonId/schedule" class="text-xs font-medium">Full</a>
+                    <h3 class="text-xl font-bold mb-2" style="letter-spacing:-0.02em;color:var(--color-text)">
+                        @Model.TitleEvent.Name</h3>
+                        <p class="text-sm" style="color:var(--color-muted)">Upcoming league event and tournament information.
+                        </p>
+                    </article>
                 }
-            </div>
-            <div class="p-4">
-                @if (Model.UpcomingWeekDate.HasValue)
+
+                @if (Model.RecentPosts.Any())
                 {
-                    <p class="text-xs font-semibold mb-3" style="color:var(--color-muted)">@Model.UpcomingWeekDate.Value.ToString("MMMM d, yyyy")</p>
-                    @if (Model.UpcomingMatches.Any())
+                    @foreach (var post in Model.RecentPosts)
                     {
-                        var byDiv = Model.UpcomingMatches.GroupBy(m => m.Division ?? "").OrderBy(g => g.Key).ToList();
-                        foreach (var div in byDiv)
-                        {
-                            if (!string.IsNullOrEmpty(div.Key))
+                        <article class="p-6" style="border-bottom:1px solid var(--color-border)">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="inline-block rounded px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide"
+                                      style="background:oklch(18% 0.06 255);color:oklch(70% 0.15 255)">News</span>
+                                <span class="text-xs" style="color:var(--color-muted)">@post.PublishedAt?.ToString("MMMM d, yyyy")</span>
+                            </div>
+                            @if (post.CoverImage != null)
                             {
-                                <p class="text-[11px] font-bold uppercase tracking-wide mt-3 mb-1" style="color:var(--color-gold)">Division @div.Key</p>
-                            }
-                            foreach (var match in div)
-                            {
-                                <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-2 py-2 text-xs" style="border-top:1px solid var(--color-border)">
-                                    <span class="truncate text-right font-semibold" style="color:var(--color-text)">@match.HomeTeamName</span>
-                                    <span style="color:var(--color-muted)">vs</span>
-                                    <span class="truncate font-semibold" style="color:var(--color-text)">@match.AwayTeamName</span>
+                                <div class="mb-3" style="border-radius:0.5rem;overflow:hidden">
+                                    <img src="/file/@post.CoverImage.Id" alt="@post.Title"
+                                         style="width:100%;max-height:200px;object-fit:cover" />
                                 </div>
                             }
-                        }
-                    }
-                    else
-                    {
-                        <p class="text-sm" style="color:var(--color-muted)">No matches scheduled.</p>
+                            <h3 class="text-base font-bold mb-1" style="color:var(--color-text)">
+                                <a href="/news/@post.Slug" style="color:inherit;text-decoration:none">@post.Title</a>
+                            </h3>
+                            @if (!string.IsNullOrEmpty(post.Excerpt))
+                            {
+                                <p class="text-sm" style="color:var(--color-muted)">@post.Excerpt</p>
+                            }
+                            <a href="/news/@post.Slug" class="inline-block mt-2 text-xs font-medium"
+                               style="color:var(--color-gold)">Read more &rarr;</a>
+                        </article>
                     }
                 }
                 else
                 {
-                    <p class="text-sm" style="color:var(--color-muted)">No upcoming schedule.</p>
+                    <article class="p-6" style="border-bottom:1px solid var(--color-border)">
+                        <p class="text-sm" style="color:var(--color-muted)">No news posts yet.</p>
+                    </article>
                 }
-            </div>
-        </section>
 
-        @if (Model.Standings.Any())
-        {
+                <article class="p-6">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="inline-block rounded px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide"
+                              style="background:var(--color-surface-hi);color:var(--color-muted);border:1px solid var(--color-border)">Archive</span>
+                        <span class="text-xs" style="color:var(--color-muted)">Sports Illustrated, 1975</span>
+                    </div>
+                    <h3 class="text-base font-bold mb-2" style="color:var(--color-text)">Eight Feet Away From Glory</h3>
+                    <p class="text-sm leading-6" style="color:var(--color-muted)">
+                        Read the classic
+                        <a href="http://www.si.com/vault/1975/02/17/557875/eight-feet-away-from-glory" target="_blank"
+                           rel="noopener noreferrer" class="font-semibold">Sports Illustrated article on darts</a>.
+                        Our own Conrad Daniels is a key part.
+                    </p>
+                </article>
+            </div>
+        </main>
+
+        <aside class="flex flex-col gap-5">
             <section class="glass-card">
                 <div class="panel-head">
-                    <h2 class="panel-title">Standings</h2>
+                    <h2 class="panel-title">Schedule</h2>
                     @if (Model.CurrentSeasonId.HasValue)
                     {
-                        <a href="/season/@Model.CurrentSeasonId" class="text-xs font-medium">Full</a>
+                        <a href="/season/@Model.CurrentSeasonId/schedule" class="text-xs font-medium">Full</a>
                     }
                 </div>
-                <div class="p-0">
-                    @{ var firstDiv = true; }
-                    @foreach (var div in Model.Standings)
+                <div class="p-4">
+                    @if (Model.UpcomingWeekDate.HasValue)
                     {
-                        if (!firstDiv) { <div style="border-top:1px solid var(--color-border)"></div> }
-                        firstDiv = false;
-                        <div class="px-4 py-3">
-                            <p class="text-[11px] font-bold uppercase tracking-wide mb-2" style="color:var(--color-gold)">Division @div.Name</p>
-                            <table class="w-full text-xs">
-                                <thead>
-                                    <tr style="color:var(--color-muted);border-bottom:1px solid var(--color-border)">
-                                        <th class="text-left pb-2 font-bold uppercase tracking-wide">Team</th>
-                                        <th class="text-center pb-2 font-bold uppercase tracking-wide w-7">W</th>
-                                        <th class="text-center pb-2 font-bold uppercase tracking-wide w-7">L</th>
-                                        <th class="text-right pb-2 font-bold uppercase tracking-wide w-12">Pct</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var team in div.Standings)
+                        <p class="text-xs font-semibold mb-3" style="color:var(--color-muted)">
+                            @Model.UpcomingWeekDate.Value.ToString("MMMM d, yyyy")</p>
+                            @if (Model.UpcomingMatches.Any())
+                            {
+                                var byDiv = Model.UpcomingMatches.GroupBy(m => m.Division ?? "").OrderBy(g => g.Key).ToList();
+                                foreach (var div in byDiv)
+                                {
+                                    if (!string.IsNullOrEmpty(div.Key))
                                     {
-                                        <tr style="border-bottom:1px solid var(--color-border)">
-                                            <td class="py-2 pr-2 font-semibold" style="color:var(--color-text);max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">@team.Name</td>
-                                            <td class="py-2 text-center">@team.WonPoints</td>
-                                            <td class="py-2 text-center">@team.LossPoints</td>
-                                            <td class="py-2 text-right" style="color:var(--color-muted)">@team.Percentage.ToString("F3")</td>
-                                        </tr>
+                                        <p class="text-[11px] font-bold uppercase tracking-wide mt-3 mb-1" style="color:var(--color-gold)">
+                                            Division @div.Key</p>
+                                        }
+                                        foreach (var match in div)
+                                        {
+                                            <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-2 py-2 text-xs"
+                                                 style="border-top:1px solid var(--color-border)">
+                                                <span class="truncate text-right font-semibold"
+                                                      style="color:var(--color-text)">@match.HomeTeamName</span>
+                                                <span style="color:var(--color-muted)">vs</span>
+                                                <span class="truncate font-semibold" style="color:var(--color-text)">@match.AwayTeamName</span>
+                                            </div>
+                                        }
                                     }
-                                </tbody>
-                            </table>
+                                }
+                    else
+                                {
+                                    <p class="text-sm" style="color:var(--color-muted)">No matches scheduled.</p>
+                                }
+                            }
+                            else
+                            {
+                                <p class="text-sm" style="color:var(--color-muted)">No upcoming schedule.</p>
+                            }
                         </div>
-                    }
-                </div>
-            </section>
-        }
-    </aside>
-</div>
+                    </section>
+
+                    @if (Model.Standings.Any())
+                    {
+                        <section class="glass-card">
+                            <div class="panel-head">
+                                <h2 class="panel-title">Standings</h2>
+                                @if (Model.CurrentSeasonId.HasValue)
+                                {
+                                    <a href="/season/@Model.CurrentSeasonId" class="text-xs font-medium">Full</a>
+                                }
+                            </div>
+                            <div class="p-0">
+                                @{
+                                    var firstDiv = true;
+                                }
+                                @foreach (var div in Model.Standings)
+                                {
+                                    if (!firstDiv)
+                                    {
+                                        <div style="border-top:1px solid var(--color-border)"></div>
+                                    }
+                                    firstDiv = false;
+                                    <div class="px-4 py-3">
+                                        <p class="text-[11px] font-bold uppercase tracking-wide mb-2" style="color:var(--color-gold)">
+                                            Division @div.Name</p>
+                                            <table class="w-full text-xs">
+                                                <thead>
+                                                    <tr style="color:var(--color-muted);border-bottom:1px solid var(--color-border)">
+                                                        <th class="text-left pb-2 font-bold uppercase tracking-wide">Team</th>
+                                                        <th class="text-center pb-2 font-bold uppercase tracking-wide w-7">W</th>
+                                                        <th class="text-center pb-2 font-bold uppercase tracking-wide w-7">L</th>
+                                                        <th class="text-right pb-2 font-bold uppercase tracking-wide w-12">Pct</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var team in div.Standings)
+                                                    {
+                                                        <tr style="border-bottom:1px solid var(--color-border)">
+                                                            <td class="py-2 pr-2 font-semibold"
+                                                                style="color:var(--color-text);max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">
+                                                                @team.Name</td>
+                                                                <td class="py-2 text-center">@team.WonPoints</td>
+                                                                <td class="py-2 text-center">@team.LossPoints</td>
+                                                                <td class="py-2 text-right" style="color:var(--color-muted)">
+                                                                    @team.Percentage.ToString("F3")</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            }
+                                        </div>
+                                    </section>
+                                }
+                            </aside>
+                        </div>

@@ -1,6 +1,7 @@
 import { Editor } from '@tiptap/core';
 import StarterKit from '@tiptap/starter-kit';
 import Link from '@tiptap/extension-link';
+import Image from '@tiptap/extension-image';
 
 const BUTTONS = [
   { label: 'B',  title: 'Bold',          style: 'font-weight:700', run: ed => ed.chain().focus().toggleBold().run(),                      isActive: ed => ed.isActive('bold') },
@@ -26,13 +27,38 @@ const BUTTONS = [
   { label: '↪', title: 'Redo', run: ed => ed.chain().focus().redo().run(), isActive: () => false },
 ];
 
-function buildToolbar(editor) {
+function imageUploadButton(uploadUrl) {
+  return {
+    label: '🖼', title: 'Insert image',
+    run: (ed) => {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.onchange = async () => {
+        const file = input.files[0];
+        if (!file) return;
+        const formData = new FormData();
+        formData.append('file', file);
+        const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
+        if (token) formData.append('__RequestVerificationToken', token);
+        const res = await fetch(uploadUrl, { method: 'POST', body: formData });
+        if (!res.ok) return;
+        const { url } = await res.json();
+        ed.chain().focus().setImage({ src: url }).run();
+      };
+      input.click();
+    },
+    isActive: () => false,
+  };
+}
+
+function buildToolbar(editor, buttons) {
   const bar = document.createElement('div');
   bar.className = 'tiptap-toolbar';
 
   const tracked = [];
 
-  for (const item of BUTTONS) {
+  for (const item of buttons) {
     if (item === null) {
       const sep = document.createElement('span');
       sep.className = 'tiptap-sep';
@@ -61,7 +87,8 @@ function buildToolbar(editor) {
   return bar;
 }
 
-window.initTipTapEditor = function (containerId, hiddenInputId, initialHtml) {
+window.initTipTapEditor = function (containerId, hiddenInputId, initialHtml, options = {}) {
+  const { imageUploadUrl } = options;
   const wrapper = document.getElementById(containerId);
   const hidden = document.getElementById(hiddenInputId);
 
@@ -74,6 +101,7 @@ window.initTipTapEditor = function (containerId, hiddenInputId, initialHtml) {
     extensions: [
       StarterKit,
       Link.configure({ openOnClick: false, autolink: true }),
+      Image,
     ],
     content: initialHtml || '',
     onUpdate({ editor }) {
@@ -81,7 +109,11 @@ window.initTipTapEditor = function (containerId, hiddenInputId, initialHtml) {
     },
   });
 
-  wrapper.insertBefore(buildToolbar(editor), mount);
+  const buttons = imageUploadUrl
+    ? [...BUTTONS, null, imageUploadButton(imageUploadUrl)]
+    : BUTTONS;
+
+  wrapper.insertBefore(buildToolbar(editor, buttons), mount);
 
   wrapper.closest('form')?.addEventListener('submit', () => {
     hidden.value = editor.getHTML();

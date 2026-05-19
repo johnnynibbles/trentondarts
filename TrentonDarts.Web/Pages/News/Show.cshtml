@@ -1,0 +1,35 @@
+@page "/news/{slug}"
+@model TrentonDarts.Web.Pages.News.ShowModel
+@{
+    ViewData["Title"] = Model.Post.Title;
+}
+
+<article class="max-w-3xl mx-auto">
+    @if (Model.Post.CoverImage != null)
+    {
+        <div class="mb-6" style="border-radius:0.75rem;overflow:hidden">
+            <img src="/file/@Model.Post.CoverImage.Id" alt="@Model.Post.Title"
+                 style="width:100%;max-height:400px;object-fit:cover" />
+        </div>
+    }
+
+    <h1 class="text-3xl font-bold mb-2" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">@Model.Post.Title</h1>
+
+    <p class="text-xs mb-4" style="color:#6B7280">@Model.Post.PublishedAt?.ToString("MMMM d, yyyy")</p>
+
+    @if (!string.IsNullOrEmpty(Model.Post.Excerpt))
+    {
+        <div class="prose-content text-base mb-6" style="color:#9CA3AF;font-style:italic">@Html.Raw(Model.Post.Excerpt)</div>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.Post.Html))
+    {
+        <div class="prose-content" style="color:#F5ECD7;line-height:1.7">
+            @Html.Raw(Model.Post.Html)
+        </div>
+    }
+
+    <div class="mt-8">
+        <a href="/news" class="text-sm" style="color:#C8962E;text-decoration:none">&larr; All news</a>
+    </div>
+</article>

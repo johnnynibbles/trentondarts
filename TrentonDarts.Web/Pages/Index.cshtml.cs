@@ -18,8 +18,7 @@ public class IndexModel : PageModel
     }
 
     public DartEvent? TitleEvent { get; private set; }
-    public string WelcomeMessage { get; private set; } = "";
-    public string PlayerOfTheWeek { get; private set; } = "";
+    public List<Data.Entities.NewsPost> RecentPosts { get; private set; } = new();
     public int? CurrentSeasonId { get; private set; }
     public List<DivStandings> Standings { get; private set; } = new();
     public List<MatchRow> UpcomingMatches { get; private set; } = new();
@@ -33,11 +32,12 @@ public class IndexModel : PageModel
                 .OrderBy(e => e.EventDate)
                 .FirstOrDefaultAsync();
 
-        var mainHeader = await _db.PageParts.FirstOrDefaultAsync(p => p.Name == "MainPageHeader");
-        WelcomeMessage = mainHeader?.Html ?? "";
-
-        var playerOfWeek = await _db.PageParts.FirstOrDefaultAsync(p => p.Name == "GTDL_PLAYER_OF_THE_WEEK");
-        PlayerOfTheWeek = playerOfWeek?.Html ?? "";
+        RecentPosts = await _db.NewsPosts
+            .Include(p => p.CoverImage)
+            .Where(p => p.PublishedAt != null)
+            .OrderByDescending(p => p.PublishedAt)
+            .Take(3)
+            .ToListAsync();
 
         var currentSeason = await _db.WinterSeasons.FirstOrDefaultAsync(s => s.IsCurrent);
         CurrentSeasonId = currentSeason?.Id;

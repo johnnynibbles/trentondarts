@@ -26,6 +26,20 @@ An enum with three values: `Pre`, `Regular`, `Post`. Stored in the DB as lowerca
 
 **Division is NOT a value object** — it remains a plain string (e.g., `"A1"`, `"B2"`). The tier letter is extracted inline where needed.
 
+## NewsPost
+
+A timestamped, authored piece of league content — news, announcements, recaps. Distinct from `PagePart` (a named singleton HTML block) in that NewsPosts are a collection ordered by publish date, not keyed by name.
+
+**Fields**: `Title`, `Slug` (unique, URL-safe, auto-generated from title), `Excerpt` (optional short plain-text summary), `Html` (TipTap rich-text body), `CoverImageId` (optional FK to `BrowsableFile`), `PublishedAt` (nullable DateTime — null means draft, non-null means live), `CreatedAt`, `UpdatedAt`, `DeletedAt`.
+
+**Draft vs Published**: `PublishedAt == null` is a draft. `PublishedAt != null` is live. The public listing and front-page feed filter to `PublishedAt != null`, ordered descending.
+
+**Public URL**: `/news/{slug}`. The slug is the canonical lookup key.
+
+**Front page**: The League Bulletin section displays the 3 most recently published NewsPosts as cards (cover image, title, excerpt, date). This replaces the former `PagePart`-driven bulletin.
+
+**Contrast with**: `PagePart` (still exists, no longer used on the front page — kept for possible future static content blocks). `DartEvent` (has dates and event-specific fields; NewsPosts have no event date).
+
 ## Award
 
 An award belongs to a specific game and a specific player. **Invariant**: the award player is always one of the players listed in that game (`GameResult.HomePlayers` or `GameResult.AwayPlayers`). Team attribution for an award is derived from the game's player lists — not from the season roster. There is no concept of a match-level award assigned outside the game's participants.

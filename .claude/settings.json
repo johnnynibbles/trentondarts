@@ -4,7 +4,12 @@
       "PowerShell(Get-ChildItem -Path \"c:\\\\dev\\\\trentondarts-dotnet\\\\TrentonDarts.Tests\" -File -Recurse | Select-Object Name, @{Name=\"Lines\";Expression={\\(Get-Content $_.FullName | Measure-Object -Line\\).Lines}} | Format-Table -AutoSize)",
       "Bash(dotnet test *)",
       "Skill(grill-with-docs)",
-      "Skill(grill-with-docs:*)"
+      "Skill(grill-with-docs:*)",
+      "Bash(Select-Object -ExpandProperty Name)",
+      "PowerShell(dotnet ef migrations add AddNewsPost --project TrentonDarts.Web 2>&1)",
+      "PowerShell(dotnet ef database update --project TrentonDarts.Web 2>&1)",
+      "PowerShell(tail -15)",
+      "PowerShell(dotnet test TrentonDarts.Tests 2>&1)"
     ]
   },
   "enabledPlugins": {

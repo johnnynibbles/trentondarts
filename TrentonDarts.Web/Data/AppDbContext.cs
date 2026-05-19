@@ -39,6 +39,7 @@ public class AppDbContext : IdentityDbContext<User>, IDataProtectionKeyContext
     public DbSet<PagePart> PageParts => Set<PagePart>();
     public DbSet<NavGroup> NavGroups => Set<NavGroup>();
     public DbSet<NavGroupItem> NavGroupItems => Set<NavGroupItem>();
+    public DbSet<NewsPost> NewsPosts => Set<NewsPost>();
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
@@ -480,6 +481,21 @@ public class AppDbContext : IdentityDbContext<User>, IDataProtectionKeyContext
             e.Property(p => p.DeletedAt).HasColumnName("deleted_at");
             e.HasQueryFilter(p => p.DeletedAt == null);
             e.HasOne(i => i.BrowsableFile).WithMany().HasForeignKey(i => i.BrowsableFileId);
+        });
+
+        // ── NewsPost ──────────────────────────────────────────────────────────
+        builder.Entity<NewsPost>(e =>
+        {
+            e.ToTable("news_posts");
+            e.Property(p => p.CoverImageId).HasColumnName("cover_image_id");
+            e.Property(p => p.PublishedAt).HasColumnName("published_at");
+            e.Property(p => p.CreatedAt).HasColumnName("created_at");
+            e.Property(p => p.UpdatedAt).HasColumnName("updated_at");
+            e.Property(p => p.DeletedAt).HasColumnName("deleted_at");
+            e.HasIndex(p => p.Slug).IsUnique();
+            e.HasQueryFilter(p => p.DeletedAt == null);
+            e.HasOne(p => p.CoverImage).WithMany().HasForeignKey(p => p.CoverImageId);
+            e.Ignore(p => p.IsDraft);
         });
     }
 }

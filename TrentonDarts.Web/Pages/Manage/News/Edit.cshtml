@@ -1,0 +1,74 @@
+@page "/Manage/{leagueId:int}/news/{id:int}/edit"
+@model TrentonDarts.Web.Pages.Manage.News.EditModel
+@{
+    ViewData["Title"] = "Edit News Post";
+    Layout = "_ManageLayout";
+}
+@section Scripts {
+    <script src="/dist/tiptap-editor.js"></script>
+    <script>
+        initTipTapEditor('tiptap-excerpt', 'Input_Excerpt', document.getElementById('Input_Excerpt').value);
+        initTipTapEditor('tiptap-body', 'Input_Html', document.getElementById('Input_Html').value, { imageUploadUrl: '/Manage/upload-image' });
+    </script>
+}
+
+<h2 class="text-2xl font-bold mb-4" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">Edit News Post</h2>
+
+<div class="flex flex-wrap gap-2 mb-5">
+    <a href="/Manage/@Model.LeagueId/news" class="inline-block px-3 py-1.5 rounded text-sm font-medium"
+       style="background:rgba(255,255,255,0.08);color:#F5ECD7;text-decoration:none">Back</a>
+</div>
+
+<form method="post" enctype="multipart/form-data" class="max-w-xl">
+    <div class="mb-4">
+        <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Title *</label>
+        <input asp-for="Input.Title" class="w-full rounded-lg px-3 py-1.5 text-sm"
+               style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+        <span asp-validation-for="Input.Title" class="text-xs mt-1 block" style="color:#C8101A"></span>
+    </div>
+    <div class="mb-4">
+        <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Slug *</label>
+        <input asp-for="Input.Slug" class="w-full rounded-lg px-3 py-1.5 text-sm font-mono"
+               style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)" />
+        <span asp-validation-for="Input.Slug" class="text-xs mt-1 block" style="color:#C8101A"></span>
+    </div>
+    <div class="mb-4">
+        <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Excerpt</label>
+        <input type="hidden" asp-for="Input.Excerpt" id="Input_Excerpt" />
+        <div id="tiptap-excerpt" style="border-radius:0.5rem;overflow:hidden"></div>
+    </div>
+    <div class="mb-4">
+        <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Body</label>
+        <input type="hidden" asp-for="Input.Html" id="Input_Html" />
+        <div id="tiptap-body" style="border-radius:0.5rem;overflow:hidden"></div>
+    </div>
+    <div class="mb-4">
+        <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Cover
+            Image</label>
+            @if (Model.ExistingCoverImage != null)
+            {
+                <div class="mb-2">
+                    <img src="/file/@Model.ExistingCoverImage.Id" alt="Cover"
+                         style="max-height:120px;border-radius:0.5rem;border:1px solid rgba(255,255,255,0.12)" />
+                </div>
+                <label class="flex items-center gap-2 cursor-pointer mb-2">
+                    <input asp-for="RemoveCoverImage" type="checkbox" class="rounded" />
+                    <span class="text-sm" style="color:#9CA3AF">Remove cover image</span>
+                </label>
+            }
+            <input asp-for="CoverImage" type="file" accept="image/*" class="w-full text-sm" style="color:#F5ECD7" />
+            <span asp-validation-for="CoverImage" class="text-xs mt-1 block" style="color:#C8101A"></span>
+        </div>
+        <div class="mb-6">
+            <label class="flex items-center gap-2 cursor-pointer">
+                <input asp-for="Input.Publish" type="checkbox" class="rounded" />
+                <span class="text-sm" style="color:#F5ECD7">Published</span>
+            </label>
+        </div>
+        <div class="flex gap-3">
+            <button type="submit" class="px-4 py-2 rounded-lg text-sm font-medium cursor-pointer"
+                    style="background:#C8962E;color:#0A0A0B;border:none">Save</button>
+            <a href="/Manage/@Model.LeagueId/news" class="inline-block px-4 py-2 rounded-lg text-sm font-medium"
+               style="background:rgba(255,255,255,0.08);color:#F5ECD7;text-decoration:none">Cancel</a>
+        </div>
+    </form>
