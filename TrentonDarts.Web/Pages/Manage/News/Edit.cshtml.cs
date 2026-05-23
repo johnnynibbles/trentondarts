@@ -36,6 +36,8 @@ public class EditModel : PageModel
 
     public BrowsableFile? ExistingCoverImage { get; private set; }
 
+    public List<WinterSeason> Seasons { get; private set; } = new();
+
     public async Task<IActionResult> OnGetAsync()
     {
         var post = await _db.NewsPosts
@@ -44,6 +46,7 @@ public class EditModel : PageModel
         if (post == null) return NotFound();
 
         ExistingCoverImage = post.CoverImage;
+        await LoadSeasonsAsync();
         Input = new NewsPostInput
         {
             Title = post.Title,
@@ -51,6 +54,7 @@ public class EditModel : PageModel
             Excerpt = post.Excerpt,
             Html = post.Html,
             PostType = post.PostType,
+            WinterSeasonId = post.WinterSeasonId,
             Publish = !post.IsDraft
         };
         return Page();
@@ -58,6 +62,8 @@ public class EditModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
+        await LoadSeasonsAsync();
+
         var slug = Slug.From(Input.Slug);
         if (string.IsNullOrEmpty(slug))
             ModelState.AddModelError("Input.Slug", "Slug is required.");
@@ -79,6 +85,7 @@ public class EditModel : PageModel
         post.Excerpt = Input.Excerpt;
         post.Html = Input.Html;
         post.PostType = Input.PostType;
+        post.WinterSeasonId = Input.WinterSeasonId;
         post.UpdatedAt = DateTime.UtcNow;
 
         if (RemoveCoverImage)
@@ -98,5 +105,13 @@ public class EditModel : PageModel
 
         await _db.SaveChangesAsync();
         return RedirectToPage("Index", new { leagueId = LeagueId });
+    }
+
+    private async Task LoadSeasonsAsync()
+    {
+        Seasons = await _db.WinterSeasons
+            .OrderByDescending(s => s.StartYear)
+            .ThenByDescending(s => s.Id)
+            .ToListAsync();
     }
 }

@@ -21,6 +21,7 @@ public class ShowModel : PageModel
     public WinterSeason? Season { get; private set; }
     public List<WinterSeasonTeam> SeasonTeams { get; private set; } = new();
     public List<WinterSeasonWeek> Weeks { get; private set; } = new();
+    public List<NewsPost> Recaps { get; private set; } = new();
 
     public async Task<IActionResult> OnGetAsync()
     {
@@ -37,6 +38,11 @@ public class ShowModel : PageModel
             .Where(w => w.SeasonId == Id)
             .Include(w => w.Matches)
             .OrderBy(w => w.Date)
+            .ToListAsync();
+
+        Recaps = await _db.NewsPosts
+            .Where(p => p.WinterSeasonId == Id)
+            .OrderByDescending(p => p.PublishedAt ?? p.CreatedAt)
             .ToListAsync();
 
         return Page();
@@ -59,6 +65,17 @@ public class ShowModel : PageModel
         if (week != null)
         {
             _db.WinterSeasonWeeks.Remove(week);
+            await _db.SaveChangesAsync();
+        }
+        return RedirectToPage();
+    }
+
+    public async Task<IActionResult> OnPostDeleteRecapAsync(int recapId)
+    {
+        var post = await _db.NewsPosts.FindAsync(recapId);
+        if (post != null)
+        {
+            post.DeletedAt = DateTime.UtcNow;
             await _db.SaveChangesAsync();
         }
         return RedirectToPage();

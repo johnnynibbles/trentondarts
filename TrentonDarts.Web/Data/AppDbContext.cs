@@ -489,13 +489,16 @@ public class AppDbContext : IdentityDbContext<User>, IDataProtectionKeyContext
             e.ToTable("news_posts");
             e.Property(p => p.PostType).HasColumnName("post_type").HasConversion<string>().HasDefaultValue(NewsPostType.News);
             e.Property(p => p.CoverImageId).HasColumnName("cover_image_id");
+            e.Property(p => p.WinterSeasonId).HasColumnName("winter_season_id");
             e.Property(p => p.PublishedAt).HasColumnName("published_at");
             e.Property(p => p.CreatedAt).HasColumnName("created_at");
             e.Property(p => p.UpdatedAt).HasColumnName("updated_at");
             e.Property(p => p.DeletedAt).HasColumnName("deleted_at");
             e.HasIndex(p => p.Slug).IsUnique();
+            e.HasIndex(p => p.WinterSeasonId);
             e.HasQueryFilter(p => p.DeletedAt == null);
             e.HasOne(p => p.CoverImage).WithMany().HasForeignKey(p => p.CoverImageId);
+            e.HasOne(p => p.WinterSeason).WithMany().HasForeignKey(p => p.WinterSeasonId).OnDelete(DeleteBehavior.SetNull);
             e.Ignore(p => p.IsDraft);
         });
     }

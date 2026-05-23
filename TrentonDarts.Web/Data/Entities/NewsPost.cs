@@ -9,12 +9,14 @@ public class NewsPost
     public string? Html { get; set; }
     public NewsPostType PostType { get; set; } = NewsPostType.News;
     public int? CoverImageId { get; set; }
+    public int? WinterSeasonId { get; set; }
     public DateTime? PublishedAt { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
     public DateTime? DeletedAt { get; set; }
 
     public BrowsableFile? CoverImage { get; set; }
+    public WinterSeason? WinterSeason { get; set; }
 
     public bool IsDraft => PublishedAt == null;
 

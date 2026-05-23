@@ -52,6 +52,16 @@
         </select>
     </div>
     <div class="mb-4">
+        <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Season</label>
+        <select asp-for="Input.WinterSeasonId" class="w-full rounded-lg px-3 py-1.5 text-sm" style="background:#111214;color:#F5ECD7;border:1px solid rgba(255,255,255,0.12)">
+            <option value="">— None —</option>
+            @foreach (var s in Model.Seasons)
+            {
+                <option value="@s.Id">@s.Name</option>
+            }
+        </select>
+    </div>
+    <div class="mb-4">
         <label class="block text-xs font-semibold uppercase tracking-wider mb-1" style="color:#6B7280">Cover
             Image</label>
             @if (Model.ExistingCoverImage != null)
@@ -66,6 +76,7 @@
                 </label>
             }
             <input asp-for="CoverImage" type="file" accept="image/*" class="w-full text-sm" style="color:#F5ECD7" />
+            <p class="text-xs mt-1" style="color:#6B7280">Recommended: 1600 × 900 px (16:9). Larger images are center-cropped.</p>
             <span asp-validation-for="CoverImage" class="text-xs mt-1 block" style="color:#C8101A"></span>
         </div>
         <div class="mb-6">

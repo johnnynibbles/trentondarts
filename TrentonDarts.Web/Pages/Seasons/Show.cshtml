@@ -7,98 +7,171 @@
 
 <h2 class="text-3xl font-bold mb-4" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">@Model.Season.Name</h2>
 
-@* Week navigation *@
-<div class="flex items-center gap-2 mb-6">
-    @if (Model.PreviousWeekDate.HasValue)
-    {
-        <a href="/season/@Model.Season.Id?week=@Model.PreviousWeekDate.Value.ToString("yyyy-MM-dd")"
-           class="px-3 py-1.5 text-sm rounded-lg transition-colors"
-           style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#F5ECD7;text-decoration:none">
-            &laquo; Previous
-        </a>
-    }
-    else
-    {
-        <span class="px-3 py-1.5 text-sm rounded-lg" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);color:#6B7280">&laquo; Previous</span>
-    }
-    @if (Model.NextWeekDate.HasValue)
-    {
-        <a href="/season/@Model.Season.Id?week=@Model.NextWeekDate.Value.ToString("yyyy-MM-dd")"
-           class="px-3 py-1.5 text-sm rounded-lg transition-colors"
-           style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#F5ECD7;text-decoration:none">
-            Next &raquo;
-        </a>
-    }
-    else
-    {
-        <span class="px-3 py-1.5 text-sm rounded-lg" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);color:#6B7280">Next &raquo;</span>
-    }
-    @if (Model.ResultWeekDate.HasValue)
-    {
-        <span class="text-sm text-center" style="color:#9CA3AF">
-            @if (Model.CurrentWeekNumber > 0 && Model.TotalWeeks > 0)
-            {
-                <span class="font-semibold" style="color:#F5ECD7">Week @Model.CurrentWeekNumber of @Model.TotalWeeks</span>
-                <span class="mx-1" style="color:#6B7280">—</span>
-            }
-            @Model.ResultWeekDate.Value.ToString("MMMM d, yyyy")
-        </span>
-    }
-</div>
-
-@* Weekly results *@
-@if (Model.DivSchedules.Any())
+@if (Model.InRecapMode)
 {
-    foreach (var div in Model.DivSchedules)
-    {
-        foreach (var week in div.Weeks)
+    @* Season Highlights — replaces weekly results when the season has been over for more than a week and recaps exist *@
+    <h3 class="text-xl font-bold mb-4" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">Season Highlights</h3>
+    var heroRecap = Model.Recaps.First();
+    var otherRecaps = Model.Recaps.Skip(1).ToList();
+    <article class="glass-card overflow-hidden mb-6">
+        @if (heroRecap.CoverImage != null)
         {
-            if (week.Matches.Any())
-            {
-                <h4 class="text-base font-semibold mb-2 mt-4" style="color:#C8962E;font-family:'Rajdhani',sans-serif;text-transform:uppercase;letter-spacing:0.05em">
-                    Results — @week.Date.ToString("MMMM d, yyyy")
-                </h4>
-                <div class="glass-card overflow-hidden mb-6">
-                    <table class="w-full text-sm">
-                        <thead>
-                            <tr style="border-bottom:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04)">
-                                <th class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wider" style="color:#6B7280">Division</th>
-                                <th class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wider" style="color:#6B7280">Away</th>
-                                <th class="px-3 py-2 text-center text-xs font-semibold uppercase tracking-wider" style="color:#6B7280">Score</th>
-                                <th class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wider" style="color:#6B7280">Home</th>
-                                <th class="px-3 py-2"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        @foreach (var m in week.Matches)
-                        {
-                            <tr class="clickable-row transition-colors"
-                                onclick="window.location='/season/@Model.Season.Id/match/@m.MatchId'"
-                                style="border-bottom:1px solid rgba(255,255,255,0.04)"
-                                onmouseover="this.style.background='rgba(255,255,255,0.04)'" onmouseout="this.style.background=''">
-                                <td class="px-3 py-2.5" style="color:#9CA3AF">@m.Division</td>
-                                <td class="px-3 py-2.5">@m.AwayTeamName</td>
-                                <td class="px-3 py-2.5 text-center font-mono font-semibold" style="color:#C8962E">
-                                    @(m.HasScorecard || m.AwayScore > 0 || m.HomeScore > 0 ? $"{m.AwayScore} – {m.HomeScore}" : "vs")
-                                </td>
-                                <td class="px-3 py-2.5 font-semibold">@m.HomeTeamName</td>
-                                <td class="px-3 py-2.5 text-right">
-                                    @if (Model.IsBoardMember)
-                                    {
-                                        <a href="/season/@Model.Season.Id/match/@m.MatchId/edit"
-                                           class="text-xs px-2 py-1 rounded"
-                                           style="background:rgba(200,150,46,0.15);color:#C8962E;text-decoration:none"
-                                           onclick="event.stopPropagation()">Edit</a>
-                                    }
-                                </td>
-                            </tr>
-                        }
-                        </tbody>
-                    </table>
-                </div>
-                @if (week.ByeTeamNames.Any())
+            <img src="/file/@heroRecap.CoverImage.Id" alt="@heroRecap.Title"
+                 style="width:100%;max-height:360px;object-fit:cover;display:block" />
+        }
+        <div class="p-6">
+            <div class="flex items-center gap-2 mb-2">
+                <span class="inline-block rounded px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide"
+                      style="background:rgba(200,150,46,0.15);color:#C8962E">@heroRecap.PostType</span>
+                @if (heroRecap.PublishedAt.HasValue)
                 {
-                    <p class="text-sm mb-4" style="color:#6B7280"><strong style="color:#F5ECD7">Byes:</strong> @string.Join(", ", week.ByeTeamNames)</p>
+                    <span class="text-xs" style="color:#6B7280">@heroRecap.PublishedAt.Value.ToString("MMMM d, yyyy")</span>
+                }
+            </div>
+            <h2 class="text-2xl font-bold mb-3" style="font-family:'Rajdhani',sans-serif;color:#F5ECD7">
+                <a href="/news/@heroRecap.Slug" style="color:inherit;text-decoration:none">@heroRecap.Title</a>
+            </h2>
+            @if (!string.IsNullOrEmpty(heroRecap.Html))
+            {
+                <div class="prose-content" style="color:#D1D5DB">@Html.Raw(heroRecap.Html)</div>
+            }
+            else if (!string.IsNullOrEmpty(heroRecap.Excerpt))
+            {
+                <div class="prose-content" style="color:#D1D5DB">@Html.Raw(heroRecap.Excerpt)</div>
+            }
+        </div>
+    </article>
+    @if (otherRecaps.Any())
+    {
+        <div class="grid gap-4 sm:grid-cols-2 mb-6">
+            @foreach (var r in otherRecaps)
+            {
+                <article class="glass-card overflow-hidden">
+                    @if (r.CoverImage != null)
+                    {
+                        <a href="/news/@r.Slug" style="display:block">
+                            <img src="/file/@r.CoverImage.Id" alt="@r.Title"
+                                 style="width:100%;max-height:180px;object-fit:cover;display:block" />
+                        </a>
+                    }
+                    <div class="p-4">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="inline-block rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide"
+                                  style="background:rgba(200,150,46,0.15);color:#C8962E">@r.PostType</span>
+                            @if (r.PublishedAt.HasValue)
+                            {
+                                <span class="text-xs" style="color:#6B7280">@r.PublishedAt.Value.ToString("MMM d, yyyy")</span>
+                            }
+                        </div>
+                        <h4 class="text-base font-bold mb-2" style="color:#F5ECD7">
+                            <a href="/news/@r.Slug" style="color:inherit;text-decoration:none">@r.Title</a>
+                        </h4>
+                        @if (!string.IsNullOrEmpty(r.Excerpt))
+                        {
+                            <div class="prose-content text-sm" style="color:#9CA3AF">@Html.Raw(r.Excerpt)</div>
+                        }
+                        <a href="/news/@r.Slug" class="inline-block mt-2 text-xs font-medium" style="color:#C8962E">Read more &rarr;</a>
+                    </div>
+                </article>
+            }
+        </div>
+    }
+}
+else
+{
+    @* Week navigation *@
+    <div class="flex items-center gap-2 mb-6">
+        @if (Model.PreviousWeekDate.HasValue)
+        {
+            <a href="/season/@Model.Season.Id?week=@Model.PreviousWeekDate.Value.ToString("yyyy-MM-dd")"
+               class="px-3 py-1.5 text-sm rounded-lg transition-colors"
+               style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#F5ECD7;text-decoration:none">
+                &laquo; Previous
+            </a>
+        }
+        else
+        {
+            <span class="px-3 py-1.5 text-sm rounded-lg" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);color:#6B7280">&laquo; Previous</span>
+        }
+        @if (Model.NextWeekDate.HasValue)
+        {
+            <a href="/season/@Model.Season.Id?week=@Model.NextWeekDate.Value.ToString("yyyy-MM-dd")"
+               class="px-3 py-1.5 text-sm rounded-lg transition-colors"
+               style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#F5ECD7;text-decoration:none">
+                Next &raquo;
+            </a>
+        }
+        else
+        {
+            <span class="px-3 py-1.5 text-sm rounded-lg" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);color:#6B7280">Next &raquo;</span>
+        }
+        @if (Model.ResultWeekDate.HasValue)
+        {
+            <span class="text-sm text-center" style="color:#9CA3AF">
+                @if (Model.CurrentWeekNumber > 0 && Model.TotalWeeks > 0)
+                {
+                    <span class="font-semibold" style="color:#F5ECD7">Week @Model.CurrentWeekNumber of @Model.TotalWeeks</span>
+                    <span class="mx-1" style="color:#6B7280">—</span>
+                }
+                @Model.ResultWeekDate.Value.ToString("MMMM d, yyyy")
+            </span>
+        }
+    </div>
+
+    @* Weekly results *@
+    if (Model.DivSchedules.Any())
+    {
+        foreach (var div in Model.DivSchedules)
+        {
+            foreach (var week in div.Weeks)
+            {
+                if (week.Matches.Any())
+                {
+                    <h4 class="text-base font-semibold mb-2 mt-4" style="color:#C8962E;font-family:'Rajdhani',sans-serif;text-transform:uppercase;letter-spacing:0.05em">
+                        Results — @week.Date.ToString("MMMM d, yyyy")
+                    </h4>
+                    <div class="glass-card overflow-hidden mb-6">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr style="border-bottom:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04)">
+                                    <th class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wider" style="color:#6B7280">Division</th>
+                                    <th class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wider" style="color:#6B7280">Away</th>
+                                    <th class="px-3 py-2 text-center text-xs font-semibold uppercase tracking-wider" style="color:#6B7280">Score</th>
+                                    <th class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wider" style="color:#6B7280">Home</th>
+                                    <th class="px-3 py-2"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var m in week.Matches)
+                            {
+                                <tr class="clickable-row transition-colors"
+                                    onclick="window.location='/season/@Model.Season.Id/match/@m.MatchId'"
+                                    style="border-bottom:1px solid rgba(255,255,255,0.04)"
+                                    onmouseover="this.style.background='rgba(255,255,255,0.04)'" onmouseout="this.style.background=''">
+                                    <td class="px-3 py-2.5" style="color:#9CA3AF">@m.Division</td>
+                                    <td class="px-3 py-2.5">@m.AwayTeamName</td>
+                                    <td class="px-3 py-2.5 text-center font-mono font-semibold" style="color:#C8962E">
+                                        @(m.HasScorecard || m.AwayScore > 0 || m.HomeScore > 0 ? $"{m.AwayScore} – {m.HomeScore}" : "vs")
+                                    </td>
+                                    <td class="px-3 py-2.5 font-semibold">@m.HomeTeamName</td>
+                                    <td class="px-3 py-2.5 text-right">
+                                        @if (Model.IsBoardMember)
+                                        {
+                                            <a href="/season/@Model.Season.Id/match/@m.MatchId/edit"
+                                               class="text-xs px-2 py-1 rounded"
+                                               style="background:rgba(200,150,46,0.15);color:#C8962E;text-decoration:none"
+                                               onclick="event.stopPropagation()">Edit</a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                    @if (week.ByeTeamNames.Any())
+                    {
+                        <p class="text-sm mb-4" style="color:#6B7280"><strong style="color:#F5ECD7">Byes:</strong> @string.Join(", ", week.ByeTeamNames)</p>
+                    }
                 }
             }
         }

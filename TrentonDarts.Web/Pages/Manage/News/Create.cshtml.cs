@@ -16,6 +16,7 @@ public class NewsPostInput
     public string? Excerpt { get; set; }
     public string? Html { get; set; }
     public NewsPostType PostType { get; set; } = NewsPostType.News;
+    public int? WinterSeasonId { get; set; }
     public bool Publish { get; set; }
 }
 
@@ -33,16 +34,31 @@ public class CreateModel : PageModel
     [BindProperty(SupportsGet = true)]
     public int LeagueId { get; set; }
 
+    [BindProperty(SupportsGet = true)]
+    public int? SeasonId { get; set; }
+
+    [BindProperty(SupportsGet = true)]
+    public NewsPostType? PostType { get; set; }
+
     [BindProperty]
     public NewsPostInput Input { get; set; } = new();
 
     [BindProperty]
     public IFormFile? CoverImage { get; set; }
 
-    public void OnGet() { }
+    public List<WinterSeason> Seasons { get; private set; } = new();
+
+    public async Task OnGetAsync()
+    {
+        await LoadSeasonsAsync();
+        if (SeasonId.HasValue) Input.WinterSeasonId = SeasonId;
+        if (PostType.HasValue) Input.PostType = PostType.Value;
+    }
 
     public async Task<IActionResult> OnPostAsync()
     {
+        await LoadSeasonsAsync();
+
         var slug = Slug.From(Input.Slug);
         if (string.IsNullOrEmpty(slug))
             ModelState.AddModelError("Input.Slug", "Slug is required.");
@@ -71,6 +87,7 @@ public class CreateModel : PageModel
             Html = Input.Html,
             PostType = Input.PostType,
             CoverImageId = coverImageId,
+            WinterSeasonId = Input.WinterSeasonId,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
         };
@@ -81,6 +98,17 @@ public class CreateModel : PageModel
         _db.NewsPosts.Add(post);
         await _db.SaveChangesAsync();
 
+        if (SeasonId.HasValue)
+            return Redirect($"/Manage/{LeagueId}/seasons/{SeasonId.Value}");
+
         return RedirectToPage("Index", new { leagueId = LeagueId });
+    }
+
+    private async Task LoadSeasonsAsync()
+    {
+        Seasons = await _db.WinterSeasons
+            .OrderByDescending(s => s.StartYear)
+            .ThenByDescending(s => s.Id)
+            .ToListAsync();
     }
 }

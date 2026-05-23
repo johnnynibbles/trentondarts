@@ -35,6 +35,8 @@ public class ShowModel : PageModel
     public bool IsBoardMember { get; private set; }
     public int CurrentWeekNumber { get; private set; }
     public int TotalWeeks { get; private set; }
+    public List<NewsPost> Recaps { get; private set; } = new();
+    public bool InRecapMode { get; private set; }
 
     public async Task<IActionResult> OnGetAsync(int id,
         [FromQuery] string? week, [FromQuery] bool allAwards = false)
@@ -47,16 +49,13 @@ public class ShowModel : PageModel
         IsBoardMember = await IsBoardMemberAsync();
 
         var today = DateTime.Today;
-        ResultWeekDate = week != null && DateTime.TryParse(week, out var parsedWeek)
+        DateTime parsedWeek = default;
+        var weekQueryProvided = !string.IsNullOrEmpty(week) && DateTime.TryParse(week, out parsedWeek);
+        ResultWeekDate = weekQueryProvided
             ? parsedWeek
             : await _seasonService.GetCurrentWeekDateAsync(Season, today);
 
         SeasonPart = await _seasonService.GetCurrentSeasonPartAsync(Season, ResultWeekDate);
-        PreviousWeekDate = ResultWeekDate.HasValue
-            ? await _seasonService.GetPreviousWeekDateAsync(Season, ResultWeekDate.Value)
-            : null;
-        NextWeekDate = await _seasonService.GetNextWeekDateAsync(Season,
-            ResultWeekDate ?? today);
 
         var allWeekDates = await _db.WinterSeasonWeeks
             .Where(w => w.SeasonId == Season.Id)
@@ -68,10 +67,29 @@ public class ShowModel : PageModel
             ? allWeekDates.IndexOf(ResultWeekDate.Value.Date) + 1
             : 0;
 
-        if (ResultWeekDate.HasValue)
-            DivSchedules = await _seasonService.GetWeekScheduleAsync(Season, ResultWeekDate.Value);
+        Recaps = await _db.NewsPosts
+            .Include(p => p.CoverImage)
+            .Where(p => p.WinterSeasonId == Season.Id && p.PublishedAt != null)
+            .OrderByDescending(p => p.PublishedAt)
+            .ToListAsync();
 
-        NextWeekSchedules = await _seasonService.GetNextWeekScheduleAsync(Season, ResultWeekDate ?? today);
+        var lastWeekDate = allWeekDates.Count > 0 ? allWeekDates[^1] : (DateTime?)null;
+        var isConcluded = lastWeekDate.HasValue && today > lastWeekDate.Value.AddDays(7);
+        InRecapMode = isConcluded && Recaps.Any() && !weekQueryProvided;
+
+        if (!InRecapMode)
+        {
+            PreviousWeekDate = ResultWeekDate.HasValue
+                ? await _seasonService.GetPreviousWeekDateAsync(Season, ResultWeekDate.Value)
+                : null;
+            NextWeekDate = await _seasonService.GetNextWeekDateAsync(Season,
+                ResultWeekDate ?? today);
+
+            if (ResultWeekDate.HasValue)
+                DivSchedules = await _seasonService.GetWeekScheduleAsync(Season, ResultWeekDate.Value);
+
+            NextWeekSchedules = await _seasonService.GetNextWeekScheduleAsync(Season, ResultWeekDate ?? today);
+        }
 
         DivStandings = await _seasonService.GetDivisionStandingsAsync(Season, SeasonPart, ResultWeekDate);
 
@@ -79,7 +97,7 @@ public class ShowModel : PageModel
             Season.Id,
             seasonPart: null,
             division: null,
-            weekDate: ViewAllAwards ? null : ResultWeekDate);
+            weekDate: (ViewAllAwards || InRecapMode) ? null : ResultWeekDate);
 
         return Page();
     }
