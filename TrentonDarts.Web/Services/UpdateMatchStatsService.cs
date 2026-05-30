@@ -21,6 +21,7 @@ public class UpdateMatchStatsService
         await UpdateTeamGameStatsAsync(result);
         await UpdatePlayerGameStatsAsync(result);
         await UpdateAwardStatsAsync(result);
+        await _db.SaveChangesAsync();
     }
 
     // ── MatchStatsRepository.updateMatchStats ─────────────────────────────
@@ -29,7 +30,6 @@ public class UpdateMatchStatsService
     {
         await UpsertMatchStatAsync(result, isHome: false);
         await UpsertMatchStatAsync(result, isHome: true);
-        await _db.SaveChangesAsync();
     }
 
     private async Task UpsertMatchStatAsync(MatchResult result, bool isHome)
@@ -119,7 +119,6 @@ public class UpdateMatchStatsService
             await UpsertPlayerGameStatsForSideAsync(result, game, isHome: false);
             await UpsertPlayerGameStatsForSideAsync(result, game, isHome: true);
         }
-        await _db.SaveChangesAsync();
     }
 
     private async Task UpsertPlayerGameStatsForSideAsync(MatchResult result, GameResult game, bool isHome)
@@ -216,6 +215,5 @@ public class UpdateMatchStatsService
                 stat.UpdatedAt = DateTime.UtcNow;
             }
         }
-        await _db.SaveChangesAsync();
     }
 }
