@@ -16,8 +16,10 @@
     <article class="glass-card overflow-hidden mb-6">
         @if (heroRecap.CoverImage != null)
         {
-            <img src="/file/@heroRecap.CoverImage.Id" alt="@heroRecap.Title"
-                 style="width:100%;max-height:360px;object-fit:cover;display:block" />
+            <div class="post-hero-image" style="border-radius:0">
+                <img class="post-hero-image-blur" src="/file/@heroRecap.CoverImage.Id" alt="" aria-hidden="true" />
+                <img class="post-hero-image-fg" src="/file/@heroRecap.CoverImage.Id" alt="@heroRecap.Title" />
+            </div>
         }
         <div class="p-6">
             <div class="flex items-center gap-2 mb-2">
@@ -50,8 +52,10 @@
                     @if (r.CoverImage != null)
                     {
                         <a href="/news/@r.Slug" style="display:block">
-                            <img src="/file/@r.CoverImage.Id" alt="@r.Title"
-                                 style="width:100%;max-height:180px;object-fit:cover;display:block" />
+                            <div class="post-hero-image" style="border-radius:0">
+                                <img class="post-hero-image-blur" src="/file/@r.CoverImage.Id" alt="" aria-hidden="true" />
+                                <img class="post-hero-image-fg" src="/file/@r.CoverImage.Id" alt="@r.Title" />
+                            </div>
                         </a>
                     }
                     <div class="p-4">

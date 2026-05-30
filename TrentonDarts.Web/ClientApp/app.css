@@ -91,6 +91,39 @@ a:hover { color: var(--color-gold-hover); text-decoration: underline; }
   background-size: cover;
 }
 
+.post-hero-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  background: var(--color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.post-hero-image--compact {
+  aspect-ratio: 3 / 1;
+}
+
+.post-hero-image-blur {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.1);
+  filter: blur(40px) brightness(0.6) saturate(1.1);
+}
+
+.post-hero-image-fg {
+  position: relative;
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+}
+
 .site-hero-inner {
   max-width: var(--max-w);
   margin: 0 auto;

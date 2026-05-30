@@ -7,9 +7,9 @@
 <article class="max-w-3xl mx-auto">
     @if (Model.Post.CoverImage != null)
     {
-        <div class="mb-6" style="border-radius:0.75rem;overflow:hidden">
-            <img src="/file/@Model.Post.CoverImage.Id" alt="@Model.Post.Title"
-                 style="width:100%;max-height:400px;object-fit:cover" />
+        <div class="post-hero-image mb-6">
+            <img class="post-hero-image-blur" src="/file/@Model.Post.CoverImage.Id" alt="" aria-hidden="true" />
+            <img class="post-hero-image-fg" src="/file/@Model.Post.CoverImage.Id" alt="@Model.Post.Title" />
         </div>
     }
 
